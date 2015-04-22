@@ -3,8 +3,18 @@
 
 #include "cocos2d.h"
 
+using namespace cocos2d;
+
+enum
+{
+    kTagTileMap = 1,
+};
+
 class HelloWorld : public cocos2d::Layer
 {
+private:
+    TMXTiledMap* _tiledMap;
+    
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
@@ -17,6 +27,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+    
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

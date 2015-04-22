@@ -62,22 +62,27 @@ bool HelloWorld::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
     
-    auto map = TMXTiledMap::create("orthogonal-test-zorder.tmx");
-    addChild(map, 0, 1);
+    // add the tiled map
+    _tiledMap = TMXTiledMap::create("orthogonal-test-zorder.tmx");
+    addChild(_tiledMap, 0, kTagTileMap);
+    
+    // init touch
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     return true;
 }
 
+void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
+{
+    auto touch = touches[0];
+    
+    auto diff = touch->getDelta();
+    auto currentPos = _tiledMap->getPosition();
+    _tiledMap->setPosition(currentPos + diff);
+}
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {

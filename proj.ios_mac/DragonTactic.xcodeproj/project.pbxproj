@@ -14,6 +14,7 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		298516981AE5F61B0053A7A9 /* ortho-test1.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516961AE5F61B0053A7A9 /* ortho-test1.png */; };
 		298516991AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */; };
+		298516A31AE780350053A7A9 /* q_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516A21AE780350053A7A9 /* q_01.png */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -111,6 +112,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		298516961AE5F61B0053A7A9 /* ortho-test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho-test1.png"; sourceTree = "<group>"; };
 		298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test-zorder.tmx"; sourceTree = "<group>"; };
+		298516A21AE780350053A7A9 /* q_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = q_01.png; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				298516A21AE780350053A7A9 /* q_01.png */,
 				298516961AE5F61B0053A7A9 /* ortho-test1.png */,
 				298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -455,6 +458,7 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				298516A31AE780350053A7A9 /* q_01.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,

@@ -67,6 +67,10 @@ bool HelloWorld::init()
     _tiledMap = TMXTiledMap::create("orthogonal-test-zorder.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
     
+    // sprite
+    Unit* u1 = Unit::create("q_01.png");
+    _tiledMap->addChild(u1, 300);
+    
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);

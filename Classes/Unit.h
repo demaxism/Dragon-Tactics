@@ -23,14 +23,15 @@ class Unit : public Sprite
 public:
     Unit(void);
     virtual ~Unit(void);
-    
-    //virtual void onEnter() override;
-    //virtual void onExit() override;
     bool initWithFile(const std::string& filename) override;
-    //bool containsTouchLocation(Touch* touch);
-    //bool onTouchBegan(Touch* touch, Event* event);
-    //void onTouchMoved(Touch* touch, Event* event);
-    //void onTouchEnded(Touch* touch, Event* event);
+    
+    Rect getRect();
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    bool containsTouchLocation(Touch* touch);
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
     static Unit* create(const std::string &fn);
 };

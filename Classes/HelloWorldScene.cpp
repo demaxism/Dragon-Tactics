@@ -69,6 +69,7 @@ bool HelloWorld::init()
     
     // sprite
     Unit* u1 = Unit::create("q_01.png");
+    u1->setPosition(Vec2(200.0f, 200.0f));
     _tiledMap->addChild(u1, 300);
     
     // init touch

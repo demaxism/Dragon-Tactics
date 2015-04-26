@@ -30,6 +30,7 @@ public:
     CREATE_FUNC(HelloWorld);
     
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void doStep(float delta);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

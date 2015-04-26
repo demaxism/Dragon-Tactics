@@ -7,6 +7,7 @@
 //
 
 #include "Unit.h"
+#include "GameManager.h"
 
 Unit::Unit(void)
 {
@@ -76,6 +77,9 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     if ( !containsTouchLocation(touch) ) return false;
     
     _state = kUnitStateGrabbed;
+    GameManager::getInstance()->isUnitGrabbed = true;
+    setScale(1.3f, 1.3f);
+    setPosition(this->getPosition() + _fingerAdjust);
     CCLOG("return true");
     return true;
 }
@@ -91,18 +95,27 @@ void Unit::onTouchMoved(Touch* touch, Event* event)
     
     //CCLOG("Unit::onTouchMoved id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
     
+    //Size winSize = Director::getInstance()->getWinSize();
+    
     CCASSERT(_state == kUnitStateGrabbed, "Paddle - Unexpected state!");
     
     //auto touchPoint = touch->getLocation();
-    
     auto diff = touch->getDelta();
+    GameManager::getInstance()->grabDiff = diff;
     auto currentPos = this->getPosition();
-    setPosition(currentPos + diff);
+    setPosition(currentPos + diff * 2.0f);
+    
+    // issue event
+    auto evt = EventCustom(EVT_UNITGRABBING);
+    evt.setUserData(&diff);
+    getEventDispatcher()->dispatchEvent(&evt);
 }
 
 void Unit::onTouchEnded(Touch* touch, Event* event)
 {
     CCASSERT(_state == kUnitStateGrabbed, "Unit - Unexpected state!");
-    
+    setScale(1.0f, 1.0f);
+    setPosition(this->getPosition() - _fingerAdjust);
     _state = kUnitStateUngrabbed;
+    GameManager::getInstance()->isUnitGrabbed = false;
 }

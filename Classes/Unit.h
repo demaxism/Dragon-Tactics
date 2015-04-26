@@ -20,6 +20,7 @@ typedef enum tagUnitState
 class Unit : public Sprite
 {
     UnitState _state;
+    Vec2 _fingerAdjust = Vec2(0, 15.0f); // make the sprite move upward when grabbed
 public:
     Unit(void);
     virtual ~Unit(void);

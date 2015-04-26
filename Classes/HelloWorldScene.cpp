@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "GameManager.h"
 
 USING_NS_CC;
 
@@ -69,7 +70,7 @@ bool HelloWorld::init()
     
     // sprite
     Unit* u1 = Unit::create("q_01.png");
-    u1->setPosition(Vec2(200.0f, 200.0f));
+    u1->setPosition(Vec2(400.0f, 400.0f));
     _tiledMap->addChild(u1, 300);
     
     // init touch
@@ -77,7 +78,22 @@ bool HelloWorld::init()
     listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    // frame loop
+    schedule( CC_SCHEDULE_SELECTOR(HelloWorld::doStep) );
+    
+    // event listener
+    getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBING, [this](EventCustom* evt){
+        auto grabDiff = (Vec2*)evt->getUserData();
+        auto mapPos = _tiledMap->getPosition();
+        _tiledMap->setPosition(mapPos - *grabDiff);
+    });
+    
     return true;
+}
+
+void HelloWorld::doStep(float delta)
+{
+
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)

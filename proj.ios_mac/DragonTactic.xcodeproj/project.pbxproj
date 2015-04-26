@@ -16,6 +16,7 @@
 		298516991AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */; };
 		298516A31AE780350053A7A9 /* q_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516A21AE780350053A7A9 /* q_01.png */; };
 		29C6FBEE1AEA537B00FC4A13 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29C6FBEC1AEA537B00FC4A13 /* Unit.cpp */; };
+		36B7FB281AED2044006A92AA /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36B7FB261AED2044006A92AA /* GameManager.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
@@ -116,6 +117,8 @@
 		298516A21AE780350053A7A9 /* q_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = q_01.png; sourceTree = "<group>"; };
 		29C6FBEC1AEA537B00FC4A13 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		29C6FBED1AEA537B00FC4A13 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		36B7FB261AED2044006A92AA /* GameManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameManager.cpp; sourceTree = "<group>"; };
+		36B7FB271AED2044006A92AA /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -307,6 +310,8 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				29C6FBEC1AEA537B00FC4A13 /* Unit.cpp */,
 				29C6FBED1AEA537B00FC4A13 /* Unit.h */,
+				36B7FB261AED2044006A92AA /* GameManager.cpp */,
+				36B7FB271AED2044006A92AA /* GameManager.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -508,6 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36B7FB281AED2044006A92AA /* GameManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,

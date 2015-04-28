@@ -30,6 +30,9 @@ public:
     Rect getRect();
     virtual void onEnter() override;
     virtual void onExit() override;
+    void reorder();
+    Vec2 tilePosition(int x, int y);
+    void alignTile();
     bool containsTouchLocation(Touch* touch);
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);

@@ -31,6 +31,7 @@ public:
     
     Vec2 grabDiff;
     Vec2 touchLocation;
+    Size tileSize;
     bool isUnitGrabbed;
     MovePattern movePattern;
     Sprite* currentUnit;

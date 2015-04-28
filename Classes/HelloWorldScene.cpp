@@ -61,15 +61,18 @@ bool HelloWorld::init()
     // add the tiled map
     _tiledMap = TMXTiledMap::create("orthogonal-test-zorder.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
+    GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     
     // sprite
     Unit* u = Unit::create("q_01.png");
-    u->setPosition(Vec2(400.0f, 400.0f));
+    u->setPosition(u->tilePosition(2, 5));
     _tiledMap->addChild(u, 300, 1);
+    u->reorder();
     
     u = Unit::create("q_02.png");
-    u->setPosition(Vec2(300.0f, 500.0f));
+    u->setPosition(u->tilePosition(3, 5));
     _tiledMap->addChild(u, 300, 2);
+    u->reorder();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();

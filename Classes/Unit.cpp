@@ -42,6 +42,33 @@ Rect Unit::getRect()
     return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
+void Unit::reorder()
+{
+    auto p = getPosition();
+    p = CC_POINT_POINTS_TO_PIXELS(p);
+    float tileHeight = GameManager::getInstance()->tileSize.height;
+    int newZ = 4 - ( (p.y-10) / tileHeight);
+    newZ = std::max(newZ,0);
+    auto parent = getParent();
+    parent->reorderChild(this, newZ);
+}
+
+Vec2 Unit::tilePosition(int x, int y)
+{
+    Size tileSize = GameManager::getInstance()->tileSize;
+    return Vec2(tileSize.width * x + tileSize.width * 0.5f, tileSize.height * y + tileSize.height * 0.8f);
+}
+
+void Unit::alignTile()
+{
+    Vec2 pos = getPosition();
+    Size tileSize = GameManager::getInstance()->tileSize;
+    int x = pos.x / tileSize.width;
+    int y = (pos.y - tileSize.height * 0.3f) / tileSize.height;
+    Vec2 posAligned = tilePosition(x, y);
+    runAction(MoveTo::create(0.1, posAligned));
+}
+
 void Unit::onEnter()
 {
     Sprite::onEnter();
@@ -82,6 +109,8 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     GameManager::getInstance()->touchLocation = touch->getLocation();
     setScale(1.3f, 1.3f);
     setPosition(this->getPosition() + _fingerAdjust);
+    auto parent = getParent();
+    parent->reorderChild(this, 500);
     CCLOG("return true");
     return true;
 }
@@ -125,7 +154,6 @@ void Unit::onTouchMoved(Touch* touch, Event* event)
         default:
             break;
     }
-
 }
 
 void Unit::onTouchEnded(Touch* touch, Event* event)
@@ -136,5 +164,7 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     _state = kUnitStateUngrabbed;
     GameManager::getInstance()->isUnitGrabbed = false;
     GameManager::getInstance()->currentUnit = nullptr;
+    reorder();
+    alignTile();
 }
 

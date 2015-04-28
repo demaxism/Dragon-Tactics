@@ -30,6 +30,8 @@ GameManager::~GameManager(void)
 bool GameManager::init(void)
 {
     grabDiff = Vec2(0, 0);
+    touchLocation = Vec2(0, 0);
     isUnitGrabbed = false;
+    movePattern = mpBring;
     return true;
 }

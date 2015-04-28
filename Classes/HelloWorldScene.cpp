@@ -48,12 +48,6 @@ bool HelloWorld::init()
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
     
     auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     
@@ -69,17 +63,26 @@ bool HelloWorld::init()
     addChild(_tiledMap, 0, kTagTileMap);
     
     // sprite
-    Unit* u1 = Unit::create("q_01.png");
-    u1->setPosition(Vec2(400.0f, 400.0f));
-    _tiledMap->addChild(u1, 300);
+    Unit* u = Unit::create("q_01.png");
+    u->setPosition(Vec2(400.0f, 400.0f));
+    _tiledMap->addChild(u, 300, 1);
+    
+    u = Unit::create("q_02.png");
+    u->setPosition(Vec2(300.0f, 500.0f));
+    _tiledMap->addChild(u, 300, 2);
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    _winSize = Director::getInstance()->getWinSize();
+    _fringe = _winSize.width / 7.0f;
+    
     // frame loop
-    schedule( CC_SCHEDULE_SELECTOR(HelloWorld::doStep) );
+    if (GameManager::getInstance()->movePattern == mpBring) {
+        schedule( CC_SCHEDULE_SELECTOR(HelloWorld::doStep) );
+    }
     
     // event listener
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBING, [this](EventCustom* evt){
@@ -93,7 +96,34 @@ bool HelloWorld::init()
 
 void HelloWorld::doStep(float delta)
 {
-
+    // mpBring
+    if (GameManager::getInstance()->isUnitGrabbed) {
+        Vec2 touch = GameManager::getInstance()->touchLocation;
+        auto mapPos = _tiledMap->getPosition();
+        Sprite* unit = GameManager::getInstance()->currentUnit;
+        auto unitPos = unit->getPosition();
+        Vec2 slidex = Vec2(FRINGE_MOVE_SPEED, 0);
+        Vec2 slidey = Vec2(0, FRINGE_MOVE_SPEED);
+        
+        if (touch.x < _fringe) {
+            mapPos = mapPos + slidex;
+            unitPos = unitPos - slidex;
+        }
+        if (touch.x > _winSize.width - _fringe) {
+            mapPos = mapPos - slidex;
+            unitPos = unitPos + slidex;
+        }
+        if (touch.y < _fringe) {
+            mapPos = mapPos + slidey;
+            unitPos = unitPos - slidey;
+        }
+        if (touch.y > _winSize.height - _fringe) {
+            mapPos = mapPos - slidey;
+            unitPos = unitPos + slidey;
+        }
+        _tiledMap->setPosition(mapPos);
+        unit->setPosition(unitPos);
+    }
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)

@@ -78,6 +78,8 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     
     _state = kUnitStateGrabbed;
     GameManager::getInstance()->isUnitGrabbed = true;
+    GameManager::getInstance()->currentUnit = this;
+    GameManager::getInstance()->touchLocation = touch->getLocation();
     setScale(1.3f, 1.3f);
     setPosition(this->getPosition() + _fingerAdjust);
     CCLOG("return true");
@@ -95,20 +97,35 @@ void Unit::onTouchMoved(Touch* touch, Event* event)
     
     //CCLOG("Unit::onTouchMoved id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
     
-    //Size winSize = Director::getInstance()->getWinSize();
-    
     CCASSERT(_state == kUnitStateGrabbed, "Paddle - Unexpected state!");
     
     //auto touchPoint = touch->getLocation();
+    GameManager::getInstance()->touchLocation = touch->getLocation();
     auto diff = touch->getDelta();
     GameManager::getInstance()->grabDiff = diff;
     auto currentPos = this->getPosition();
-    setPosition(currentPos + diff * 2.0f);
-    
-    // issue event
-    auto evt = EventCustom(EVT_UNITGRABBING);
-    evt.setUserData(&diff);
-    getEventDispatcher()->dispatchEvent(&evt);
+    switch (GameManager::getInstance()->movePattern) {
+        case mpGrab:
+            setPosition(currentPos + diff);
+            break;
+        case mpGrabx2:
+        {
+            setPosition(currentPos + diff * 2.0f);
+            // issue event
+            auto evt = EventCustom(EVT_UNITGRABBING);
+            evt.setUserData(&diff);
+            getEventDispatcher()->dispatchEvent(&evt);
+            break;
+        }
+        case mpBring:
+        {
+            setPosition(currentPos + diff);
+        }
+            break;
+        default:
+            break;
+    }
+
 }
 
 void Unit::onTouchEnded(Touch* touch, Event* event)
@@ -118,4 +135,6 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     setPosition(this->getPosition() - _fingerAdjust);
     _state = kUnitStateUngrabbed;
     GameManager::getInstance()->isUnitGrabbed = false;
+    GameManager::getInstance()->currentUnit = nullptr;
 }
+

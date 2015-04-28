@@ -15,6 +15,8 @@ class HelloWorld : public cocos2d::Layer
 {
 private:
     TMXTiledMap* _tiledMap;
+    Size _winSize;
+    float _fringe;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

@@ -59,20 +59,20 @@ bool HelloWorld::init()
     this->addChild(label, 1);
     
     // add the tiled map
-    _tiledMap = TMXTiledMap::create("orthogonal-test-zorder.tmx");
+    _tiledMap = TMXTiledMap::create("field2.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     
     // sprite
     Unit* u = Unit::create("q_01.png");
-    u->setPosition(u->tilePosition(2, 5));
-    _tiledMap->addChild(u, 300, 1);
-    u->reorder();
+    u->setPosition(u->tilePosition(0, 0));
+    _tiledMap->addChild(u, 1);
+    //u->reorder();
     
     u = Unit::create("q_02.png");
-    u->setPosition(u->tilePosition(3, 5));
-    _tiledMap->addChild(u, 300, 2);
-    u->reorder();
+    u->setPosition(u->tilePosition(0, 1));
+    _tiledMap->addChild(u, 1);
+    //u->reorder();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -131,11 +131,13 @@ void HelloWorld::doStep(float delta)
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
+    if (GameManager::getInstance()->isUnitGrabbed == false) {
     auto touch = touches[0];
     
     auto diff = touch->getDelta();
     auto currentPos = _tiledMap->getPosition();
     _tiledMap->setPosition(currentPos + diff);
+    }
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)

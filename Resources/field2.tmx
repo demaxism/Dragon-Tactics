@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="90" tileheight="90" nextobjectid="1">
+ <tileset firstgid="1" name="tex" tilewidth="120" tileheight="120">
+  <tileoffset x="-15" y="0"/>
+  <image source="tex.png" width="960" height="960"/>
+ </tileset>
+ <layer name="terran" width="16" height="12">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA7NkYGCwJICNgNgEio1xyGMTh2FbIDYDYhsgtsYhb4dkBzq2B2JTAuYbQjHMHhA2RxLHp98KSY81EeLkYkLhSAgTCkdCdhIKR0JhQ81wIMf/yG6ihjtAGAB2OEe7AAMAAA==
+  </data>
+ </layer>
+ <layer name="objects" width="16" height="12">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgwASaUIwPKEExJYBS/ehAkQgxkL+0iDCLkP8J6UW2RwmLO6hlFy47CQH0sCdFL7o+bH4j1iwtBuz+10IzA1f4ketuGAAAE3q3QQADAAA=
+  </data>
+ </layer>
+</map>

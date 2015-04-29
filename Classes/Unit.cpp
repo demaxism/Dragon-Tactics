@@ -45,9 +45,8 @@ Rect Unit::getRect()
 void Unit::reorder()
 {
     auto p = getPosition();
-    p = CC_POINT_POINTS_TO_PIXELS(p);
     float tileHeight = GameManager::getInstance()->tileSize.height;
-    int newZ = 4 - ( (p.y-10) / tileHeight);
+    int newZ = 4 - ( p.y / tileHeight);
     newZ = std::max(newZ,0);
     auto parent = getParent();
     parent->reorderChild(this, newZ);
@@ -56,7 +55,7 @@ void Unit::reorder()
 Vec2 Unit::tilePosition(int x, int y)
 {
     Size tileSize = GameManager::getInstance()->tileSize;
-    return Vec2(tileSize.width * x + tileSize.width * 0.5f, tileSize.height * y + tileSize.height * 0.8f);
+    return Vec2(tileSize.width * x + 15 + tileSize.width * 0.5f, tileSize.height * y + tileSize.height * 0.7f);
 }
 
 void Unit::alignTile()
@@ -64,7 +63,7 @@ void Unit::alignTile()
     Vec2 pos = getPosition();
     Size tileSize = GameManager::getInstance()->tileSize;
     int x = pos.x / tileSize.width;
-    int y = (pos.y - tileSize.height * 0.3f) / tileSize.height;
+    int y = pos.y / tileSize.height;
     Vec2 posAligned = tilePosition(x, y);
     runAction(MoveTo::create(0.1, posAligned));
 }
@@ -164,7 +163,7 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     _state = kUnitStateUngrabbed;
     GameManager::getInstance()->isUnitGrabbed = false;
     GameManager::getInstance()->currentUnit = nullptr;
-    reorder();
     alignTile();
+    reorder();
 }
 

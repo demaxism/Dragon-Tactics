@@ -26,6 +26,15 @@ Unit* Unit::create(const std::string &fn)
     return unit;
 }
 
+Unit* Unit::createWithTexture(Texture2D *texture)
+{
+    Unit* unit = new (std::nothrow) Unit();
+    unit->initWithTexture(texture);
+    unit->autorelease();
+    
+    return unit;
+}
+
 bool Unit::initWithFile(const std::string& filename)
 {
     if( Sprite::initWithFile(filename) )
@@ -36,20 +45,18 @@ bool Unit::initWithFile(const std::string& filename)
     return true;
 }
 
+bool Unit::initWithTexture(Texture2D *texture)
+{
+    if (Sprite::initWithTexture(texture)) {
+        _state = kUnitStateUngrabbed;
+    }
+    return true;
+}
+
 Rect Unit::getRect()
 {
     auto s = getTexture()->getContentSize();
     return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
-}
-
-void Unit::reorder()
-{
-    auto p = getPosition();
-    float tileHeight = GameManager::getInstance()->tileSize.height;
-    int newZ = 4 - ( p.y / tileHeight);
-    newZ = std::max(newZ,0);
-    auto parent = getParent();
-    parent->reorderChild(this, newZ);
 }
 
 Vec2 Unit::tilePosition(int x, int y)
@@ -65,7 +72,24 @@ void Unit::alignTile()
     int x = pos.x / tileSize.width;
     int y = pos.y / tileSize.height;
     Vec2 posAligned = tilePosition(x, y);
-    runAction(MoveTo::create(0.1, posAligned));
+    //runAction(MoveTo::create(0.1, posAligned)); // positionZ become strange when using action
+    float sz = -y - 1.5;
+    setPosition(posAligned);
+    setPositionZ(sz);
+//    CCLOG("zs:%f¥n",sz);
+//    CCLOG("zorder:%d¥n",getLocalZOrder());
+    
+//    auto tiledMap = GameManager::getInstance()->tiledMap;
+//    auto layer = tiledMap->getLayer("objects");
+//    auto mapSize = tiledMap->getMapSize();
+//    if (y > 0 && y < mapSize.height) {
+//        Sprite* sp = layer->getTileAt(Vec2(x,mapSize.height - y -2));
+//        if (sp != nullptr) {
+//            float z = sp->getPositionZ();
+//            CCLOG("zt:%f¥n",z);
+//        }
+//    }
+
 }
 
 void Unit::onEnter()
@@ -109,7 +133,7 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     setScale(1.3f, 1.3f);
     setPosition(this->getPosition() + _fingerAdjust);
     auto parent = getParent();
-    parent->reorderChild(this, 500);
+    setPositionZ(1000);
     CCLOG("return true");
     return true;
 }
@@ -164,6 +188,5 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     GameManager::getInstance()->isUnitGrabbed = false;
     GameManager::getInstance()->currentUnit = nullptr;
     alignTile();
-    reorder();
 }
 

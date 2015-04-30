@@ -32,9 +32,11 @@ public:
     Vec2 grabDiff;
     Vec2 touchLocation;
     Size tileSize;
+    Size mapSize;
     bool isUnitGrabbed;
     MovePattern movePattern;
     Sprite* currentUnit;
+    TMXTiledMap* tiledMap;
     
 public:
     virtual ~GameManager();

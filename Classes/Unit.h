@@ -26,11 +26,11 @@ public:
     Unit(void);
     virtual ~Unit(void);
     bool initWithFile(const std::string& filename) override;
+    bool initWithTexture(Texture2D *texture) override;
     
     Rect getRect();
     virtual void onEnter() override;
     virtual void onExit() override;
-    void reorder();
     Vec2 tilePosition(int x, int y);
     void alignTile();
     bool containsTouchLocation(Touch* touch);
@@ -39,6 +39,7 @@ public:
     void onTouchEnded(Touch* touch, Event* event);
     
     static Unit* create(const std::string &fn);
+    static Unit* createWithTexture(Texture2D *texture);
 };
 
 #endif /* defined(__DragonTactic__Unit__) */

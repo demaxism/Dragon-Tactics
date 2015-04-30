@@ -4,17 +4,31 @@
   <tileoffset x="-15" y="0"/>
   <image source="tex.png" width="960" height="960"/>
  </tileset>
+ <tileset firstgid="65" name="Chara" tilewidth="100" tileheight="106">
+  <tile id="0">
+   <image width="100" height="106" source="q_01.png"/>
+  </tile>
+ </tileset>
  <layer name="terran" width="16" height="12">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA7NkYGCwJICNgNgEio1xyGMTh2FbIDYDYhsgtsYhb4dkBzq2B2JTAuYbQjHMHhA2RxLHp98KSY81EeLkYkLhSAgTCkdCdhIKR0JhQ81wIMf/yG6ihjtAGAB2OEe7AAMAAA==
   </data>
  </layer>
  <layer name="objects" width="16" height="12">
   <properties>
+   <property name="cc_alpha_func" value="0.05"/>
    <property name="cc_vertexz" value="automatic"/>
   </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NgwASaUIwPKEExJYBS/ehAkQgxkL+0iDCLkP8J6UW2RwmLO6hlFy47CQH0sCdFL7o+bH4j1iwtBuz+10IzA1f4ketuGAAAE3q3QQADAAA=
+  </data>
+ </layer>
+ <layer name="sprites" width="16" height="12" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA3NkGAWjYOQCAGhsJekAAwAA
   </data>
  </layer>
 </map>

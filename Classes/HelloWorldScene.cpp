@@ -30,6 +30,10 @@ bool HelloWorld::init()
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    // TIP: 2d projection should be used
+    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setDepthTest(true);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -62,17 +66,34 @@ bool HelloWorld::init()
     _tiledMap = TMXTiledMap::create("field2.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
+    GameManager::getInstance()->mapSize = _tiledMap->getMapSize();
+    GameManager::getInstance()->tiledMap = _tiledMap;
+    
+    // debug
+    auto layer = _tiledMap->getLayer("objects");
+    Sprite* sp = layer->getTileAt(Vec2(0,11));
+    int z = sp->getPositionZ();
+//    Node* parent = sp->getParent();
+//    Unit* sp2 = Unit::createWithTexture(sp->getTexture());
+//    parent->addChild(sp2,1000);
+//    sp2->setPosition(sp2->tilePosition(1, 0));
+    
+//    auto spriteLayer = _tiledMap->getLayer("sprites");
+//    sp = spriteLayer->getTileAt(Vec2(0, 0));
+//    Unit* player = Unit::createWithTexture(sp->getTexture());
+//    parent->addChild(player);
+//    player->setPosition(player->tilePosition(5, 5));
     
     // sprite
     Unit* u = Unit::create("q_01.png");
-    u->setPosition(u->tilePosition(0, 0));
-    _tiledMap->addChild(u, 1);
-    //u->reorder();
+    u->setPosition(u->tilePosition(0, 3));
+    _tiledMap->addChild(u, 1000);
+    u->alignTile();
     
     u = Unit::create("q_02.png");
-    u->setPosition(u->tilePosition(0, 1));
-    _tiledMap->addChild(u, 1);
-    //u->reorder();
+    u->setPosition(u->tilePosition(4, 1));
+    _tiledMap->addChild(u, 1000);
+    u->alignTile();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();

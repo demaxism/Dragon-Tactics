@@ -18,6 +18,7 @@ private:
     Size _winSize;
     float _fringe;
     Vec2 _releaseTouchDiff;
+    int _frameCnt;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

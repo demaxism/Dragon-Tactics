@@ -118,6 +118,7 @@ bool HelloWorld::init()
     });
     
     _releaseTouchDiff = Vec2(0, 0);
+    _frameCnt = 0;
     
     return true;
 }
@@ -155,11 +156,24 @@ void HelloWorld::doStep(float delta)
     
     // inertia move
     if (_releaseTouchDiff.length() > 10.0f) {
-        _releaseTouchDiff = _releaseTouchDiff * 0.9f;
-        _releaseTouchDiff = Vec2(floorf(_releaseTouchDiff.x), floorf(_releaseTouchDiff.y));
+        if (_frameCnt % 2 == 0)
+            _releaseTouchDiff = _releaseTouchDiff * 0.9f;
+        
+        int x, y;
+        if (_releaseTouchDiff.x > 0)
+            x = floorf(_releaseTouchDiff.x);
+        else
+            x = ceilf(_releaseTouchDiff.x);
+        if (_releaseTouchDiff.y > 0)
+            y = floorf(_releaseTouchDiff.y);
+        else
+            y = ceilf(_releaseTouchDiff.y);
+        _releaseTouchDiff = Vec2(x, y);
         auto currentPos = _tiledMap->getPosition();
         _tiledMap->setPosition(currentPos + _releaseTouchDiff);
     }
+    
+    _frameCnt++;
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -190,15 +204,21 @@ void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
     std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;
     
     Vec2 diffTotal = Vec2(0, 0);
-    long length = touchQueue->size();
-    for (int i = 0; i < length; i++) {
+    long n = touchQueue->size();
+    for (int i = 0; i < n; i++) {
         Vec2 diff = touchQueue->front();
         diffTotal = diffTotal + diff;
         touchQueue->pop();
     }
-    _releaseTouchDiff = diffTotal / length;
+    _releaseTouchDiff = diffTotal / n;
     
-    CCLOG("touch queue: %lu , vx:%f, vy:%f¥n",length, _releaseTouchDiff.x, _releaseTouchDiff.y);
+    float length = _releaseTouchDiff.length();
+    
+    if (length > SWIPE_INERTIA_MAX) {
+        _releaseTouchDiff = _releaseTouchDiff * (SWIPE_INERTIA_MAX / length);
+    }
+    
+    CCLOG("touch queue: %lu , vx:%f, vy:%f¥n",n, _releaseTouchDiff.x, _releaseTouchDiff.y);
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)

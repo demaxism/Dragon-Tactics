@@ -31,7 +31,7 @@ bool HelloWorld::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    // TIP: 2d projection should be used
+    // TIP: 2d projection should be used (For TileMap vertexz)
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
 
@@ -98,10 +98,12 @@ bool HelloWorld::init()
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(HelloWorld::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(HelloWorld::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _winSize = Director::getInstance()->getWinSize();
-    _fringe = _winSize.width / 7.0f;
+    _fringe = _winSize.width / 10.0f;
     
     // frame loop
     if (GameManager::getInstance()->movePattern == mpBring) {
@@ -114,6 +116,8 @@ bool HelloWorld::init()
         auto mapPos = _tiledMap->getPosition();
         _tiledMap->setPosition(mapPos - *grabDiff);
     });
+    
+    _releaseTouchDiff = Vec2(0, 0);
     
     return true;
 }
@@ -148,17 +152,53 @@ void HelloWorld::doStep(float delta)
         _tiledMap->setPosition(mapPos);
         unit->setPosition(unitPos);
     }
+    
+    // inertia move
+    if (_releaseTouchDiff.length() > 10.0f) {
+        _releaseTouchDiff = _releaseTouchDiff * 0.9f;
+        _releaseTouchDiff = Vec2(floorf(_releaseTouchDiff.x), floorf(_releaseTouchDiff.y));
+        auto currentPos = _tiledMap->getPosition();
+        _tiledMap->setPosition(currentPos + _releaseTouchDiff);
+    }
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     if (GameManager::getInstance()->isUnitGrabbed == false) {
-    auto touch = touches[0];
-    
-    auto diff = touch->getDelta();
-    auto currentPos = _tiledMap->getPosition();
-    _tiledMap->setPosition(currentPos + diff);
+        auto touch = touches[0];
+        auto diff = touch->getDelta();
+        auto currentPos = _tiledMap->getPosition();
+        _tiledMap->setPosition(currentPos + diff);
+        
+        // for slide enertia
+        std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;
+        if (touchQueue->size() > 4) {
+            touchQueue->pop();
+        }
+        touchQueue->push(diff);
     }
+}
+
+void HelloWorld::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
+{
+    GameManager::getInstance()->touchQueue->empty();
+}
+
+void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
+{
+    auto touch = touches[0];
+    std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;
+    
+    Vec2 diffTotal = Vec2(0, 0);
+    long length = touchQueue->size();
+    for (int i = 0; i < length; i++) {
+        Vec2 diff = touchQueue->front();
+        diffTotal = diffTotal + diff;
+        touchQueue->pop();
+    }
+    _releaseTouchDiff = diffTotal / length;
+    
+    CCLOG("touch queue: %lu , vx:%f, vy:%f¥n",length, _releaseTouchDiff.x, _releaseTouchDiff.y);
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)

@@ -10,7 +10,7 @@
 #define __DragonTactic__GameManager__
 
 #define EVT_UNITGRABBING "evtUnitGrabbing"
-#define FRINGE_MOVE_SPEED 6.0f
+#define FRINGE_MOVE_SPEED 8.0f
 
 #include "cocos2d.h"
 using namespace cocos2d;
@@ -37,6 +37,7 @@ public:
     MovePattern movePattern;
     Sprite* currentUnit;
     TMXTiledMap* tiledMap;
+    std::queue<Vec2>* touchQueue;
     
 public:
     virtual ~GameManager();

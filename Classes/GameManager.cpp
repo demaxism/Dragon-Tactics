@@ -33,5 +33,6 @@ bool GameManager::init(void)
     touchLocation = Vec2(0, 0);
     isUnitGrabbed = false;
     movePattern = mpBring;
+    touchQueue = new std::queue<Vec2>();
     return true;
 }

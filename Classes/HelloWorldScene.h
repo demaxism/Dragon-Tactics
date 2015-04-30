@@ -17,6 +17,7 @@ private:
     TMXTiledMap* _tiledMap;
     Size _winSize;
     float _fringe;
+    Vec2 _releaseTouchDiff;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -32,6 +33,8 @@ public:
     CREATE_FUNC(HelloWorld);
     
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) override;
     void doStep(float delta);
 };
 

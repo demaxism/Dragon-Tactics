@@ -12,6 +12,7 @@
 #define EVT_UNITGRABBING "evtUnitGrabbing"
 #define FRINGE_MOVE_SPEED 8.0f
 #define SWIPE_INERTIA_MAX 30.0f
+#define MAP_MARGIN 60.0f
 
 #include "cocos2d.h"
 using namespace cocos2d;

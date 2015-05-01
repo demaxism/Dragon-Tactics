@@ -37,6 +37,7 @@ public:
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) override;
     void doStep(float delta);
+    Vec2 refrainMapPos(Vec2 pos);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

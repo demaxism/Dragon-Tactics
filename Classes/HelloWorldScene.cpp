@@ -171,9 +171,25 @@ void HelloWorld::doStep(float delta)
         _releaseTouchDiff = Vec2(x, y);
         auto currentPos = _tiledMap->getPosition();
         _tiledMap->setPosition(currentPos + _releaseTouchDiff);
+        
+        Vec2 newPos = refrainMapPos(currentPos + _releaseTouchDiff);
+        _tiledMap->setPosition(newPos);
     }
     
     _frameCnt++;
+}
+
+Vec2 HelloWorld::refrainMapPos(Vec2 pos)
+{
+    float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
+    float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
+    float x = pos.x;
+    float y = pos.y;
+    if (pos.x > MAP_MARGIN) x = MAP_MARGIN;
+    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width) x = -mapWidth - MAP_MARGIN + _winSize.width;
+    if (pos.y > MAP_MARGIN) y = MAP_MARGIN;
+    if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) y = -mapHeight - MAP_MARGIN + _winSize.height;
+    return Vec2(x, y);
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -182,7 +198,8 @@ void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *even
         auto touch = touches[0];
         auto diff = touch->getDelta();
         auto currentPos = _tiledMap->getPosition();
-        _tiledMap->setPosition(currentPos + diff);
+        Vec2 newPos = refrainMapPos(currentPos + diff);
+        _tiledMap->setPosition(newPos);
         
         // for slide enertia
         std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;
@@ -218,7 +235,7 @@ void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
         _releaseTouchDiff = _releaseTouchDiff * (SWIPE_INERTIA_MAX / length);
     }
     
-    CCLOG("touch queue: %lu , vx:%f, vy:%f¥n",n, _releaseTouchDiff.x, _releaseTouchDiff.y);
+    CCLOG("map x: %f¥n",_tiledMap->getPosition().x);
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)

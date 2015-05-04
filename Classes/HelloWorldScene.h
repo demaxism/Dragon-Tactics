@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "Unit.h"
+#include "BattleUI.h"
+#include "GameManager.h"
 
 using namespace cocos2d;
 
@@ -19,6 +21,7 @@ private:
     float _fringe;
     Vec2 _releaseTouchDiff;
     int _frameCnt;
+    GameManager* _gameManager;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -32,12 +35,13 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
-    
+private:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) override;
     void doStep(float delta);
     Vec2 refrainMapPos(Vec2 pos);
+    bool isMapInsideView(Vec2 pos);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

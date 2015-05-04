@@ -28,6 +28,8 @@ bool HelloWorld::init()
         return false;
     }
     
+    _gameManager = GameManager::getInstance();
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
@@ -63,7 +65,7 @@ bool HelloWorld::init()
     this->addChild(label, 1);
     
     // add the tiled map
-    _tiledMap = TMXTiledMap::create("field2.tmx");
+    _tiledMap = TMXTiledMap::create("map-1.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     GameManager::getInstance()->mapSize = _tiledMap->getMapSize();
@@ -72,7 +74,8 @@ bool HelloWorld::init()
     // debug
     auto layer = _tiledMap->getLayer("objects");
     Sprite* sp = layer->getTileAt(Vec2(0,11));
-    int z = sp->getPositionZ();
+    int a = layer->getTileGIDAt(Vec2(2, 15));
+    //int z = sp->getPositionZ();
 //    Node* parent = sp->getParent();
 //    Unit* sp2 = Unit::createWithTexture(sp->getTexture());
 //    parent->addChild(sp2,1000);
@@ -87,13 +90,19 @@ bool HelloWorld::init()
     // sprite
     Unit* u = Unit::create("q_01.png");
     u->setPosition(u->tilePosition(0, 3));
-    _tiledMap->addChild(u, 1000);
+    _tiledMap->addChild(u);
     u->alignTile();
     
     u = Unit::create("q_02.png");
     u->setPosition(u->tilePosition(4, 1));
-    _tiledMap->addChild(u, 1000);
+    _tiledMap->addChild(u);
     u->alignTile();
+
+    FlashGrid* grid = FlashGrid::create("grid-light.png");
+    grid->setPosition(grid->tilePosition(5, 7));
+    _tiledMap->addChild(grid, 1000);
+    grid->alignTile();
+    grid->startFlash();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -129,6 +138,7 @@ void HelloWorld::doStep(float delta)
     if (GameManager::getInstance()->isUnitGrabbed) {
         Vec2 touch = GameManager::getInstance()->touchLocation;
         auto mapPos = _tiledMap->getPosition();
+        
         Sprite* unit = GameManager::getInstance()->currentUnit;
         auto unitPos = unit->getPosition();
         Vec2 slidex = Vec2(FRINGE_MOVE_SPEED, 0);
@@ -150,12 +160,15 @@ void HelloWorld::doStep(float delta)
             mapPos = mapPos - slidey;
             unitPos = unitPos + slidey;
         }
-        _tiledMap->setPosition(mapPos);
-        unit->setPosition(unitPos);
+        
+        if (isMapInsideView(mapPos)) {
+            _tiledMap->setPosition(mapPos);
+            unit->setPosition(unitPos);
+        }
     }
     
     // inertia move
-    if (_releaseTouchDiff.length() > 10.0f) {
+    if (_releaseTouchDiff.length() > 10.0f && GameManager::getInstance()->isUnitGrabbed == false) {
         if (_frameCnt % 2 == 0)
             _releaseTouchDiff = _releaseTouchDiff * 0.9f;
         
@@ -190,6 +203,18 @@ Vec2 HelloWorld::refrainMapPos(Vec2 pos)
     if (pos.y > MAP_MARGIN) y = MAP_MARGIN;
     if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) y = -mapHeight - MAP_MARGIN + _winSize.height;
     return Vec2(x, y);
+}
+
+bool HelloWorld::isMapInsideView(Vec2 pos)
+{
+    float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
+    float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
+    bool ret = true;
+    if (pos.x > MAP_MARGIN) ret = false;
+    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width) ret = false;
+    if (pos.y > MAP_MARGIN) ret = false;
+    if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) ret = false;
+    return ret;
 }
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)

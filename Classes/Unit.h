@@ -9,6 +9,7 @@
 #ifndef __DragonTactic__Unit__
 #define __DragonTactic__Unit__
 
+#include "SpriteBase.h"
 USING_NS_CC;
 
 typedef enum tagUnitState
@@ -17,7 +18,7 @@ typedef enum tagUnitState
     kUnitStateUngrabbed
 } UnitState;
 
-class Unit : public Sprite
+class Unit : public SpriteBase
 {
     UnitState _state;
     Vec2 _fingerAdjust = Vec2(0, 15.0f); // make the sprite move upward when grabbed
@@ -31,8 +32,6 @@ public:
     Rect getRect();
     virtual void onEnter() override;
     virtual void onExit() override;
-    Vec2 tilePosition(int x, int y);
-    void alignTile();
     bool containsTouchLocation(Touch* touch);
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);

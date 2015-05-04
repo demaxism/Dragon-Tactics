@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="12" height="18" tilewidth="90" tileheight="90" nextobjectid="1">
+ <tileset firstgid="1" name="tex2" tilewidth="120" tileheight="120">
+  <tileoffset x="-15" y="0"/>
+  <image source="tex2.png" width="960" height="960"/>
+ </tileset>
+ <layer name="ground" width="12" height="18">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC3WTSw7EIAxDuVJCNzS9/7mGSlh6Y6WLiJ/tJAbuMcY6cZ9YH6HzuaN2xI48a406S/DyYAO8F/dgPoEv6DymO8EhPqFNnOasR1quV8iVjX6gf+LEW02OxJnw0iJ2jX8PvWfXL+OKL8/K9nlP4lP7anToS57e6bHwfo9hedzPhAa94777o/yBfOJfVg81feRbYT1dXQlfVM/X/+j+zrv+Ab1vC/1gAwAA
+  </data>
+ </layer>
+ <layer name="objects" width="12" height="18">
+  <properties>
+   <property name="cc_alpha_func" value="0.05"/>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgoA/QhGJsQIsEM/ABJRzmaWIRU0STJ2Q2PqBIWAkYKBFWgmKmIh49pLpXiww9pAJ09xKyE1ktLA6ITQv4ALobsMmREheUAAA/nD2DYAMAAA==
+  </data>
+ </layer>
+</map>

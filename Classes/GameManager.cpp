@@ -36,3 +36,4 @@ bool GameManager::init(void)
     touchQueue = new std::queue<Vec2>();
     return true;
 }
+

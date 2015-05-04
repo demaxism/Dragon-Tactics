@@ -11,6 +11,8 @@
 
 Unit::Unit(void)
 {
+    offset = Vec2(0, 15);
+    zoffset = 0;
 }
 
 Unit::~Unit(void)
@@ -59,39 +61,6 @@ Rect Unit::getRect()
     return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
-Vec2 Unit::tilePosition(int x, int y)
-{
-    Size tileSize = GameManager::getInstance()->tileSize;
-    return Vec2(tileSize.width * x + 15 + tileSize.width * 0.5f, tileSize.height * y + tileSize.height * 0.7f);
-}
-
-void Unit::alignTile()
-{
-    Vec2 pos = getPosition();
-    Size tileSize = GameManager::getInstance()->tileSize;
-    int x = pos.x / tileSize.width;
-    int y = pos.y / tileSize.height;
-    Vec2 posAligned = tilePosition(x, y);
-    //runAction(MoveTo::create(0.1, posAligned)); // positionZ become strange when using action
-    float sz = -y - 1.5;
-    setPosition(posAligned);
-    setPositionZ(sz);
-//    CCLOG("zs:%f¥n",sz);
-//    CCLOG("zorder:%d¥n",getLocalZOrder());
-    
-//    auto tiledMap = GameManager::getInstance()->tiledMap;
-//    auto layer = tiledMap->getLayer("objects");
-//    auto mapSize = tiledMap->getMapSize();
-//    if (y > 0 && y < mapSize.height) {
-//        Sprite* sp = layer->getTileAt(Vec2(x,mapSize.height - y -2));
-//        if (sp != nullptr) {
-//            float z = sp->getPositionZ();
-//            CCLOG("zt:%f¥n",z);
-//        }
-//    }
-
-}
-
 void Unit::onEnter()
 {
     Sprite::onEnter();
@@ -133,6 +102,7 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     setScale(1.3f, 1.3f);
     setPosition(this->getPosition() + _fingerAdjust);
     auto parent = getParent();
+    parent->reorderChild(this, 1000);
     setPositionZ(1000);
     CCLOG("return true");
     return true;

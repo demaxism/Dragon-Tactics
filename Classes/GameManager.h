@@ -10,6 +10,7 @@
 #define __DragonTactic__GameManager__
 
 #define EVT_UNITGRABBING "evtUnitGrabbing"
+#define EVT_UNITGRABBEGAN "evtUnitGrabBegan"
 #define FRINGE_MOVE_SPEED 8.0f
 #define SWIPE_INERTIA_MAX 30.0f
 #define MAP_MARGIN 60.0f

@@ -44,11 +44,96 @@ void FlashGrid::startFlash()
 //    light.src = GL_ZERO;
 //    setBlendFunc(light);
     nFrame = 0;
+    doFlash = true;
     schedule( CC_SCHEDULE_SELECTOR(FlashGrid::doStep) );
 }
 
 void FlashGrid::doStep(float delta)
 {
-    setOpacity(0x80 + 0x50 * cosf(nFrame * 0.3f));
+    if (doFlash)
+        setOpacity(0x80 + 0x50 * cosf(nFrame * 0.2f));
+    else
+        setOpacity(0xFF);
     nFrame++;
+}
+
+////////////////////////
+// CrossMark
+
+CrossMark* CrossMark::create(const std::string &fn)
+{
+    CrossMark* unit = new (std::nothrow) CrossMark();
+    unit->initWithFile(fn);
+    unit->autorelease();
+    
+    return unit;
+}
+
+bool CrossMark::initWithFile(const std::string& filename)
+{
+    if( Sprite::initWithFile(filename) )
+    {
+        
+    }
+    
+    return true;
+}
+
+void CrossMark::showForCurrentUnit(SpriteBase* unit)
+{
+    setVisible(true);
+    setPosition(unit->getPosition() + Vec2(0, 90));
+}
+
+void CrossMark::hide()
+{
+    setVisible(false);
+}
+
+////////////////////////
+// TargetMark
+
+TargetMark* TargetMark::create(const std::string &fn)
+{
+    TargetMark* unit = new (std::nothrow) TargetMark();
+    unit->initWithFile(fn);
+    unit->autorelease();
+    
+    return unit;
+}
+
+bool TargetMark::initWithFile(const std::string& filename)
+{
+    if( Sprite::initWithFile(filename) )
+    {
+        
+    }
+    
+    return true;
+}
+
+void TargetMark::startFlash()
+{
+    if (!isFlashing) {
+        isFlashing = true;
+        setVisible(true);
+        nFrame = 0;
+        schedule( CC_SCHEDULE_SELECTOR(TargetMark::doStep) );
+    }
+}
+
+void TargetMark::doStep(float delta)
+{
+    float scale = 1.2 + cosf(nFrame * 0.2) * 0.2;
+    setScale(scale);
+    nFrame++;
+}
+
+void TargetMark::stopFlash()
+{
+    if (isFlashing) {
+        setVisible(false);
+        unschedule(CC_SCHEDULE_SELECTOR(TargetMark::doStep));
+        isFlashing = false;
+    }
 }

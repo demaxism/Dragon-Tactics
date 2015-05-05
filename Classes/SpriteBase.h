@@ -18,7 +18,9 @@ public:
     float zoffset;
     Vec2 offset;
     Vec2 tilePosition(int x, int y);
+    Vec2 mapGrid;
     void alignTile();
+    Vec2 gridAtMap();
 };
 
 #endif /* defined(__DragonTactic__SpriteBase__) */

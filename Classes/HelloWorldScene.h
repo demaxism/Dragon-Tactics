@@ -22,6 +22,9 @@ private:
     Vec2 _releaseTouchDiff;
     int _frameCnt;
     GameManager* _gameManager;
+    Vector<FlashGrid*>* _movingGridList;
+    CrossMark* _crossMark;
+    TargetMark* _targetMark;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -36,12 +39,14 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 private:
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event *event) override;
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) override;
     void doStep(float delta);
     Vec2 refrainMapPos(Vec2 pos);
     bool isMapInsideView(Vec2 pos);
+    void showMovingGrid(Vec2 pos);
+    void clearMovingGrid();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

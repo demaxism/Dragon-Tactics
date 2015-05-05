@@ -104,7 +104,10 @@ bool Unit::onTouchBegan(Touch* touch, Event* event)
     auto parent = getParent();
     parent->reorderChild(this, 1000);
     setPositionZ(1000);
-    CCLOG("return true");
+    
+    auto evt = EventCustom(EVT_UNITGRABBEGAN);
+    evt.setUserData(&mapGrid);
+    getEventDispatcher()->dispatchEvent(&evt);
     return true;
 }
 
@@ -158,5 +161,8 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     GameManager::getInstance()->isUnitGrabbed = false;
     GameManager::getInstance()->currentUnit = nullptr;
     alignTile();
+    auto evt = EventCustom(EVT_UNITGRABEND);
+    getEventDispatcher()->dispatchEvent(&evt);
 }
+
 

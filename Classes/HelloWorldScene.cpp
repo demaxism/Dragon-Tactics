@@ -36,6 +36,7 @@ bool HelloWorld::init()
     // TIP: 2d projection should be used (For TileMap vertexz)
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
+    _movingGridList = new Vector<FlashGrid*>();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -97,12 +98,17 @@ bool HelloWorld::init()
     u->setPosition(u->tilePosition(4, 1));
     _tiledMap->addChild(u);
     u->alignTile();
-
-    FlashGrid* grid = FlashGrid::create("grid-light.png");
-    grid->setPosition(grid->tilePosition(5, 7));
-    _tiledMap->addChild(grid, 1000);
-    grid->alignTile();
-    grid->startFlash();
+    
+    // battle UI
+    _crossMark = CrossMark::create("cross_mark.png");
+    _crossMark->hide();
+    _tiledMap->addChild(_crossMark, 1010);
+    _crossMark->setPositionZ(1010);
+    
+    _targetMark = TargetMark::create("target_mark.png");
+    _tiledMap->addChild(_targetMark, 1005);
+    _targetMark->setPositionZ(1005);
+    _targetMark->stopFlash();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -126,10 +132,57 @@ bool HelloWorld::init()
         _tiledMap->setPosition(mapPos - *grabDiff);
     });
     
+    getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBEGAN, [this](EventCustom* evt){
+        auto mapGrid = (Vec2*)evt->getUserData();
+        this->showMovingGrid(*mapGrid);
+    });
+    
+    getEventDispatcher()->addCustomEventListener(EVT_UNITGRABEND, [this](EventCustom* evt){
+        this->clearMovingGrid();
+    });
+    
     _releaseTouchDiff = Vec2(0, 0);
     _frameCnt = 0;
     
     return true;
+}
+
+void HelloWorld::showMovingGrid(Vec2 tileGrid)
+{
+    auto layer = _tiledMap->getLayer("objects");
+    
+    int range = 3;
+    int xmin = MAX(0, tileGrid.x - range);
+    int xmax = MIN(_tiledMap->getMapSize().width - 1, tileGrid.x + range);
+    int ymin = MAX(0, tileGrid.y - range);
+    int ymax = MIN(_tiledMap->getMapSize().height - 1, tileGrid.y + range);
+    for (int x = xmin; x <= xmax; x++) {
+        for (int y = ymin; y <= ymax; y++) {
+            // object in objects layer
+            int gid = layer->getTileGIDAt(Vec2(x, _tiledMap->getMapSize().height - y - 1)); // y coord reverted
+
+            if (gid == 0) { // no object in grid
+                FlashGrid* grid = FlashGrid::create("grid-light.png");
+                grid->setPosition(grid->tilePosition(x, y));
+                _tiledMap->addChild(grid);
+                grid->alignTile();
+                grid->startFlash();
+                _movingGridList->pushBack(grid);
+            }
+        }
+    }
+}
+
+void HelloWorld::clearMovingGrid()
+{
+    ssize_t n = _movingGridList->size();
+    for (ssize_t i = 0; i < n ; i++) {
+        SpriteBase* sp = _movingGridList->at(i);
+        sp->removeFromParentAndCleanup(true);
+    }
+    _movingGridList->clear();
+    _crossMark->hide();
+    _targetMark->stopFlash();
 }
 
 void HelloWorld::doStep(float delta)
@@ -164,6 +217,31 @@ void HelloWorld::doStep(float delta)
         if (isMapInsideView(mapPos)) {
             _tiledMap->setPosition(mapPos);
             unit->setPosition(unitPos);
+            
+            // check moving range
+            bool isMovingGrid = false;
+            ssize_t n = _movingGridList->size();
+            Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
+            Vec2 tileGrid = cur->gridAtMap();
+            for (ssize_t i = 0; i < n ; i++) {
+                FlashGrid* sp = _movingGridList->at(i);
+                if (sp->mapGrid.x == tileGrid.x && sp->mapGrid.y == tileGrid.y) {
+                   isMovingGrid = true;
+                    sp->doFlash = false;
+                }
+                else {
+                    sp->doFlash = true;
+                }
+            }
+            if (!isMovingGrid) {
+                _crossMark->showForCurrentUnit(cur);
+                _targetMark->stopFlash();
+            }
+            else {
+                _crossMark->hide();
+                _targetMark->startFlash();
+                _targetMark->setPosition(_targetMark->tilePosition(tileGrid.x, tileGrid.y));
+            }
         }
     }
     

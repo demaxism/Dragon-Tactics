@@ -23,6 +23,7 @@ class Unit : public SpriteBase
     UnitState _state;
     Vec2 _fingerAdjust = Vec2(0, 15.0f); // make the sprite move upward when grabbed
     Vec2 _touchLocation = Vec2(0, 0);
+
 public:
     Unit(void);
     virtual ~Unit(void);

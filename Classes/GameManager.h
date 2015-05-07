@@ -38,6 +38,7 @@ public:
     Size tileSize;
     Size mapSize;
     bool isUnitGrabbed;
+    bool isMovable;
     MovePattern movePattern;
     Sprite* currentUnit;
     TMXTiledMap* tiledMap;

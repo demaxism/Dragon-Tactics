@@ -23,6 +23,7 @@ private:
     int _frameCnt;
     GameManager* _gameManager;
     Vector<FlashGrid*>* _movingGridList;
+    Vector<Unit*>* _unitList;
     CrossMark* _crossMark;
     TargetMark* _targetMark;
     

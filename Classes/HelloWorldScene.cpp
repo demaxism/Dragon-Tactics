@@ -37,6 +37,7 @@ bool HelloWorld::init()
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
     _movingGridList = new Vector<FlashGrid*>();
+    _unitList = new Vector<Unit*>();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -90,14 +91,18 @@ bool HelloWorld::init()
     
     // sprite
     Unit* u = Unit::create("q_01.png");
+    u->moveRange = 3;
     u->setPosition(u->tilePosition(0, 3));
     _tiledMap->addChild(u);
     u->alignTile();
+    _unitList->pushBack(u);
     
     u = Unit::create("q_02.png");
+    u->moveRange = 2;
     u->setPosition(u->tilePosition(4, 1));
     _tiledMap->addChild(u);
     u->alignTile();
+    _unitList->pushBack(u);
     
     // battle UI
     _crossMark = CrossMark::create("cross_mark.png");
@@ -139,6 +144,8 @@ bool HelloWorld::init()
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABEND, [this](EventCustom* evt){
         this->clearMovingGrid();
+        _crossMark->hide();
+        _targetMark->stopFlash();
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -150,24 +157,35 @@ bool HelloWorld::init()
 void HelloWorld::showMovingGrid(Vec2 tileGrid)
 {
     auto layer = _tiledMap->getLayer("objects");
-    
-    int range = 3;
+    Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
+    int range = unit->moveRange;
     int xmin = MAX(0, tileGrid.x - range);
     int xmax = MIN(_tiledMap->getMapSize().width - 1, tileGrid.x + range);
     int ymin = MAX(0, tileGrid.y - range);
     int ymax = MIN(_tiledMap->getMapSize().height - 1, tileGrid.y + range);
     for (int x = xmin; x <= xmax; x++) {
+        uint xmove = abs(x - (int)tileGrid.x);
         for (int y = ymin; y <= ymax; y++) {
+            uint ymove = abs(y - (int)tileGrid.y);
+            if (xmove + ymove > range) continue;
             // object in objects layer
             int gid = layer->getTileGIDAt(Vec2(x, _tiledMap->getMapSize().height - y - 1)); // y coord reverted
-
             if (gid == 0) { // no object in grid
-                FlashGrid* grid = FlashGrid::create("grid-light.png");
-                grid->setPosition(grid->tilePosition(x, y));
-                _tiledMap->addChild(grid);
-                grid->alignTile();
-                grid->startFlash();
-                _movingGridList->pushBack(grid);
+                bool hasOtherUnit = false;
+                // check unit on this grid
+                for (int i = 0; i < _unitList->size(); i++) {
+                    Unit* u = _unitList->at(i);
+                    if (u->mapGrid.x == x && u->mapGrid.y == y && u != GameManager::getInstance()->currentUnit)
+                        hasOtherUnit = true;
+                }
+                if (!hasOtherUnit) {
+                    FlashGrid* grid = FlashGrid::create("grid-light.png");
+                    grid->setPosition(grid->tilePosition(x, y));
+                    _tiledMap->addChild(grid);
+                    grid->alignTile();
+                    grid->startFlash();
+                    _movingGridList->pushBack(grid);
+                }
             }
         }
     }
@@ -181,8 +199,6 @@ void HelloWorld::clearMovingGrid()
         sp->removeFromParentAndCleanup(true);
     }
     _movingGridList->clear();
-    _crossMark->hide();
-    _targetMark->stopFlash();
 }
 
 void HelloWorld::doStep(float delta)

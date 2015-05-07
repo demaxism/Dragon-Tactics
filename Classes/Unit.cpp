@@ -13,6 +13,7 @@ Unit::Unit(void)
 {
     offset = Vec2(0, 15);
     zoffset = 0;
+    moveRange = 1;
 }
 
 Unit::~Unit(void)
@@ -160,6 +161,10 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     _state = kUnitStateUngrabbed;
     GameManager::getInstance()->isUnitGrabbed = false;
     GameManager::getInstance()->currentUnit = nullptr;
+    // back to initial pos
+    if (!GameManager::getInstance()->isMovable) {
+        setPosition(tilePosition(mapGrid.x, mapGrid.y));
+    }
     alignTile();
     auto evt = EventCustom(EVT_UNITGRABEND);
     getEventDispatcher()->dispatchEvent(&evt);

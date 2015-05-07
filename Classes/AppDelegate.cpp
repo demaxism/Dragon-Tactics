@@ -37,6 +37,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::create("Dragon Tactic");
         director->setOpenGLView(glview);
     }
+    
+    glview->setDesignResolutionSize(640, 1136, ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
     director->setDisplayStats(true);

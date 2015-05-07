@@ -7,6 +7,7 @@
 //
 
 #include "BattleUI.h"
+#include "GameManager.h"
 
 FlashGrid* FlashGrid::create(const std::string &fn)
 {
@@ -115,6 +116,7 @@ bool TargetMark::initWithFile(const std::string& filename)
 void TargetMark::startFlash()
 {
     if (!isFlashing) {
+        GameManager::getInstance()->isMovable = true;
         isFlashing = true;
         setVisible(true);
         nFrame = 0;
@@ -132,6 +134,7 @@ void TargetMark::doStep(float delta)
 void TargetMark::stopFlash()
 {
     if (isFlashing) {
+        GameManager::getInstance()->isMovable = false;
         setVisible(false);
         unschedule(CC_SCHEDULE_SELECTOR(TargetMark::doStep));
         isFlashing = false;

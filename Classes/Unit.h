@@ -25,6 +25,8 @@ class Unit : public SpriteBase
     Vec2 _touchLocation = Vec2(0, 0);
 
 public:
+    uint moveRange;
+    
     Unit(void);
     virtual ~Unit(void);
     bool initWithFile(const std::string& filename) override;

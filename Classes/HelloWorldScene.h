@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Unit.h"
+#include "Monster.h"
 #include "BattleUI.h"
 #include "GameManager.h"
 
@@ -24,8 +25,11 @@ private:
     GameManager* _gameManager;
     Vector<FlashGrid*>* _movingGridList;
     Vector<Unit*>* _unitList;
+    Vector<Monster*>* _monsterList;
     CrossMark* _crossMark;
     TargetMark* _targetMark;
+    Unit* _originalUnit;
+    UpperInfoPanel* _upper;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer

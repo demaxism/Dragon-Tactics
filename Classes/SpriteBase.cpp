@@ -19,13 +19,24 @@ void SpriteBase::alignTile()
 {
     mapGrid = gridAtMap();
     Vec2 posAligned = tilePosition(mapGrid.x, mapGrid.y);
-    //runAction(MoveTo::create(0.1, posAligned)); // positionZ become strange when using action
     float sz = -mapGrid.y - 1.5;
     setPosition(posAligned);
     // both PositionZ & zorder should be set
     setPositionZ(sz + zoffset);
     auto parent = getParent();
     parent->reorderChild(this, 1000-mapGrid.y);
+}
+
+void SpriteBase::flyToGrid(Vec2 grid)
+{
+    float sz = -grid.y - 1.5;
+    //setPositionZ(sz + zoffset);
+    auto parent = getParent();
+    parent->reorderChild(this, 1000-mapGrid.y);
+    // both PositionZ & zorder should be set
+    Vec2 posAligned = tilePosition(mapGrid.x, mapGrid.y);
+    Vec3 posXYZ = Vec3(posAligned.x, posAligned.y, sz + zoffset); // should set z coordinate
+    runAction(MoveTo::create(0.2, posXYZ)); // positionZ become strange when using action
 }
 
 Vec2 SpriteBase::gridAtMap()

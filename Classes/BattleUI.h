@@ -41,6 +41,7 @@ public:
 class TargetMark : public SpriteBase
 {
 public:
+    TargetMark(void);
     bool initWithFile(const std::string& filename) override;
     static TargetMark* create(const std::string &fn);
     void startFlash();
@@ -49,6 +50,23 @@ public:
 private:
     int nFrame;
     void doStep(float delta);
+};
+
+class UpperInfoPanel : public Sprite
+{
+private:
+    Sprite* _panel;
+    Sprite* _icon;
+    Sprite* _lastUnit;
+    Vec2 _hidePos;
+    Vec2 _showPos;
+    bool _isShowing;
+public:
+    UpperInfoPanel(void);
+    bool initWithFile(const std::string& filename) override;
+    void showUnitInfo(Sprite* unit);
+    void hideUnitInfo();
+    static UpperInfoPanel* create(const std::string &fn);
 };
 
 #endif /* defined(__DragonTactic__BattleUI__) */

@@ -93,6 +93,10 @@ void CrossMark::hide()
 
 ////////////////////////
 // TargetMark
+TargetMark::TargetMark()
+{
+    isFlashing = true;
+}
 
 TargetMark* TargetMark::create(const std::string &fn)
 {
@@ -140,3 +144,65 @@ void TargetMark::stopFlash()
         isFlashing = false;
     }
 }
+
+////////////////////////
+// UpperInfoPanel
+UpperInfoPanel::UpperInfoPanel()
+{
+    _icon = nullptr;
+    _lastUnit = nullptr;
+    _hidePos = Vec2(0, 25);
+    _showPos = Vec2(0, -30);
+    _panel = Sprite::create("up_panel.png");
+    _panel->setPosition(_hidePos);
+    addChild(_panel);
+    _isShowing = false;
+}
+
+UpperInfoPanel* UpperInfoPanel::create(const std::string &fn)
+{
+    UpperInfoPanel* unit = new (std::nothrow) UpperInfoPanel();
+    unit->initWithFile(fn);
+    unit->autorelease();
+    
+    return unit;
+}
+
+bool UpperInfoPanel::initWithFile(const std::string& filename)
+{
+    if( Sprite::initWithFile(filename) )
+    {
+        
+    }
+    
+    return true;
+}
+
+void UpperInfoPanel::showUnitInfo(Sprite* unit)
+{
+    if (!_isShowing) {
+        _panel->runAction(MoveTo::create(0.2, _showPos));
+        _isShowing = true;
+    }
+    if (_lastUnit != unit) {
+        if (_icon != nullptr)
+            _icon->removeFromParentAndCleanup(true);
+        _icon = Sprite::createWithTexture(unit->getTexture());
+        _icon->setPosition(Vec2(80, 55));
+        _icon->setScale(0.7);
+        _panel->addChild(_icon);
+        _lastUnit = unit;
+    }
+}
+
+void UpperInfoPanel::hideUnitInfo()
+{
+    if (_isShowing) {
+        _panel->runAction(MoveTo::create(0.2, _hidePos));
+        _isShowing = false;
+        _icon->removeFromParentAndCleanup(true);
+        _icon = nullptr;
+        _lastUnit = nullptr;
+    }
+}
+

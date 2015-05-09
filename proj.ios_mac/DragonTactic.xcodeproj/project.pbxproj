@@ -22,6 +22,9 @@
 		360995581AF663670069EED8 /* grid-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 360995571AF663670069EED8 /* grid-light.png */; };
 		3609955B1AF71F0D0069EED8 /* SpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360995591AF71F0D0069EED8 /* SpriteBase.cpp */; };
 		368189711AF88D8200611B01 /* target_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 368189701AF88D8200611B01 /* target_mark.png */; };
+		368189731AFCADF600611B01 /* m_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 368189721AFCADF600611B01 /* m_02.png */; };
+		368189761AFCAE6900611B01 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 368189741AFCAE6900611B01 /* Monster.cpp */; };
+		368189781AFCBB2300611B01 /* up_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 368189771AFCBB2300611B01 /* up_panel.png */; };
 		3685481E1AF11BB4002146C3 /* field2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 3685481C1AF11BB4002146C3 /* field2.tmx */; };
 		3685481F1AF11BB4002146C3 /* tex.png in Resources */ = {isa = PBXBuildFile; fileRef = 3685481D1AF11BB4002146C3 /* tex.png */; };
 		368548251AF48EF7002146C3 /* map-1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 368548231AF48EF7002146C3 /* map-1.tmx */; };
@@ -136,6 +139,10 @@
 		360995591AF71F0D0069EED8 /* SpriteBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteBase.cpp; sourceTree = "<group>"; };
 		3609955A1AF71F0D0069EED8 /* SpriteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBase.h; sourceTree = "<group>"; };
 		368189701AF88D8200611B01 /* target_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_mark.png; sourceTree = "<group>"; };
+		368189721AFCADF600611B01 /* m_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m_02.png; sourceTree = "<group>"; };
+		368189741AFCAE6900611B01 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
+		368189751AFCAE6900611B01 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
+		368189771AFCBB2300611B01 /* up_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_panel.png; sourceTree = "<group>"; };
 		3685481C1AF11BB4002146C3 /* field2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = field2.tmx; sourceTree = "<group>"; };
 		3685481D1AF11BB4002146C3 /* tex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tex.png; sourceTree = "<group>"; };
 		368548231AF48EF7002146C3 /* map-1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "map-1.tmx"; sourceTree = "<group>"; };
@@ -312,6 +319,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				368189771AFCBB2300611B01 /* up_panel.png */,
+				368189721AFCADF600611B01 /* m_02.png */,
 				368189701AF88D8200611B01 /* target_mark.png */,
 				360995571AF663670069EED8 /* grid-light.png */,
 				360995521AF64CE60069EED8 /* cross_mark.png */,
@@ -349,6 +358,8 @@
 				360995551AF65E5F0069EED8 /* BattleUI.h */,
 				360995591AF71F0D0069EED8 /* SpriteBase.cpp */,
 				3609955A1AF71F0D0069EED8 /* SpriteBase.h */,
+				368189741AFCAE6900611B01 /* Monster.cpp */,
+				368189751AFCAE6900611B01 /* Monster.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -516,6 +527,7 @@
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				3685481E1AF11BB4002146C3 /* field2.tmx in Resources */,
+				368189781AFCBB2300611B01 /* up_panel.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				3685481F1AF11BB4002146C3 /* tex.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -530,6 +542,7 @@
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				368548251AF48EF7002146C3 /* map-1.tmx in Resources */,
+				368189731AFCADF600611B01 /* m_02.png in Resources */,
 				298516981AE5F61B0053A7A9 /* ortho-test1.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				368548261AF48EF7002146C3 /* tex2.png in Resources */,
@@ -561,6 +574,7 @@
 			files = (
 				36B7FB281AED2044006A92AA /* GameManager.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				368189761AFCAE6900611B01 /* Monster.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				3609955B1AF71F0D0069EED8 /* SpriteBase.cpp in Sources */,

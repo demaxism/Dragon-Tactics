@@ -163,9 +163,11 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     GameManager::getInstance()->currentUnit = nullptr;
     // back to initial pos
     if (!GameManager::getInstance()->isMovable) {
-        setPosition(tilePosition(mapGrid.x, mapGrid.y));
+        flyToGrid(mapGrid);
     }
-    alignTile();
+    else {
+        alignTile();
+    }
     auto evt = EventCustom(EVT_UNITGRABEND);
     getEventDispatcher()->dispatchEvent(&evt);
 }

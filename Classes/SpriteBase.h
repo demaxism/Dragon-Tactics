@@ -20,6 +20,7 @@ public:
     Vec2 tilePosition(int x, int y);
     Vec2 mapGrid;
     void alignTile();
+    void flyToGrid(Vec2 pos);
     Vec2 gridAtMap();
 };
 

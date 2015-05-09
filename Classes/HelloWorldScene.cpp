@@ -38,6 +38,7 @@ bool HelloWorld::init()
     Director::getInstance()->setDepthTest(true);
     _movingGridList = new Vector<FlashGrid*>();
     _unitList = new Vector<Unit*>();
+    _monsterList = new Vector<Monster*>();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -66,6 +67,11 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
     
+    // info panel
+    _upper = new UpperInfoPanel();
+    _upper->setPosition(Vec2(visibleSize.width / 2, visibleSize.height));
+    addChild(_upper, 1);
+    
     // add the tiled map
     _tiledMap = TMXTiledMap::create("map-1.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
@@ -89,10 +95,10 @@ bool HelloWorld::init()
 //    parent->addChild(player);
 //    player->setPosition(player->tilePosition(5, 5));
     
-    // sprite
+    // units
     Unit* u = Unit::create("q_01.png");
     u->moveRange = 3;
-    u->setPosition(u->tilePosition(0, 3));
+    u->setPosition(u->tilePosition(2, 3));
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);
@@ -103,6 +109,13 @@ bool HelloWorld::init()
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);
+    
+    // monsters
+    Monster* m = Monster::create("m_02.png");
+    m->setPosition(m->tilePosition(5, 8));
+    _tiledMap->addChild(m);
+    m->alignTile();
+    _monsterList->pushBack(m);
     
     // battle UI
     _crossMark = CrossMark::create("cross_mark.png");
@@ -140,12 +153,23 @@ bool HelloWorld::init()
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBEGAN, [this](EventCustom* evt){
         auto mapGrid = (Vec2*)evt->getUserData();
         this->showMovingGrid(*mapGrid);
+        // origin unit
+        Sprite* cur = GameManager::getInstance()->currentUnit;
+        _originalUnit = Unit::createWithTexture(cur->getTexture());
+        _originalUnit->setPosition(cur->getPosition());
+        _tiledMap->addChild(_originalUnit);
+        _originalUnit->alignTile();
+        _originalUnit->setOpacity(0x80);
+        // upper info
+        _upper->showUnitInfo(cur);
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABEND, [this](EventCustom* evt){
         this->clearMovingGrid();
         _crossMark->hide();
         _targetMark->stopFlash();
+        // remove origin unit
+        _originalUnit->removeFromParentAndCleanup(true);
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -176,6 +200,11 @@ void HelloWorld::showMovingGrid(Vec2 tileGrid)
                 for (int i = 0; i < _unitList->size(); i++) {
                     Unit* u = _unitList->at(i);
                     if (u->mapGrid.x == x && u->mapGrid.y == y && u != GameManager::getInstance()->currentUnit)
+                        hasOtherUnit = true;
+                }
+                for (int i = 0; i < _monsterList->size(); i++) {
+                    Monster* m = _monsterList->at(i);
+                    if (m->mapGrid.x == x && m->mapGrid.y == y)
                         hasOtherUnit = true;
                 }
                 if (!hasOtherUnit) {
@@ -332,6 +361,7 @@ void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *even
 void HelloWorld::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
     GameManager::getInstance()->touchQueue->empty();
+    _upper->hideUnitInfo();
 }
 
 void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)

@@ -15,6 +15,11 @@ USING_NS_CC;
 
 class Monster : public SpriteBase
 {
+private:
+    int nFrame;
+    bool isFlashing;
+    void doStep(float delta);
+    bool isTouchBegin;
     
 public:
     uint moveRange;
@@ -22,9 +27,13 @@ public:
     Monster(void);
     virtual ~Monster(void);
     bool initWithFile(const std::string& filename) override;
-
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     virtual void onEnter() override;
     virtual void onExit() override;
+    
+    void startFlash();
+    void stopFlash();
     
     static Monster* create(const std::string &fn);
 };

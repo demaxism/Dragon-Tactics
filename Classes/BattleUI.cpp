@@ -151,6 +151,8 @@ UpperInfoPanel::UpperInfoPanel()
 {
     _icon = nullptr;
     _lastUnit = nullptr;
+    _enemy = nullptr;
+    _lastEnemy = nullptr;
     _hidePos = Vec2(0, 25);
     _showPos = Vec2(0, -30);
     _panel = Sprite::create("up_panel.png");
@@ -185,6 +187,8 @@ void UpperInfoPanel::showUnitInfo(Sprite* unit)
         _isShowing = true;
     }
     if (_lastUnit != unit) {
+        if (_enemy != nullptr)
+            _enemy->removeFromParentAndCleanup(true);
         if (_icon != nullptr)
             _icon->removeFromParentAndCleanup(true);
         _icon = Sprite::createWithTexture(unit->getTexture());
@@ -206,3 +210,12 @@ void UpperInfoPanel::hideUnitInfo()
     }
 }
 
+void UpperInfoPanel::showEnemyInfo(Sprite* enemy)
+{
+    if (_enemy != nullptr)
+        _enemy->removeFromParentAndCleanup(true);
+    _enemy = Sprite::createWithTexture(enemy->getTexture());
+    _enemy->setPosition(Vec2(560, 55));
+    _enemy->setScale(0.7);
+    _panel->addChild(_enemy);
+}

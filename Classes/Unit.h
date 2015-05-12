@@ -26,16 +26,15 @@ class Unit : public SpriteBase
 
 public:
     uint moveRange;
+    uint attackRange;
     
     Unit(void);
     virtual ~Unit(void);
     bool initWithFile(const std::string& filename) override;
     bool initWithTexture(Texture2D *texture) override;
     
-    Rect getRect();
     virtual void onEnter() override;
     virtual void onExit() override;
-    bool containsTouchLocation(Touch* touch);
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);

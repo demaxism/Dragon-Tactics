@@ -47,3 +47,14 @@ Vec2 SpriteBase::gridAtMap()
     int y = pos.y / tileSize.height;
     return Vec2(x, y);
 }
+
+Rect SpriteBase::getRect()
+{
+    auto s = getTexture()->getContentSize();
+    return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
+}
+
+bool SpriteBase::containsTouchLocation(Touch* touch)
+{
+    return getRect().containsPoint(convertTouchToNodeSpaceAR(touch));
+}

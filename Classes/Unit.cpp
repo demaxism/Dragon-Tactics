@@ -14,6 +14,7 @@ Unit::Unit(void)
     offset = Vec2(0, 15);
     zoffset = 0;
     moveRange = 1;
+    attackRange = 1;
 }
 
 Unit::~Unit(void)
@@ -56,12 +57,6 @@ bool Unit::initWithTexture(Texture2D *texture)
     return true;
 }
 
-Rect Unit::getRect()
-{
-    auto s = getTexture()->getContentSize();
-    return Rect(-s.width / 2, -s.height / 2, s.width, s.height);
-}
-
 void Unit::onEnter()
 {
     Sprite::onEnter();
@@ -82,11 +77,6 @@ void Unit::onExit()
     //    auto director = Director::getInstance();
     //    director->getTouchDispatcher()->removeDelegate(this);
     Sprite::onExit();
-}
-
-bool Unit::containsTouchLocation(Touch* touch)
-{
-    return getRect().containsPoint(convertTouchToNodeSpaceAR(touch));
 }
 
 bool Unit::onTouchBegan(Touch* touch, Event* event)
@@ -160,15 +150,18 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     setPosition(this->getPosition() - _fingerAdjust);
     _state = kUnitStateUngrabbed;
     GameManager::getInstance()->isUnitGrabbed = false;
-    GameManager::getInstance()->currentUnit = nullptr;
+
     // back to initial pos
+    bool isMoved = false;
     if (!GameManager::getInstance()->isMovable) {
         flyToGrid(mapGrid);
     }
     else {
         alignTile();
+        isMoved = true;
     }
     auto evt = EventCustom(EVT_UNITGRABEND);
+    evt.setUserData(&isMoved);
     getEventDispatcher()->dispatchEvent(&evt);
 }
 

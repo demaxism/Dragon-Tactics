@@ -22,6 +22,9 @@ public:
     void alignTile();
     void flyToGrid(Vec2 pos);
     Vec2 gridAtMap();
+
+    Rect getRect();
+    bool containsTouchLocation(Touch* touch);
 };
 
 #endif /* defined(__DragonTactic__SpriteBase__) */

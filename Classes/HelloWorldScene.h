@@ -24,6 +24,7 @@ private:
     int _frameCnt;
     GameManager* _gameManager;
     Vector<FlashGrid*>* _movingGridList;
+    Vector<FlashGrid*>* _attackGridList;
     Vector<Unit*>* _unitList;
     Vector<Monster*>* _monsterList;
     CrossMark* _crossMark;
@@ -51,7 +52,9 @@ private:
     Vec2 refrainMapPos(Vec2 pos);
     bool isMapInsideView(Vec2 pos);
     void showMovingGrid(Vec2 pos);
+    void showAttackGrid(Vec2 pos);
     void clearMovingGrid();
+    void clearAttackGrid();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

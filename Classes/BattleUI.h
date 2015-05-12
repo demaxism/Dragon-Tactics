@@ -57,7 +57,9 @@ class UpperInfoPanel : public Sprite
 private:
     Sprite* _panel;
     Sprite* _icon;
+    Sprite* _enemy;
     Sprite* _lastUnit;
+    Sprite* _lastEnemy;
     Vec2 _hidePos;
     Vec2 _showPos;
     bool _isShowing;
@@ -66,6 +68,8 @@ public:
     bool initWithFile(const std::string& filename) override;
     void showUnitInfo(Sprite* unit);
     void hideUnitInfo();
+    void showEnemyInfo(Sprite* enemy);
+    void hideEnemyInfo();
     static UpperInfoPanel* create(const std::string &fn);
 };
 

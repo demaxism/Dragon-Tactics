@@ -17,6 +17,7 @@
 		298516A31AE780350053A7A9 /* q_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516A21AE780350053A7A9 /* q_01.png */; };
 		29C6FBEE1AEA537B00FC4A13 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29C6FBEC1AEA537B00FC4A13 /* Unit.cpp */; };
 		29C6FBF41AEDF71C00FC4A13 /* q_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C6FBF31AEDF71C00FC4A13 /* q_02.png */; };
+		29C6FBFC1B01FFF300FC4A13 /* grid-attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C6FBFB1B01FFF300FC4A13 /* grid-attack.png */; };
 		360995531AF64CE60069EED8 /* cross_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 360995521AF64CE60069EED8 /* cross_mark.png */; };
 		360995561AF65E5F0069EED8 /* BattleUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360995541AF65E5F0069EED8 /* BattleUI.cpp */; };
 		360995581AF663670069EED8 /* grid-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 360995571AF663670069EED8 /* grid-light.png */; };
@@ -132,6 +133,7 @@
 		29C6FBEC1AEA537B00FC4A13 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
 		29C6FBED1AEA537B00FC4A13 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		29C6FBF31AEDF71C00FC4A13 /* q_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = q_02.png; sourceTree = "<group>"; };
+		29C6FBFB1B01FFF300FC4A13 /* grid-attack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-attack.png"; sourceTree = "<group>"; };
 		360995521AF64CE60069EED8 /* cross_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross_mark.png; sourceTree = "<group>"; };
 		360995541AF65E5F0069EED8 /* BattleUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleUI.cpp; sourceTree = "<group>"; };
 		360995551AF65E5F0069EED8 /* BattleUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BattleUI.h; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29C6FBFB1B01FFF300FC4A13 /* grid-attack.png */,
 				368189771AFCBB2300611B01 /* up_panel.png */,
 				368189721AFCADF600611B01 /* m_02.png */,
 				368189701AF88D8200611B01 /* target_mark.png */,
@@ -533,6 +536,7 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				360995581AF663670069EED8 /* grid-light.png in Resources */,
+				29C6FBFC1B01FFF300FC4A13 /* grid-attack.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,

@@ -37,6 +37,7 @@ bool HelloWorld::init()
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
     _movingGridList = new Vector<FlashGrid*>();
+    _attackGridList = new Vector<FlashGrid*>();
     _unitList = new Vector<Unit*>();
     _monsterList = new Vector<Monster*>();
 
@@ -151,6 +152,7 @@ bool HelloWorld::init()
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBEGAN, [this](EventCustom* evt){
+        this->clearAttackGrid();
         auto mapGrid = (Vec2*)evt->getUserData();
         this->showMovingGrid(*mapGrid);
         // origin unit
@@ -170,6 +172,17 @@ bool HelloWorld::init()
         _targetMark->stopFlash();
         // remove origin unit
         _originalUnit->removeFromParentAndCleanup(true);
+        bool isMoved = (bool*)evt->getUserData();
+        if (isMoved) {
+            this->showAttackGrid(((Unit*)(GameManager::getInstance()->currentUnit))->mapGrid);
+        }
+    });
+    
+    getEventDispatcher()->addCustomEventListener(EVT_ENEMYTOUCHED, [this](EventCustom* evt){
+        this->clearAttackGrid();
+        Monster* m = (Monster*)evt->getUserData();
+        m->stopFlash();
+        _upper->showEnemyInfo(m);
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -220,6 +233,36 @@ void HelloWorld::showMovingGrid(Vec2 tileGrid)
     }
 }
 
+void HelloWorld::showAttackGrid(Vec2 tileGrid)
+{
+    Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
+    int range = unit->moveRange;
+    int xmin = MAX(0, tileGrid.x - range);
+    int xmax = MIN(_tiledMap->getMapSize().width - 1, tileGrid.x + range);
+    int ymin = MAX(0, tileGrid.y - range);
+    int ymax = MIN(_tiledMap->getMapSize().height - 1, tileGrid.y + range);
+    for (int x = xmin; x <= xmax; x++) {
+        uint xmove = abs(x - (int)tileGrid.x);
+        for (int y = ymin; y <= ymax; y++) {
+            uint ymove = abs(y - (int)tileGrid.y);
+            if (xmove + ymove > range) continue;
+            
+            if (x == tileGrid.x && y == tileGrid.y) continue;
+            FlashGrid* grid = FlashGrid::create("grid-attack.png");
+            grid->setPosition(grid->tilePosition(x, y));
+            _tiledMap->addChild(grid);
+            grid->alignTile();
+            grid->startFlash();
+            _attackGridList->pushBack(grid);
+            for (int i = 0; i < _monsterList->size(); i++) {
+                Monster* m = _monsterList->at(i);
+                if (m->mapGrid.x == x && m->mapGrid.y == y)
+                    m->startFlash();
+            }
+        }
+    }
+}
+
 void HelloWorld::clearMovingGrid()
 {
     ssize_t n = _movingGridList->size();
@@ -228,6 +271,20 @@ void HelloWorld::clearMovingGrid()
         sp->removeFromParentAndCleanup(true);
     }
     _movingGridList->clear();
+}
+
+void HelloWorld::clearAttackGrid()
+{
+    ssize_t n = _attackGridList->size();
+    for (ssize_t i = 0; i < n ; i++) {
+        SpriteBase* sp = _attackGridList->at(i);
+        sp->removeFromParentAndCleanup(true);
+    }
+    _attackGridList->clear();
+    for (int i = 0; i < _monsterList->size(); i++) {
+        Monster* m = _monsterList->at(i);
+        m->stopFlash();
+    }
 }
 
 void HelloWorld::doStep(float delta)
@@ -361,7 +418,6 @@ void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *even
 void HelloWorld::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
     GameManager::getInstance()->touchQueue->empty();
-    _upper->hideUnitInfo();
 }
 
 void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)

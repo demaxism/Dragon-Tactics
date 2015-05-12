@@ -106,6 +106,7 @@ bool HelloWorld::init()
     
     u = Unit::create("q_02.png");
     u->moveRange = 2;
+    u->attackRange = 2;
     u->setPosition(u->tilePosition(4, 1));
     _tiledMap->addChild(u);
     u->alignTile();
@@ -114,6 +115,12 @@ bool HelloWorld::init()
     // monsters
     Monster* m = Monster::create("m_02.png");
     m->setPosition(m->tilePosition(5, 8));
+    _tiledMap->addChild(m);
+    m->alignTile();
+    _monsterList->pushBack(m);
+    
+    m = Monster::create("m_02.png");
+    m->setPosition(m->tilePosition(5, 6));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
@@ -128,6 +135,11 @@ bool HelloWorld::init()
     _tiledMap->addChild(_targetMark, 1005);
     _targetMark->setPositionZ(1005);
     _targetMark->stopFlash();
+    
+    _attackTarget = AttackTarget::create("attack_target.png");
+    _tiledMap->addChild(_attackTarget, 1006);
+    _attackTarget->setPositionZ(1006);
+    
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -153,6 +165,7 @@ bool HelloWorld::init()
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBEGAN, [this](EventCustom* evt){
         this->clearAttackGrid();
+        _attackTarget->stopLock();
         auto mapGrid = (Vec2*)evt->getUserData();
         this->showMovingGrid(*mapGrid);
         // origin unit
@@ -183,6 +196,7 @@ bool HelloWorld::init()
         Monster* m = (Monster*)evt->getUserData();
         m->stopFlash();
         _upper->showEnemyInfo(m);
+        _attackTarget->lockTarget(GameManager::getInstance()->currentUnit, m);
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -236,7 +250,7 @@ void HelloWorld::showMovingGrid(Vec2 tileGrid)
 void HelloWorld::showAttackGrid(Vec2 tileGrid)
 {
     Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
-    int range = unit->moveRange;
+    int range = unit->attackRange;
     int xmin = MAX(0, tileGrid.x - range);
     int xmax = MIN(_tiledMap->getMapSize().width - 1, tileGrid.x + range);
     int ymin = MAX(0, tileGrid.y - range);

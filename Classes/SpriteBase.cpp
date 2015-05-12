@@ -24,7 +24,7 @@ void SpriteBase::alignTile()
     // both PositionZ & zorder should be set
     setPositionZ(sz + zoffset);
     auto parent = getParent();
-    parent->reorderChild(this, 1000-mapGrid.y);
+    parent->reorderChild(this, 1000-mapGrid.y+zoffset*10);
 }
 
 void SpriteBase::flyToGrid(Vec2 grid)

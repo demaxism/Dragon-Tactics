@@ -29,6 +29,7 @@ private:
     Vector<Monster*>* _monsterList;
     CrossMark* _crossMark;
     TargetMark* _targetMark;
+    AttackTarget* _attackTarget;
     Unit* _originalUnit;
     UpperInfoPanel* _upper;
     

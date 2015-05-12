@@ -52,6 +52,22 @@ private:
     void doStep(float delta);
 };
 
+class AttackTarget : public SpriteBase
+{
+public:
+    AttackTarget(void);
+    bool initWithFile(const std::string& filename) override;
+    static AttackTarget* create(const std::string &fn);
+    void lockTarget(Sprite* from, Sprite* target);
+    void stopLock();
+private:
+    Sprite* _from;
+    Sprite* _target;
+    bool _isLocking;
+    int nFrame;
+    void doStep(float delta);
+};
+
 class UpperInfoPanel : public Sprite
 {
 private:

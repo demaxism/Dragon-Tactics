@@ -146,6 +146,65 @@ void TargetMark::stopFlash()
 }
 
 ////////////////////////
+// Attack Target
+AttackTarget::AttackTarget()
+{
+    _isLocking = false;
+}
+
+AttackTarget* AttackTarget::create(const std::string &fn)
+{
+    AttackTarget* unit = new (std::nothrow) AttackTarget();
+    unit->initWithFile(fn);
+    unit->autorelease();
+    
+    return unit;
+}
+
+bool AttackTarget::initWithFile(const std::string& filename)
+{
+    if( Sprite::initWithFile(filename) )
+    {
+        
+    }
+    
+    return true;
+}
+
+void AttackTarget::lockTarget(Sprite* from, Sprite* target)
+{
+    if (!_isLocking) {
+        _isLocking = true;
+        setVisible(true);
+        _from = from;
+        _target = target;
+        nFrame = 0;
+        schedule( CC_SCHEDULE_SELECTOR(AttackTarget::doStep) );
+    }
+}
+
+void AttackTarget::stopLock()
+{
+    if (_isLocking) {
+        setVisible(false);
+        unschedule(CC_SCHEDULE_SELECTOR(AttackTarget::doStep));
+        _isLocking = false;
+    }
+}
+
+void AttackTarget::doStep(float delta)
+{
+    setRotation(nFrame * 2);
+    if (nFrame % 50 == 0) {
+        setPosition(_from->getPosition());
+        setOpacity(0x60);
+        runAction(MoveTo::create(0.2, _target->getPosition()));
+        runAction(FadeTo::create(0.2, 0xff));
+    }
+    nFrame++;
+}
+
+////////////////////////
 // UpperInfoPanel
 UpperInfoPanel::UpperInfoPanel()
 {
@@ -187,8 +246,10 @@ void UpperInfoPanel::showUnitInfo(Sprite* unit)
         _isShowing = true;
     }
     if (_lastUnit != unit) {
-        if (_enemy != nullptr)
+        if (_enemy != nullptr) {
             _enemy->removeFromParentAndCleanup(true);
+            _enemy = nullptr;
+        }
         if (_icon != nullptr)
             _icon->removeFromParentAndCleanup(true);
         _icon = Sprite::createWithTexture(unit->getTexture());

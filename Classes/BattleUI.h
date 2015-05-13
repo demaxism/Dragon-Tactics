@@ -11,8 +11,10 @@
 
 #include <stdio.h>
 #include "SpriteBase.h"
+#include <cocos/ui/CocosGUI.h>
 
 USING_NS_CC;
+using namespace cocos2d::ui;
 
 class FlashGrid : public SpriteBase
 {
@@ -76,6 +78,7 @@ private:
     Sprite* _enemy;
     Sprite* _lastUnit;
     Sprite* _lastEnemy;
+    Button* _btnDecide;
     Vec2 _hidePos;
     Vec2 _showPos;
     bool _isShowing;
@@ -85,8 +88,8 @@ public:
     void showUnitInfo(Sprite* unit);
     void hideUnitInfo();
     void showEnemyInfo(Sprite* enemy);
-    void hideEnemyInfo();
     static UpperInfoPanel* create(const std::string &fn);
+    void touchEvent(Ref *pSender, Widget::TouchEventType type);
 };
 
 #endif /* defined(__DragonTactic__BattleUI__) */

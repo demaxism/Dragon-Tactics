@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "BattleUI.h"
 #include "GameManager.h"
+#include "Charactor.h"
 
 using namespace cocos2d;
 
@@ -32,6 +33,7 @@ private:
     AttackTarget* _attackTarget;
     Unit* _originalUnit;
     UpperInfoPanel* _upper;
+    ActionLayer* _action;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -54,8 +56,10 @@ private:
     bool isMapInsideView(Vec2 pos);
     void showMovingGrid(Vec2 pos);
     void showAttackGrid(Vec2 pos);
+    void showActionMode();
     void clearMovingGrid();
     void clearAttackGrid();
+    void clearActionUI();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

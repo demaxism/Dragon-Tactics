@@ -29,6 +29,7 @@ class Unit : public SpriteBase
 public:
     uint moveRange;
     uint attackRange;
+    SpriteBase* attackTarget;
     
     Unit(void);
     virtual ~Unit(void);
@@ -42,6 +43,7 @@ public:
     void onTouchEnded(Touch* touch, Event* event);
     void actionFinish();
     void actionEnable();
+    bool getIsActionFinished() { return _isActionFinished; }
     
     static Unit* create(const std::string &fn);
     static Unit* createWithTexture(Texture2D *texture);

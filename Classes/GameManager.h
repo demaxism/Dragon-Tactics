@@ -13,6 +13,10 @@
 #define EVT_UNITGRABBEGAN "evtUnitGrabBegan"
 #define EVT_UNITGRABEND "evtUnitGrabEnd"
 #define EVT_ENEMYTOUCHED "evtEnemyTouched"
+#define EVT_ACTIONDECIDED "evtActionDecided"
+#define EVT_UNITCHECK "evtUnitCheck"
+#define EVT_ACTIONFINISHED "evtActionFinished"
+
 #define FRINGE_MOVE_SPEED 8.0f
 #define SWIPE_INERTIA_MAX 30.0f
 #define MAP_MARGIN 60.0f

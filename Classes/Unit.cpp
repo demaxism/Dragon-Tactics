@@ -16,6 +16,7 @@ Unit::Unit(void)
     moveRange = 1;
     attackRange = 1;
     _checkMark = nullptr;
+    _isActionFinished = false;
 }
 
 Unit::~Unit(void)
@@ -82,10 +83,16 @@ void Unit::onExit()
 
 bool Unit::onTouchBegan(Touch* touch, Event* event)
 {
-    CCLOG("Unit::onTouchBegan id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
+
     
     if (_state != kUnitStateUngrabbed) return false;
     if ( !containsTouchLocation(touch) ) return false;
+    if (_isActionFinished) {
+        GameManager::getInstance()->currentUnit = this;
+        auto evt = EventCustom(EVT_UNITCHECK);
+        getEventDispatcher()->dispatchEvent(&evt);
+        return true;
+    }
     
     _state = kUnitStateGrabbed;
     GameManager::getInstance()->isUnitGrabbed = true;
@@ -114,7 +121,7 @@ void Unit::onTouchMoved(Touch* touch, Event* event)
     
     //CCLOG("Unit::onTouchMoved id = %d, x = %f, y = %f", touch->getID(), touch->getLocation().x, touch->getLocation().y);
     
-    CCASSERT(_state == kUnitStateGrabbed, "Paddle - Unexpected state!");
+    if (_isActionFinished) return;
     
     //auto touchPoint = touch->getLocation();
     GameManager::getInstance()->touchLocation = touch->getLocation();
@@ -146,7 +153,7 @@ void Unit::onTouchMoved(Touch* touch, Event* event)
 
 void Unit::onTouchEnded(Touch* touch, Event* event)
 {
-    CCASSERT(_state == kUnitStateGrabbed, "Unit - Unexpected state!");
+    if (_isActionFinished) return;
     setScale(1.0f, 1.0f);
     setPosition(this->getPosition() - _fingerAdjust);
     _state = kUnitStateUngrabbed;
@@ -175,7 +182,7 @@ void Unit::actionFinish()
     if (!_isActionFinished) {
         _checkMark = Sprite::create("check_mark.png");
         addChild(_checkMark);
-        _checkMark->setPosition(Vec2(60, 10));
+        _checkMark->setPosition(Vec2(70, 10));
         _isActionFinished = true;
     }
 }
@@ -183,5 +190,9 @@ void Unit::actionFinish()
 void Unit::actionEnable()
 {
     _isActionFinished = false;
+    if (_checkMark != nullptr) {
+        _checkMark->removeFromParentAndCleanup(true);
+        _checkMark = nullptr;
+    }
 }
 

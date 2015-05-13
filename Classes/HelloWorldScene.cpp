@@ -71,7 +71,10 @@ bool HelloWorld::init()
     // info panel
     _upper = new UpperInfoPanel();
     _upper->setPosition(Vec2(visibleSize.width / 2, visibleSize.height));
-    addChild(_upper, 1);
+    addChild(_upper, 2);
+    // action layer
+    _action = new ActionLayer();
+    addChild(_action, 1);
     
     // add the tiled map
     _tiledMap = TMXTiledMap::create("map-1.tmx");
@@ -139,7 +142,7 @@ bool HelloWorld::init()
     _attackTarget = AttackTarget::create("attack_target.png");
     _tiledMap->addChild(_attackTarget, 1006);
     _attackTarget->setPositionZ(1006);
-    
+    _attackTarget->stopLock();
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -157,6 +160,13 @@ bool HelloWorld::init()
     }
     
     // event listener
+    getEventDispatcher()->addCustomEventListener(EVT_UNITCHECK, [this](EventCustom* evt){
+        this->clearActionUI();
+        Unit* cur = (Unit*)GameManager::getInstance()->currentUnit;
+        _upper->showEnemyInfo(cur->attackTarget);
+        _attackTarget->lockTarget(cur, cur->attackTarget);
+    });
+                                                 
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBING, [this](EventCustom* evt){
         auto grabDiff = (Vec2*)evt->getUserData();
         auto mapPos = _tiledMap->getPosition();
@@ -164,12 +174,12 @@ bool HelloWorld::init()
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABBEGAN, [this](EventCustom* evt){
-        this->clearAttackGrid();
-        _attackTarget->stopLock();
+        this->clearActionUI();
+        Unit* cur = (Unit*)GameManager::getInstance()->currentUnit;
+
         auto mapGrid = (Vec2*)evt->getUserData();
         this->showMovingGrid(*mapGrid);
         // origin unit
-        Sprite* cur = GameManager::getInstance()->currentUnit;
         _originalUnit = Unit::createWithTexture(cur->getTexture());
         _originalUnit->setPosition(cur->getPosition());
         _tiledMap->addChild(_originalUnit);
@@ -195,16 +205,40 @@ bool HelloWorld::init()
         Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
         this->clearAttackGrid();
         Monster* m = (Monster*)evt->getUserData();
+        cur->attackTarget = m;
         m->stopFlash();
-        _upper->showEnemyInfo(m);
-        _attackTarget->lockTarget(cur, m);
+        _upper->showEnemyInfo(cur->attackTarget);
+        _attackTarget->lockTarget(cur, cur->attackTarget);
         cur->actionFinish();
+        // commit battle pair
+        _action->addPair("ani01", "");
+    });
+    
+    getEventDispatcher()->addCustomEventListener(EVT_ACTIONDECIDED, [this](EventCustom* evt){
+        // enable all units
+        for (int i = 0; i < _unitList->size(); i++) {
+            Unit* u = _unitList->at(i);
+            u->actionEnable();
+        }
+        this->clearActionUI();
+        _action->showLayer();
+        _upper->hideUnitInfo();
+    });
+    
+    getEventDispatcher()->addCustomEventListener(EVT_ACTIONFINISHED, [this](EventCustom* evt){
+        
     });
     
     _releaseTouchDiff = Vec2(0, 0);
     _frameCnt = 0;
     
     return true;
+}
+
+void HelloWorld::clearActionUI()
+{
+    this->clearAttackGrid();
+    _attackTarget->stopLock();
 }
 
 void HelloWorld::showMovingGrid(Vec2 tileGrid)
@@ -277,6 +311,11 @@ void HelloWorld::showAttackGrid(Vec2 tileGrid)
             }
         }
     }
+}
+
+void HelloWorld::showActionMode()
+{
+    
 }
 
 void HelloWorld::clearMovingGrid()

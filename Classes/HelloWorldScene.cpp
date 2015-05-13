@@ -223,6 +223,7 @@ bool HelloWorld::init()
         this->clearActionUI();
         _action->showLayer();
         _upper->hideUnitInfo();
+        this->turnActionMode();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONFINISHED, [this](EventCustom* evt){
@@ -313,9 +314,21 @@ void HelloWorld::showAttackGrid(Vec2 tileGrid)
     }
 }
 
-void HelloWorld::showActionMode()
+void HelloWorld::turnActionMode()
 {
-    
+    auto ground = _tiledMap->getLayer("ground");
+    auto objects = _tiledMap->getLayer("objects");
+    for (int x = 0; x < _tiledMap->getMapSize().width; x++) {
+        for (int y = 0; y < _tiledMap->getMapSize().height; y++) {
+            Sprite* g = ground->getTileAt(Vec2(x, y));
+            if (g != nullptr)
+                g->setColor(Color3B(0x40, 0x40, 0x40));
+            
+            Sprite* o = objects->getTileAt(Vec2(x, y));
+            if (o != nullptr)
+                o->setColor(Color3B(0x60, 0x60, 0x60));
+        }
+    }
 }
 
 void HelloWorld::clearMovingGrid()

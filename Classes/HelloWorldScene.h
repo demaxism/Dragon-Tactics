@@ -56,7 +56,7 @@ private:
     bool isMapInsideView(Vec2 pos);
     void showMovingGrid(Vec2 pos);
     void showAttackGrid(Vec2 pos);
-    void showActionMode();
+    void turnActionMode();
     void clearMovingGrid();
     void clearAttackGrid();
     void clearActionUI();

@@ -48,10 +48,12 @@ void Charactor::fight()
     auto delay = DelayTime::create(0.1);
     auto fightMovein = MoveTo::create(0.1, Vec2(250, _fight->getPosition().y));
     auto fightSlowin = MoveTo::create(1, Vec2(280, _fight->getPosition().y));
-    auto fightMoveSequence = Sequence::create(delay, fightMovein, fightSlowin, NULL);
+    auto fightMoveout = MoveTo::create(0.1, Vec2(300, _fight->getPosition().y));
+    auto fightMoveSequence = Sequence::create(delay, fightMovein, fightSlowin, fightMoveout, NULL);
     _fight->runAction(fightMoveSequence);
     auto fightFadein = FadeTo::create(0.1, 0xff);
-    auto fightFadeSequence = Sequence::create(delay, fightFadein, NULL);
+    auto fightFadeout = FadeTo::create(0.1, 0);
+    auto fightFadeSequence = Sequence::create(delay, fightFadein, DelayTime::create(1), fightFadeout, NULL);
     _fight->runAction(fightFadeSequence);
 }
 

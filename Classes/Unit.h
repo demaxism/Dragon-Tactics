@@ -23,6 +23,8 @@ class Unit : public SpriteBase
     UnitState _state;
     Vec2 _fingerAdjust = Vec2(0, 15.0f); // make the sprite move upward when grabbed
     Vec2 _touchLocation = Vec2(0, 0);
+    Sprite* _checkMark;
+    bool _isActionFinished;
 
 public:
     uint moveRange;
@@ -38,6 +40,8 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
+    void actionFinish();
+    void actionEnable();
     
     static Unit* create(const std::string &fn);
     static Unit* createWithTexture(Texture2D *texture);

@@ -15,6 +15,7 @@ Unit::Unit(void)
     zoffset = 0;
     moveRange = 1;
     attackRange = 1;
+    _checkMark = nullptr;
 }
 
 Unit::~Unit(void)
@@ -165,4 +166,22 @@ void Unit::onTouchEnded(Touch* touch, Event* event)
     getEventDispatcher()->dispatchEvent(&evt);
 }
 
+void Unit::actionFinish()
+{
+    if (_checkMark != nullptr) {
+        _checkMark->removeFromParentAndCleanup(true);
+        _checkMark = nullptr;
+    }
+    if (!_isActionFinished) {
+        _checkMark = Sprite::create("check_mark.png");
+        addChild(_checkMark);
+        _checkMark->setPosition(Vec2(60, 10));
+        _isActionFinished = true;
+    }
+}
+
+void Unit::actionEnable()
+{
+    _isActionFinished = false;
+}
 

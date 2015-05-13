@@ -192,11 +192,13 @@ bool HelloWorld::init()
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ENEMYTOUCHED, [this](EventCustom* evt){
+        Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
         this->clearAttackGrid();
         Monster* m = (Monster*)evt->getUserData();
         m->stopFlash();
         _upper->showEnemyInfo(m);
-        _attackTarget->lockTarget(GameManager::getInstance()->currentUnit, m);
+        _attackTarget->lockTarget(cur, m);
+        cur->actionFinish();
     });
     
     _releaseTouchDiff = Vec2(0, 0);

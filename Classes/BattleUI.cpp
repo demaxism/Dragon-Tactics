@@ -214,7 +214,7 @@ UpperInfoPanel::UpperInfoPanel()
     _lastUnit = nullptr;
     _enemy = nullptr;
     _lastEnemy = nullptr;
-    _hidePos = Vec2(0, 25);
+    _hidePos = Vec2(0, 55);
     _showPos = Vec2(0, -30);
     _panel = Sprite::create("up_panel.png");
     _panel->setPosition(_hidePos);
@@ -229,7 +229,7 @@ UpperInfoPanel::UpperInfoPanel()
     _isLowShowing = true;
     
     _btnDecide = Button::create("btn_decide.png");
-    _btnDecide->setPosition(Vec2(size.width/2 -65, -size.height+50));
+    _btnDecide->setPosition(Vec2(size.width/2 -80, -size.height+50));
     _btnDecide->addTouchEventListener(CC_CALLBACK_2(UpperInfoPanel::touchEvent, this));
     _btnDecide->setZoomScale(0.4f);
     _btnDecide->setPressedActionEnabled(true);

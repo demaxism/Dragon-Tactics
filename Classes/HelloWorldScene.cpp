@@ -45,6 +45,7 @@ bool HelloWorld::init()
     // info panel
     _upper = new UpperInfoPanel();
     _upper->setPosition(Vec2(visibleSize.width / 2, visibleSize.height));
+    _upper->setPositionZ(1020);
     addChild(_upper, 2);
     // action layer
     _action = new ActionLayer();
@@ -433,11 +434,11 @@ void HelloWorld::doStep(float delta)
             mapPos = mapPos - slidex;
             unitPos = unitPos + slidex;
         }
-        if (touch.y < _fringe) {
+        if (touch.y < _fringe + 40) {
             mapPos = mapPos + slidey;
             unitPos = unitPos - slidey;
         }
-        if (touch.y > _winSize.height - _fringe) {
+        if (touch.y > _winSize.height - _fringe - 60) {
             mapPos = mapPos - slidey;
             unitPos = unitPos + slidey;
         }

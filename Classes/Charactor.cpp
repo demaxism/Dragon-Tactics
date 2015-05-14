@@ -87,12 +87,15 @@ ActionLayer::ActionLayer()
 {
     _winSize = Director::getInstance()->getVisibleSize();
     _isShowing = false;
+    _isBgShowing = false;
     _mask = LayerColor::create(Color4B(0,0,0,0x80));
     _mask->setContentSize( _winSize );
     this->addChild(_mask);
     setVisible(false);
     _actionLabel = nullptr;
     _rtex = nullptr;
+    _left = nullptr;
+    _right = nullptr;
     _battleList = new std::vector<BattlePair*>();
 }
 
@@ -113,8 +116,8 @@ void ActionLayer::showLayer()
             _actionLabel->removeFromParentAndCleanup(true);
             _actionLabel = nullptr;
             _mask->runAction(FadeTo::create(0.1, 0));
-            this->showChars();
-            this->showBg();
+            _iBattle = 0;
+            this->nextBattle();
         });
         auto sequence = Sequence::create(movein, delay, moveout, final, NULL);
         _actionLabel->runAction(sequence);
@@ -126,14 +129,7 @@ void ActionLayer::showLayer()
 void ActionLayer::hideLayer()
 {
     if (_isShowing) {
-        if (_left != nullptr) {
-            _left->removeFromParentAndCleanup(true);
-            _left = nullptr;
-        }
-        if (_right != nullptr) {
-            _right->removeFromParentAndCleanup(true);
-            _right = nullptr;
-        }
+        this->hideChars();
         _battleList->clear();
         this->hideBg();
         _isShowing = false;
@@ -150,6 +146,8 @@ void ActionLayer::addPair(void* leftSprite, void* rightSprite)
 
 void ActionLayer::showBg()
 {
+    if (_isBgShowing) return;
+    
     if (_rtex != nullptr) {
         _rtex->removeFromParentAndCleanup(true);
     }
@@ -185,10 +183,13 @@ void ActionLayer::showBg()
     });
     Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
     runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
+    _isBgShowing = true;
 }
 
 void ActionLayer::hideBg()
 {
+    if (!_isBgShowing) return;
+    
     int nFrame = 10;
     _cntMaskLoop = nFrame;
 
@@ -214,37 +215,68 @@ void ActionLayer::hideBg()
     });
     Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
     runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
+    _isBgShowing = false;
 }
 
 void ActionLayer::showChars()
 {
-    BattlePair* bp = _battleList->at(0);
+    float ypos = _winSize.height - 430;
+    BattlePair* bp = _battleList->at(_iBattle);
     Unit* left = (Unit*)bp->leftSprite;
     _left = new Charactor(left->charName);
     addChild(_left,2);
-    _left->setPosition(Vec2(_winSize.width/2 - 230, _winSize.height - 400));
+    _left->setPosition(Vec2(_winSize.width/2 - 230, ypos));
     auto delay = DelayTime::create(1);
     CallFunc* func = CallFunc::create([&] () {
         _left->fight();
     });
     auto delayHitted = DelayTime::create(1.5);
     CallFunc* func2 = CallFunc::create([&] () {
-        this->hideLayer();
-        auto evt = EventCustom(EVT_ACTIONFINISHED);
-        getEventDispatcher()->dispatchEvent(&evt);
+        this->nextBattle();
     });
     runAction(Sequence::create(delay, func, delayHitted, func2, NULL));
     
     Monster* right = (Monster*)bp->rightSprite;
     _right = new Charactor(right->charName);
-    addChild(_right, 2);
-    _right->setPosition(Vec2(_winSize.width/2 + 210, _winSize.height - 400));
+    addChild(_right, 1);
+    _right->setPosition(Vec2(_winSize.width/2 + 210, ypos));
     _right->setScaleX(-1);
     CallFunc* hurtFunc = CallFunc::create([&] () {
         _right->hurt();
     });
     runAction(Sequence::create(delay = DelayTime::create(1.2), hurtFunc, NULL));
+    
+    // send battle start event to main, for focus battle
+    GameManager::getInstance()->currentUnit = left;
+    auto evt = EventCustom(EVT_BATTLESTART);
+    getEventDispatcher()->dispatchEvent(&evt);
 }
 
+void ActionLayer::hideChars()
+{
+    if (_left != nullptr) {
+        _left->removeFromParentAndCleanup(true);
+        _left = nullptr;
+    }
+    if (_right != nullptr) {
+        _right->removeFromParentAndCleanup(true);
+        _right = nullptr;
+    }
+}
+
+void ActionLayer::nextBattle()
+{
+    if (_iBattle < _battleList->size()) {
+        this->showBg();
+        this->hideChars();
+        this->showChars();
+    }
+    else {
+        this->hideLayer();
+        auto evt = EventCustom(EVT_ACTIONFINISHED);
+        getEventDispatcher()->dispatchEvent(&evt);
+    }
+    _iBattle++;
+}
 
 

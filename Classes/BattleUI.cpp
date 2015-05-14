@@ -301,10 +301,14 @@ void UpperInfoPanel::hideUnitInfo()
     if (_isShowing) {
         _panel->runAction(MoveTo::create(0.2, _hidePos));
         _isShowing = false;
-        _icon->removeFromParentAndCleanup(true);
-        _icon = nullptr;
-        _enemy->removeFromParentAndCleanup(true);
-        _enemy = nullptr;
+        if (_icon != nullptr) {
+            _icon->removeFromParentAndCleanup(true);
+            _icon = nullptr;
+        }
+        if (_enemy != nullptr) {
+            _enemy->removeFromParentAndCleanup(true);
+            _enemy = nullptr;
+        }
         _lastUnit = nullptr;
         _btnDecide->setVisible(false);
     }

@@ -38,6 +38,7 @@ class ActionLayer : public Sprite
 {
 private:
     bool _isShowing;
+    bool _isBgShowing;
     LayerColor* _mask;
     Sprite* _actionLabel;
     Size _winSize;
@@ -48,6 +49,7 @@ private:
     Sprite* bg;
     Sprite* mask;
     int _cntMaskLoop;
+    int _iBattle; // battle index
 public:
     ActionLayer(void);
     void showLayer();
@@ -56,6 +58,8 @@ public:
     void showBg();
     void hideBg();
     void showChars();
+    void hideChars();
+    void nextBattle();
 };
 
 #endif /* defined(__DragonTactic__Charactor__) */

@@ -110,9 +110,9 @@ bool HelloWorld::init()
     _unitList->pushBack(u);
     
     u = Unit::create("q_02.png");
-    u->moveRange = 2;
+    u->moveRange = 3;
     u->attackRange = 2;
-    u->charName = "ani01";
+    u->charName = "ani02";
     u->setPosition(u->tilePosition(4, 1));
     _tiledMap->addChild(u);
     u->alignTile();
@@ -232,13 +232,18 @@ bool HelloWorld::init()
         _upper->hideUnitInfo();
         this->turnActionMode();
         _gameManager->isAction = true;
-        this->focusBattle();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONFINISHED, [this](EventCustom* evt){
         this->turnControlMode();
         _gameManager->isAction = false;
         this->clearActionUI();
+    });
+    
+    getEventDispatcher()->addCustomEventListener(EVT_BATTLESTART, [this](EventCustom* evt){
+        this->clearActionUI();
+        this->highlightBattleUnit();
+        this->focusBattle();
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -325,6 +330,25 @@ void HelloWorld::showAttackGrid(Vec2 tileGrid)
     }
 }
 
+void HelloWorld::highlightBattleUnit()
+{
+    Unit* cur = (Unit*)(_gameManager->currentUnit);
+    for (int i = 0; i < _unitList->size(); i++) {
+        Unit* u = _unitList->at(i);
+        if (u == cur)
+            u->setColor(Color3B(0xff, 0xff, 0xff));
+        else
+            u->setColor(Color3B(0x80, 0x80, 0x80));
+    }
+    for (int i = 0; i < _monsterList->size(); i++) {
+        Monster* m = _monsterList->at(i);
+        if (m == cur->attackTarget)
+            m->setColor(Color3B(0xff, 0xff, 0xff));
+        else
+            m->setColor(Color3B(0x80, 0x80, 0x80));
+    }
+}
+
 void HelloWorld::turnActionMode()
 {
     auto ground = _tiledMap->getLayer("ground");
@@ -333,23 +357,21 @@ void HelloWorld::turnActionMode()
         for (int y = 0; y < _tiledMap->getMapSize().height; y++) {
             Sprite* g = ground->getTileAt(Vec2(x, y));
             if (g != nullptr)
-                g->setColor(Color3B(0x40, 0x40, 0x40));
+                g->setColor(Color3B(0x60, 0x60, 0x60));
             
             Sprite* o = objects->getTileAt(Vec2(x, y));
             if (o != nullptr)
                 o->setColor(Color3B(0x60, 0x60, 0x60));
         }
     }
-    Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
+
     for (int i = 0; i < _unitList->size(); i++) {
         Unit* u = _unitList->at(i);
-        if (u != cur)
-            u->setColor(Color3B(0x80, 0x80, 0x80));
+        u->setColor(Color3B(0x80, 0x80, 0x80));
     }
     for (int i = 0; i < _monsterList->size(); i++) {
         Monster* m = _monsterList->at(i);
-        if (m != cur->attackTarget)
-            m->setColor(Color3B(0x80, 0x80, 0x80));
+        m->setColor(Color3B(0x80, 0x80, 0x80));
     }
 }
 
@@ -405,7 +427,8 @@ void HelloWorld::clearAttackGrid()
 void HelloWorld::focusBattle()
 {
     Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
-    Vec2 absScreenPos = _tiledMap->getPosition() + cur->getPosition(); // absolute pos in view
+    Vec2 battlePos = (cur->getPosition() + cur->attackTarget->getPosition()) / 2;
+    Vec2 absScreenPos = _tiledMap->getPosition() + battlePos; // absolute pos in view
     Vec2 distToViewCenter = Vec2(_winSize.width / 2 - absScreenPos.x, _winSize.height / 2 - absScreenPos.y);
     Vec2 mapPosTo = _tiledMap->getPosition() + distToViewCenter;
     mapPosTo += Vec2(10, -180); // small adjust

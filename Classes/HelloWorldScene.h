@@ -58,6 +58,7 @@ private:
     void showAttackGrid(Vec2 pos);
     void turnActionMode();
     void turnControlMode();
+    void highlightBattleUnit();
     void clearMovingGrid();
     void clearAttackGrid();
     void clearActionUI();

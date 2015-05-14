@@ -208,6 +208,7 @@ void AttackTarget::doStep(float delta)
 // UpperInfoPanel
 UpperInfoPanel::UpperInfoPanel()
 {
+    Size size = Director::getInstance()->getVisibleSize();
     Sprite::init();
     _icon = nullptr;
     _lastUnit = nullptr;
@@ -218,16 +219,21 @@ UpperInfoPanel::UpperInfoPanel()
     _panel = Sprite::create("up_panel.png");
     _panel->setPosition(_hidePos);
     addChild(_panel);
-    _isShowing = false;
     
-    Size size = Director::getInstance()->getVisibleSize();
+    _lowHidePos = Vec2(0, -size.height - 52);
+    _lowShowPos = Vec2(0, -size.height + 50);
+    _lowPanel = Sprite::create("low_panel.png");
+    _lowPanel->setPosition(_lowShowPos);
+    addChild(_lowPanel);
+    _isShowing = false;
+    _isLowShowing = true;
+    
     _btnDecide = Button::create("btn_decide.png");
-    _btnDecide->setPosition(Vec2(size.width -90, -40));
+    _btnDecide->setPosition(Vec2(size.width/2 -65, -size.height+50));
     _btnDecide->addTouchEventListener(CC_CALLBACK_2(UpperInfoPanel::touchEvent, this));
     _btnDecide->setZoomScale(0.4f);
     _btnDecide->setPressedActionEnabled(true);
-    _panel->addChild(_btnDecide, 2);
-    _btnDecide->setVisible(false);
+    addChild(_btnDecide, 2);
 }
 
 void UpperInfoPanel::touchEvent(Ref *pSender, Widget::TouchEventType type)
@@ -278,7 +284,6 @@ void UpperInfoPanel::showUnitInfo(Sprite* unit)
 {
     if (!_isShowing) {
         _panel->runAction(MoveTo::create(0.2, _showPos));
-        _btnDecide->setVisible(true);
         _isShowing = true;
     }
     if (_lastUnit != unit) {
@@ -310,7 +315,30 @@ void UpperInfoPanel::hideUnitInfo()
             _enemy = nullptr;
         }
         _lastUnit = nullptr;
-        _btnDecide->setVisible(false);
+    }
+}
+
+void UpperInfoPanel::showLow()
+{
+    if (!_isLowShowing) {
+        _lowPanel->runAction(MoveTo::create(0.2, _lowShowPos));
+        _btnDecide->setVisible(true);
+        _btnDecide->runAction(ScaleTo::create(0.2, 1));
+        _isLowShowing = true;
+    }
+}
+
+void UpperInfoPanel::hideLow()
+{
+    if (_isLowShowing) {
+        _btnDecide->runAction(ScaleTo::create(0.1, 0));
+        
+        CallFunc* func = CallFunc::create([&] () {
+            _btnDecide->setVisible(false);
+            _lowPanel->runAction(MoveTo::create(0.2, _lowHidePos));
+        });
+        runAction(Sequence::create(DelayTime::create(0.1), func, NULL));
+        _isLowShowing = false;
     }
 }
 

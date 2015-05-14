@@ -41,33 +41,6 @@ bool HelloWorld::init()
     _unitList = new Vector<Unit*>();
     _monsterList = new Vector<Monster*>();
     _gameManager->isAction = false;
-
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-    
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-    
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
-
-    // add the label as a child to this layer
-    this->addChild(label, 1);
     
     // info panel
     _upper = new UpperInfoPanel();
@@ -230,6 +203,7 @@ bool HelloWorld::init()
         this->clearActionUI();
         _action->showLayer();
         _upper->hideUnitInfo();
+        _upper->hideLow();
         this->turnActionMode();
         _gameManager->isAction = true;
     });
@@ -238,6 +212,7 @@ bool HelloWorld::init()
         this->turnControlMode();
         _gameManager->isAction = false;
         this->clearActionUI();
+        _upper->showLow();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_BATTLESTART, [this](EventCustom* evt){

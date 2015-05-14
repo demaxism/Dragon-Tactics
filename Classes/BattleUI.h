@@ -74,6 +74,7 @@ class UpperInfoPanel : public Sprite
 {
 private:
     Sprite* _panel;
+    Sprite* _lowPanel;
     Sprite* _icon;
     Sprite* _enemy;
     Sprite* _lastUnit;
@@ -81,12 +82,17 @@ private:
     Button* _btnDecide;
     Vec2 _hidePos;
     Vec2 _showPos;
+    Vec2 _lowHidePos;
+    Vec2 _lowShowPos;
     bool _isShowing;
+    bool _isLowShowing;
 public:
     UpperInfoPanel(void);
     bool initWithFile(const std::string& filename) override;
     void showUnitInfo(Sprite* unit);
     void hideUnitInfo();
+    void showLow();
+    void hideLow();
     void showEnemyInfo(Sprite* enemy);
     static UpperInfoPanel* create(const std::string &fn);
     void touchEvent(Ref *pSender, Widget::TouchEventType type);

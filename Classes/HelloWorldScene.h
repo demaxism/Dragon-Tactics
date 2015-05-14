@@ -63,6 +63,7 @@ private:
     void clearAttackGrid();
     void clearActionUI();
     void focusBattle(); // focus the battle pair in view center during action
+    void onActionDecided();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

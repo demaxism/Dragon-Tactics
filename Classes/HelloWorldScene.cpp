@@ -193,21 +193,24 @@ bool HelloWorld::init()
             cur->actionFinish();
             // commit battle pair
             _action->addPair(cur, cur->attackTarget);
+            // if all unit action finished
+            int nFinished = 0;
+            for (int i = 0; i < _unitList->size(); i++) {
+                Unit* u = _unitList->at(i);
+                if (u->getIsActionFinished())
+                    nFinished++;
+            }
+            if (nFinished == _unitList->size()){
+                CallFunc* func = CallFunc::create([&] () {
+                    this->onActionDecided();
+                });
+                runAction(Sequence::create(DelayTime::create(0.6), func, NULL));
+            }
         }
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONDECIDED, [this](EventCustom* evt){
-        // enable all units
-        for (int i = 0; i < _unitList->size(); i++) {
-            Unit* u = _unitList->at(i);
-            u->actionEnable();
-        }
-        this->clearActionUI();
-        _action->showLayer();
-        _upper->hideUnitInfo();
-        _upper->hideLow();
-        this->turnActionMode();
-        _gameManager->isAction = true;
+        this->onActionDecided();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONFINISHED, [this](EventCustom* evt){
@@ -227,6 +230,21 @@ bool HelloWorld::init()
     _frameCnt = 0;
     
     return true;
+}
+
+void HelloWorld::onActionDecided()
+{
+    // enable all units
+    for (int i = 0; i < _unitList->size(); i++) {
+        Unit* u = _unitList->at(i);
+        u->actionEnable();
+    }
+    this->clearActionUI();
+    _action->showLayer();
+    _upper->hideUnitInfo();
+    _upper->hideLow();
+    this->turnActionMode();
+    _gameManager->isAction = true;
 }
 
 void HelloWorld::clearActionUI()

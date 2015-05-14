@@ -221,11 +221,12 @@ void ActionLayer::hideBg()
 void ActionLayer::showChars()
 {
     float ypos = _winSize.height - 430;
+    float xd = 210;
     BattlePair* bp = _battleList->at(_iBattle);
     Unit* left = (Unit*)bp->leftSprite;
     _left = new Charactor(left->charName);
     addChild(_left,2);
-    _left->setPosition(Vec2(_winSize.width/2 - 230, ypos));
+    _left->setPosition(Vec2(_winSize.width/2 - xd, ypos));
     auto delay = DelayTime::create(1);
     CallFunc* func = CallFunc::create([&] () {
         _left->fight();
@@ -239,7 +240,7 @@ void ActionLayer::showChars()
     Monster* right = (Monster*)bp->rightSprite;
     _right = new Charactor(right->charName);
     addChild(_right, 1);
-    _right->setPosition(Vec2(_winSize.width/2 + 210, ypos));
+    _right->setPosition(Vec2(_winSize.width/2 + xd, ypos));
     _right->setScaleX(-1);
     CallFunc* hurtFunc = CallFunc::create([&] () {
         _right->hurt();

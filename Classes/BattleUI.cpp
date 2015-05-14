@@ -321,6 +321,8 @@ void UpperInfoPanel::hideUnitInfo()
 void UpperInfoPanel::showLow()
 {
     if (!_isLowShowing) {
+        _lowPanel->stopAllActions();
+        _btnDecide->stopAllActions();
         _lowPanel->runAction(MoveTo::create(0.2, _lowShowPos));
         _btnDecide->setVisible(true);
         _btnDecide->runAction(ScaleTo::create(0.2, 1));
@@ -331,13 +333,16 @@ void UpperInfoPanel::showLow()
 void UpperInfoPanel::hideLow()
 {
     if (_isLowShowing) {
+        _lowPanel->stopAllActions();
+        _btnDecide->stopAllActions();
+        
         _btnDecide->runAction(ScaleTo::create(0.1, 0));
         
         CallFunc* func = CallFunc::create([&] () {
             _btnDecide->setVisible(false);
             _lowPanel->runAction(MoveTo::create(0.2, _lowHidePos));
         });
-        runAction(Sequence::create(DelayTime::create(0.1), func, NULL));
+        _lowPanel->runAction(Sequence::create(DelayTime::create(0.1), func, NULL));
         _isLowShowing = false;
     }
 }

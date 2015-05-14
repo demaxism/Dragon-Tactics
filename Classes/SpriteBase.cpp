@@ -48,6 +48,12 @@ Vec2 SpriteBase::gridAtMap()
     return Vec2(x, y);
 }
 
+void SpriteBase::setMapGrid(int x, int y)
+{
+    originMapGrid = Vec2(x, y);
+    setPosition(tilePosition(x, y));
+}
+
 Rect SpriteBase::getRect()
 {
     auto s = getTexture()->getContentSize();

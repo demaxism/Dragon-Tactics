@@ -194,5 +194,5 @@ void Unit::actionEnable()
         _checkMark->removeFromParentAndCleanup(true);
         _checkMark = nullptr;
     }
+    originMapGrid = mapGrid;
 }
-

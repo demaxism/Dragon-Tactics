@@ -202,7 +202,7 @@ void ActionLayer::hideBg()
             bg->visit();
             _rtex->end();
         }
-        else {
+        else if (_cntMaskLoop == 0) {
             mask->release();
             bg->release();
             if (_rtex != nullptr) {
@@ -214,7 +214,7 @@ void ActionLayer::hideBg()
         _cntMaskLoop--;
     });
     Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
-    runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
+    runAction(Repeat::create(sequence, nFrame+1)); // repeat nFrame times
     _isBgShowing = false;
 }
 

@@ -78,7 +78,7 @@ bool HelloWorld::init()
     Unit* u = Unit::create("q_01.png");
     u->moveRange = 3;
     u->charName = "ani01";
-    u->setPosition(u->tilePosition(2, 3));
+    u->setMapGrid(2, 3);
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);
@@ -87,7 +87,7 @@ bool HelloWorld::init()
     u->moveRange = 3;
     u->attackRange = 2;
     u->charName = "ani02";
-    u->setPosition(u->tilePosition(4, 1));
+    u->setMapGrid(4, 1);
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);
@@ -156,22 +156,23 @@ bool HelloWorld::init()
         this->clearActionUI();
         Unit* cur = (Unit*)GameManager::getInstance()->currentUnit;
 
-        auto mapGrid = (Vec2*)evt->getUserData();
-        this->showMovingGrid(*mapGrid);
+        this->showMovingGrid(cur->originMapGrid);
         // origin unit
         _originalUnit = Unit::createWithTexture(cur->getTexture());
-        _originalUnit->setPosition(cur->getPosition());
+        _originalUnit->setMapGrid(cur->originMapGrid.x, cur->originMapGrid.y);
         _tiledMap->addChild(_originalUnit);
         _originalUnit->alignTile();
         _originalUnit->setOpacity(0x80);
         // upper info
         _upper->showUnitInfo(cur);
+        _upper->hideLow();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_UNITGRABEND, [this](EventCustom* evt){
         this->clearMovingGrid();
         _crossMark->hide();
         _targetMark->stopFlash();
+        _upper->showLow();
         // remove origin unit
         _originalUnit->removeFromParentAndCleanup(true);
         bool isMoved = (bool*)evt->getUserData();
@@ -434,7 +435,7 @@ void HelloWorld::doStep(float delta)
             mapPos = mapPos - slidex;
             unitPos = unitPos + slidex;
         }
-        if (touch.y < _fringe + 40) {
+        if (touch.y < _fringe + 30) {
             mapPos = mapPos + slidey;
             unitPos = unitPos - slidey;
         }

@@ -19,9 +19,11 @@ public:
     Vec2 offset;
     Vec2 tilePosition(int x, int y);
     Vec2 mapGrid;
+    Vec2 originMapGrid; // the origin map grid in a turn, doesnt change in turn. change after action decide
     void alignTile();
     void flyToGrid(Vec2 pos);
     Vec2 gridAtMap();
+    void setMapGrid(int x, int y); // put to a map position
 
     Rect getRect();
     bool containsTouchLocation(Touch* touch);

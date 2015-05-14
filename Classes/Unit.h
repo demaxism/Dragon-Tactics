@@ -30,6 +30,7 @@ public:
     uint moveRange;
     uint attackRange;
     SpriteBase* attackTarget;
+    std::string charName;
     
     Unit(void);
     virtual ~Unit(void);

@@ -23,6 +23,7 @@ private:
     
 public:
     uint moveRange;
+    std::string charName;
     
     Monster(void);
     virtual ~Monster(void);
@@ -34,6 +35,7 @@ public:
     
     void startFlash();
     void stopFlash();
+    bool getIsFlashing() { return isFlashing; }
     
     static Monster* create(const std::string &fn);
 };

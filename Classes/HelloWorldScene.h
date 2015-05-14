@@ -57,9 +57,11 @@ private:
     void showMovingGrid(Vec2 pos);
     void showAttackGrid(Vec2 pos);
     void turnActionMode();
+    void turnControlMode();
     void clearMovingGrid();
     void clearAttackGrid();
     void clearActionUI();
+    void focusBattle(); // focus the battle pair in view center during action
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -44,6 +44,7 @@ public:
     Size mapSize;
     bool isUnitGrabbed;
     bool isMovable;
+    bool isAction; // is main view in action performing (battle animating)
     MovePattern movePattern;
     Sprite* currentUnit;
     TMXTiledMap* tiledMap;

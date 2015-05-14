@@ -40,6 +40,7 @@ bool HelloWorld::init()
     _attackGridList = new Vector<FlashGrid*>();
     _unitList = new Vector<Unit*>();
     _monsterList = new Vector<Monster*>();
+    _gameManager->isAction = false;
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -102,6 +103,7 @@ bool HelloWorld::init()
     // units
     Unit* u = Unit::create("q_01.png");
     u->moveRange = 3;
+    u->charName = "ani01";
     u->setPosition(u->tilePosition(2, 3));
     _tiledMap->addChild(u);
     u->alignTile();
@@ -110,6 +112,7 @@ bool HelloWorld::init()
     u = Unit::create("q_02.png");
     u->moveRange = 2;
     u->attackRange = 2;
+    u->charName = "ani01";
     u->setPosition(u->tilePosition(4, 1));
     _tiledMap->addChild(u);
     u->alignTile();
@@ -117,13 +120,15 @@ bool HelloWorld::init()
     
     // monsters
     Monster* m = Monster::create("m_02.png");
+    m->charName = "m01";
     m->setPosition(m->tilePosition(5, 8));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
     
     m = Monster::create("m_02.png");
-    m->setPosition(m->tilePosition(5, 6));
+    m->charName = "m01";
+    m->setPosition(m->tilePosition(1, 4));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
@@ -203,15 +208,17 @@ bool HelloWorld::init()
     
     getEventDispatcher()->addCustomEventListener(EVT_ENEMYTOUCHED, [this](EventCustom* evt){
         Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
-        this->clearAttackGrid();
         Monster* m = (Monster*)evt->getUserData();
-        cur->attackTarget = m;
-        m->stopFlash();
-        _upper->showEnemyInfo(cur->attackTarget);
-        _attackTarget->lockTarget(cur, cur->attackTarget);
-        cur->actionFinish();
-        // commit battle pair
-        _action->addPair("ani01", "");
+        if (m->getIsFlashing()) {
+            this->clearAttackGrid();
+            cur->attackTarget = m;
+            m->stopFlash();
+            _upper->showEnemyInfo(cur->attackTarget);
+            _attackTarget->lockTarget(cur, cur->attackTarget);
+            cur->actionFinish();
+            // commit battle pair
+            _action->addPair(cur, cur->attackTarget);
+        }
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONDECIDED, [this](EventCustom* evt){
@@ -224,10 +231,14 @@ bool HelloWorld::init()
         _action->showLayer();
         _upper->hideUnitInfo();
         this->turnActionMode();
+        _gameManager->isAction = true;
+        this->focusBattle();
     });
     
     getEventDispatcher()->addCustomEventListener(EVT_ACTIONFINISHED, [this](EventCustom* evt){
-        
+        this->turnControlMode();
+        _gameManager->isAction = false;
+        this->clearActionUI();
     });
     
     _releaseTouchDiff = Vec2(0, 0);
@@ -329,6 +340,42 @@ void HelloWorld::turnActionMode()
                 o->setColor(Color3B(0x60, 0x60, 0x60));
         }
     }
+    Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
+    for (int i = 0; i < _unitList->size(); i++) {
+        Unit* u = _unitList->at(i);
+        if (u != cur)
+            u->setColor(Color3B(0x80, 0x80, 0x80));
+    }
+    for (int i = 0; i < _monsterList->size(); i++) {
+        Monster* m = _monsterList->at(i);
+        if (m != cur->attackTarget)
+            m->setColor(Color3B(0x80, 0x80, 0x80));
+    }
+}
+
+void HelloWorld::turnControlMode()
+{
+    auto ground = _tiledMap->getLayer("ground");
+    auto objects = _tiledMap->getLayer("objects");
+    for (int x = 0; x < _tiledMap->getMapSize().width; x++) {
+        for (int y = 0; y < _tiledMap->getMapSize().height; y++) {
+            Sprite* g = ground->getTileAt(Vec2(x, y));
+            if (g != nullptr)
+                g->setColor(Color3B(0xff, 0xff, 0xff));
+            
+            Sprite* o = objects->getTileAt(Vec2(x, y));
+            if (o != nullptr)
+                o->setColor(Color3B(0xff, 0xff, 0xff));
+        }
+    }
+    for (int i = 0; i < _unitList->size(); i++) {
+        Unit* u = _unitList->at(i);
+        u->setColor(Color3B(0xff, 0xff, 0xff));
+    }
+    for (int i = 0; i < _monsterList->size(); i++) {
+        Monster* m = _monsterList->at(i);
+        m->setColor(Color3B(0xff, 0xff, 0xff));
+    }
 }
 
 void HelloWorld::clearMovingGrid()
@@ -353,6 +400,19 @@ void HelloWorld::clearAttackGrid()
         Monster* m = _monsterList->at(i);
         m->stopFlash();
     }
+}
+
+void HelloWorld::focusBattle()
+{
+    Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
+    Vec2 absScreenPos = _tiledMap->getPosition() + cur->getPosition(); // absolute pos in view
+    Vec2 distToViewCenter = Vec2(_winSize.width / 2 - absScreenPos.x, _winSize.height / 2 - absScreenPos.y);
+    Vec2 mapPosTo = _tiledMap->getPosition() + distToViewCenter;
+    mapPosTo += Vec2(10, -180); // small adjust
+    Vec2 refrained = refrainMapPos(mapPosTo);
+    _tiledMap->runAction(MoveTo::create(0.2, refrained));
+    // attack target
+    _attackTarget->lockTarget(cur, cur->attackTarget);
 }
 
 void HelloWorld::doStep(float delta)
@@ -446,7 +506,8 @@ Vec2 HelloWorld::refrainMapPos(Vec2 pos)
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     float x = pos.x;
     float y = pos.y;
-    if (pos.x > MAP_MARGIN) x = MAP_MARGIN;
+    float xAdjust = -15;
+    if (pos.x > MAP_MARGIN + xAdjust) x = MAP_MARGIN + xAdjust;
     if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width) x = -mapWidth - MAP_MARGIN + _winSize.width;
     if (pos.y > MAP_MARGIN) y = MAP_MARGIN;
     if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) y = -mapHeight - MAP_MARGIN + _winSize.height;
@@ -467,6 +528,7 @@ bool HelloWorld::isMapInsideView(Vec2 pos)
 
 void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
+    if (_gameManager->isAction) return; // return if during action animation
     if (GameManager::getInstance()->isUnitGrabbed == false) {
         auto touch = touches[0];
         auto diff = touch->getDelta();
@@ -485,12 +547,14 @@ void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *even
 
 void HelloWorld::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
+    if (_gameManager->isAction) return; // return if during action animation
     GameManager::getInstance()->touchQueue->empty();
 }
 
 void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    auto touch = touches[0];
+    if (_gameManager->isAction) return; // return if during action animation
+    
     std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;
     
     Vec2 diffTotal = Vec2(0, 0);

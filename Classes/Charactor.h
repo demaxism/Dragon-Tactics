@@ -14,8 +14,8 @@
 USING_NS_CC;
 
 struct BattlePair {
-    std::string left;
-    std::string right;
+    void* leftSprite;
+    void* rightSprite;
 };
 
 class Charactor : public Sprite
@@ -24,10 +24,14 @@ private:
     std::string _name;
     Sprite* _normal;
     Sprite* _fight;
+    int _frame;
+    Vec2 _pos;
 public:
     Charactor(void);
     Charactor(const std::string& filename);
     void fight();
+    void hurt();
+    void hurtStep(float);
 };
 
 class ActionLayer : public Sprite
@@ -38,12 +42,19 @@ private:
     Sprite* _actionLabel;
     Size _winSize;
     Charactor* _left;
+    Charactor* _right;
     std::vector<BattlePair*>* _battleList;
+    RenderTexture* _rtex;
+    Sprite* bg;
+    Sprite* mask;
+    int _cntMaskLoop;
 public:
     ActionLayer(void);
     void showLayer();
     void hideLayer();
-    void addPair(const std::string& left, const std::string& right);
+    void addPair(void* leftSprite, void* rightSprite);
+    void showBg();
+    void hideBg();
     void showChars();
 };
 

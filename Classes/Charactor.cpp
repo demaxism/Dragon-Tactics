@@ -8,6 +8,8 @@
 
 #include "Charactor.h"
 #include "GameManager.h"
+#include "Unit.h"
+#include "Monster.h"
 
 Charactor::Charactor()
 {
@@ -57,6 +59,28 @@ void Charactor::fight()
     _fight->runAction(fightFadeSequence);
 }
 
+void Charactor::hurt()
+{
+    _frame = 0;
+    schedule( CC_SCHEDULE_SELECTOR(Charactor::hurtStep) );
+}
+
+void Charactor::hurtStep(float delta)
+{
+    _normal->setPosition(Vec2(5 * cosf(_frame), _normal->getPosition().y));
+    if (_frame % 2 > 0) {
+        _normal->setColor(Color3B(0xff, 0xff, 0xff));
+    }
+    else {
+        _normal->setColor(Color3B(0xff, 0x00, 0x00));
+    }
+    if (_frame >= 20) {
+        unschedule(CC_SCHEDULE_SELECTOR(Charactor::hurtStep));
+        _normal->setColor(Color3B(0xff, 0xff, 0xff));
+    }
+    _frame++;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // ActionLayer
 ActionLayer::ActionLayer()
@@ -68,6 +92,7 @@ ActionLayer::ActionLayer()
     this->addChild(_mask);
     setVisible(false);
     _actionLabel = nullptr;
+    _rtex = nullptr;
     _battleList = new std::vector<BattlePair*>();
 }
 
@@ -89,6 +114,7 @@ void ActionLayer::showLayer()
             _actionLabel = nullptr;
             _mask->runAction(FadeTo::create(0.1, 0));
             this->showChars();
+            this->showBg();
         });
         auto sequence = Sequence::create(movein, delay, moveout, final, NULL);
         _actionLabel->runAction(sequence);
@@ -104,24 +130,97 @@ void ActionLayer::hideLayer()
             _left->removeFromParentAndCleanup(true);
             _left = nullptr;
         }
+        if (_right != nullptr) {
+            _right->removeFromParentAndCleanup(true);
+            _right = nullptr;
+        }
         _battleList->clear();
-        setVisible(false);
+        this->hideBg();
         _isShowing = false;
     }
 }
 
-void ActionLayer::addPair(const std::string& left, const std::string& right)
+void ActionLayer::addPair(void* leftSprite, void* rightSprite)
 {
     BattlePair* bp = new BattlePair();
-    bp->left = left;
-    bp->right = right;
+    bp->leftSprite = leftSprite;
+    bp->rightSprite = rightSprite;
     _battleList->push_back(bp);
+}
+
+void ActionLayer::showBg()
+{
+    if (_rtex != nullptr) {
+        _rtex->removeFromParentAndCleanup(true);
+    }
+    bg = Sprite::create("bg_02.jpg");
+    BlendFunc bf1;
+    bf1.src = GL_DST_ALPHA;
+    bf1.dst = GL_ZERO;
+    bg->setBlendFunc(bf1);
+    bg->retain();
+    mask = Sprite::create("bg_mask.png");
+    BlendFunc bf2;
+    bf2.src = GL_ONE;
+    bf2.dst = GL_ZERO;
+    mask->setBlendFunc(bf2);
+    mask->retain();
+    
+    int nFrame = 20;
+    _cntMaskLoop = nFrame;
+    _rtex = RenderTexture::create(_winSize.width, 500);
+    addChild(_rtex, -1);
+    _rtex->setPosition(Vec2(_winSize.width/2, _winSize.height - 250));
+    
+    CallFunc* stepFunc = CallFunc::create([&] () {
+        if (_cntMaskLoop > 0) {
+            _rtex->beginWithClear(0, 0, 0, 0);
+            mask->setPosition(Vec2(_winSize.width/2, 250 + _cntMaskLoop * 25));
+            mask->visit();
+            bg->setPosition(Vec2(_winSize.width/2, 250));
+            bg->visit();
+            _rtex->end();
+        }
+        _cntMaskLoop--;
+    });
+    Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
+    runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
+}
+
+void ActionLayer::hideBg()
+{
+    int nFrame = 10;
+    _cntMaskLoop = nFrame;
+
+    CallFunc* stepFunc = CallFunc::create([&] () {
+        if (_cntMaskLoop > 0) {
+            _rtex->beginWithClear(0, 0, 0, 0);
+            mask->setPosition(Vec2(_winSize.width/2, 750 - _cntMaskLoop * (50)));
+            mask->visit();
+            bg->setPosition(Vec2(_winSize.width/2, 250));
+            bg->visit();
+            _rtex->end();
+        }
+        else {
+            mask->release();
+            bg->release();
+            if (_rtex != nullptr) {
+                _rtex->removeFromParentAndCleanup(true);
+                _rtex = nullptr;
+            }
+            setVisible(false);
+        }
+        _cntMaskLoop--;
+    });
+    Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
+    runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
 }
 
 void ActionLayer::showChars()
 {
     BattlePair* bp = _battleList->at(0);
-    _left = new Charactor(bp->left);
+    Unit* left = (Unit*)bp->leftSprite;
+    _left = new Charactor(left->charName);
     addChild(_left,2);
     _left->setPosition(Vec2(_winSize.width/2 - 230, _winSize.height - 400));
     auto delay = DelayTime::create(1);
@@ -135,6 +234,16 @@ void ActionLayer::showChars()
         getEventDispatcher()->dispatchEvent(&evt);
     });
     runAction(Sequence::create(delay, func, delayHitted, func2, NULL));
+    
+    Monster* right = (Monster*)bp->rightSprite;
+    _right = new Charactor(right->charName);
+    addChild(_right, 2);
+    _right->setPosition(Vec2(_winSize.width/2 + 210, _winSize.height - 400));
+    _right->setScaleX(-1);
+    CallFunc* hurtFunc = CallFunc::create([&] () {
+        _right->hurt();
+    });
+    runAction(Sequence::create(delay = DelayTime::create(1.2), hurtFunc, NULL));
 }
 
 

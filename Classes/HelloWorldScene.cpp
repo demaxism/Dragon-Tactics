@@ -54,6 +54,7 @@ bool HelloWorld::init()
     // add the tiled map
     _tiledMap = TMXTiledMap::create("map-1.tmx");
     addChild(_tiledMap, 0, kTagTileMap);
+    _tiledMap->setPosition(refrainMapPos(Vec2(0, 0)));
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     GameManager::getInstance()->mapSize = _tiledMap->getMapSize();
     GameManager::getInstance()->tiledMap = _tiledMap;
@@ -103,6 +104,13 @@ bool HelloWorld::init()
     m = Monster::create("m_02.png");
     m->charName = "m01";
     m->setPosition(m->tilePosition(1, 4));
+    _tiledMap->addChild(m);
+    m->alignTile();
+    _monsterList->pushBack(m);
+    
+    m = Monster::create("m_03.png");
+    m->charName = "m01";
+    m->setPosition(m->tilePosition(8, 11));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
@@ -159,7 +167,8 @@ bool HelloWorld::init()
         this->showMovingGrid(cur->originMapGrid);
         // origin unit
         _originalUnit = Unit::createWithTexture(cur->getTexture());
-        _originalUnit->setMapGrid(cur->originMapGrid.x, cur->originMapGrid.y);
+        //_originalUnit->setMapGrid(cur->originMapGrid.x, cur->originMapGrid.y); // origin pos
+        _originalUnit->setPosition(cur->getPosition()); // recent pos
         _tiledMap->addChild(_originalUnit);
         _originalUnit->alignTile();
         _originalUnit->setOpacity(0x80);
@@ -524,9 +533,9 @@ Vec2 HelloWorld::refrainMapPos(Vec2 pos)
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     float x = pos.x;
     float y = pos.y;
-    float xAdjust = -15;
-    if (pos.x > MAP_MARGIN + xAdjust) x = MAP_MARGIN + xAdjust;
-    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width) x = -mapWidth - MAP_MARGIN + _winSize.width;
+
+    if (pos.x > MAP_MARGIN + MAP_XADJUST) x = MAP_MARGIN + MAP_XADJUST;
+    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST) x = -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST;
     if (pos.y > MAP_MARGIN) y = MAP_MARGIN;
     if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) y = -mapHeight - MAP_MARGIN + _winSize.height;
     return Vec2(x, y);
@@ -537,8 +546,8 @@ bool HelloWorld::isMapInsideView(Vec2 pos)
     float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     bool ret = true;
-    if (pos.x > MAP_MARGIN) ret = false;
-    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width) ret = false;
+    if (pos.x > MAP_MARGIN + MAP_XADJUST) ret = false;
+    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST) ret = false;
     if (pos.y > MAP_MARGIN) ret = false;
     if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) ret = false;
     return ret;

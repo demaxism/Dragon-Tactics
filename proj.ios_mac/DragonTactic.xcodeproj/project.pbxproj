@@ -14,6 +14,10 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		295906481B04B0C800BABB3C /* btn_decide.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906461B04B0C800BABB3C /* btn_decide.png */; };
 		295906491B04B0C800BABB3C /* low_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906471B04B0C800BABB3C /* low_panel.png */; };
+		295906531B058AB600BABB3C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295906511B058AB600BABB3C /* Effect.cpp */; };
+		295906561B059CF800BABB3C /* ef_hit1_00.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906541B059CF800BABB3C /* ef_hit1_00.png */; };
+		295906571B059CF800BABB3C /* ef_hit1_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906551B059CF800BABB3C /* ef_hit1_01.png */; };
+		295906591B05B45400BABB3C /* m_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906581B05B45400BABB3C /* m_03.png */; };
 		298516981AE5F61B0053A7A9 /* ortho-test1.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516961AE5F61B0053A7A9 /* ortho-test1.png */; };
 		298516991AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */; };
 		298516A31AE780350053A7A9 /* q_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 298516A21AE780350053A7A9 /* q_01.png */; };
@@ -144,6 +148,11 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		295906461B04B0C800BABB3C /* btn_decide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_decide.png; sourceTree = "<group>"; };
 		295906471B04B0C800BABB3C /* low_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = low_panel.png; sourceTree = "<group>"; };
+		295906511B058AB600BABB3C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
+		295906521B058AB600BABB3C /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Effect.h; sourceTree = "<group>"; };
+		295906541B059CF800BABB3C /* ef_hit1_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ef_hit1_00.png; sourceTree = "<group>"; };
+		295906551B059CF800BABB3C /* ef_hit1_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ef_hit1_01.png; sourceTree = "<group>"; };
+		295906581B05B45400BABB3C /* m_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m_03.png; sourceTree = "<group>"; };
 		298516961AE5F61B0053A7A9 /* ortho-test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ortho-test1.png"; sourceTree = "<group>"; };
 		298516971AE5F61B0053A7A9 /* orthogonal-test-zorder.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "orthogonal-test-zorder.tmx"; sourceTree = "<group>"; };
 		298516A21AE780350053A7A9 /* q_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = q_01.png; sourceTree = "<group>"; };
@@ -352,6 +361,9 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				295906581B05B45400BABB3C /* m_03.png */,
+				295906541B059CF800BABB3C /* ef_hit1_00.png */,
+				295906551B059CF800BABB3C /* ef_hit1_01.png */,
 				366F907D1B053264006316B6 /* action.png */,
 				366F907B1B04D0FD006316B6 /* panel.png */,
 				295906461B04B0C800BABB3C /* btn_decide.png */,
@@ -410,6 +422,8 @@
 				3609955A1AF71F0D0069EED8 /* SpriteBase.h */,
 				368189741AFCAE6900611B01 /* Monster.cpp */,
 				368189751AFCAE6900611B01 /* Monster.h */,
+				295906511B058AB600BABB3C /* Effect.cpp */,
+				295906521B058AB600BABB3C /* Effect.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -574,6 +588,7 @@
 				360995531AF64CE60069EED8 /* cross_mark.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				29C6FC191B045E9700FC4A13 /* bg_mask.png in Resources */,
+				295906561B059CF800BABB3C /* ef_hit1_00.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				29C6FC171B045DB600FC4A13 /* bg_02.jpg in Resources */,
 				369686E71AF4C2FD008EFA2E /* m_01.png in Resources */,
@@ -588,9 +603,11 @@
 				366F907C1B04D0FD006316B6 /* panel.png in Resources */,
 				3685481F1AF11BB4002146C3 /* tex.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				295906571B059CF800BABB3C /* ef_hit1_01.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				360995581AF663670069EED8 /* grid-light.png in Resources */,
 				366F906A1B022CC9006316B6 /* attack_target.png in Resources */,
+				295906591B05B45400BABB3C /* m_03.png in Resources */,
 				29C6FBFC1B01FFF300FC4A13 /* grid-attack.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				366F907E1B053264006316B6 /* action.png in Resources */,
@@ -641,6 +658,7 @@
 				366F906F1B039344006316B6 /* Charactor.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				368189761AFCAE6900611B01 /* Monster.cpp in Sources */,
+				295906531B058AB600BABB3C /* Effect.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				3609955B1AF71F0D0069EED8 /* SpriteBase.cpp in Sources */,

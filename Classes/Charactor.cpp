@@ -96,6 +96,7 @@ ActionLayer::ActionLayer()
     _rtex = nullptr;
     _left = nullptr;
     _right = nullptr;
+    _eh = nullptr;
     _battleList = new std::vector<BattlePair*>();
 }
 
@@ -184,11 +185,26 @@ void ActionLayer::showBg()
     Sequence* sequence = Sequence::create(stepFunc, DelayTime::create(0.02), NULL);
     runAction(Repeat::create(sequence, nFrame)); // repeat nFrame times
     _isBgShowing = true;
+    
+    // for effect flash
+    _flash = Sprite::create("bg_mask.png");
+    addChild(_flash, 2);
+    _flash->setPosition(_rtex->getPosition());
+    BlendFunc bf3;
+    bf3.src = GL_SRC_ALPHA;
+    bf3.dst = GL_ONE;
+    setBlendFunc(bf3);
+    _flash->setVisible(false);
 }
 
 void ActionLayer::hideBg()
 {
     if (!_isBgShowing) return;
+    
+    if (_flash != nullptr) {
+        _flash->removeFromParentAndCleanup(true);
+        _flash = nullptr;
+    }
     
     int nFrame = 10;
     _cntMaskLoop = nFrame;
@@ -231,7 +247,7 @@ void ActionLayer::showChars()
     CallFunc* func = CallFunc::create([&] () {
         _left->fight();
     });
-    auto delayHitted = DelayTime::create(1.5);
+    auto delayHitted = DelayTime::create(1.6);
     CallFunc* func2 = CallFunc::create([&] () {
         this->nextBattle();
     });
@@ -244,9 +260,17 @@ void ActionLayer::showChars()
     _right->setScaleX(-1);
     CallFunc* hurtFunc = CallFunc::create([&] () {
         _right->hurt();
+        // effect
+        _eh = new EffectHit();
+        _eh->setPosition(_right->getPosition() + Vec2(-40, 150));
+        addChild(_eh, 3);
+        _eh->play();
+        _flash->setVisible(true);
+        _flash->setOpacity(0xff);
+        _flash->runAction(FadeTo::create(0.4, 0));
     });
     runAction(Sequence::create(delay = DelayTime::create(1.2), hurtFunc, NULL));
-    
+
     // send battle start event to main, for focus battle
     GameManager::getInstance()->currentUnit = left;
     auto evt = EventCustom(EVT_BATTLESTART);
@@ -262,6 +286,10 @@ void ActionLayer::hideChars()
     if (_right != nullptr) {
         _right->removeFromParentAndCleanup(true);
         _right = nullptr;
+    }
+    if (_eh != nullptr) {
+        _eh->removeFromParentAndCleanup(true);
+        _eh = nullptr;
     }
 }
 

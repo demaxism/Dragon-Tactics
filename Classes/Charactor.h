@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include "Effect.h"
 USING_NS_CC;
 
 struct BattlePair {
@@ -48,6 +49,8 @@ private:
     RenderTexture* _rtex;
     Sprite* bg;
     Sprite* mask;
+    EffectHit* _eh;
+    Sprite* _flash;
     int _cntMaskLoop;
     int _iBattle; // battle index
 public:

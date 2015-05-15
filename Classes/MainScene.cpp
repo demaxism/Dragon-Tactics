@@ -1,15 +1,15 @@
-#include "HelloWorldScene.h"
+#include "MainScene.h"
 #include "GameManager.h"
 
 USING_NS_CC;
 
-Scene* HelloWorld::createScene()
+Scene* MainScene::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = HelloWorld::create();
+    auto layer = MainScene::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -19,7 +19,7 @@ Scene* HelloWorld::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool MainScene::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -133,9 +133,9 @@ bool HelloWorld::init()
     
     // init touch
     auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesMoved = CC_CALLBACK_2(HelloWorld::onTouchesMoved, this);
-    listener->onTouchesBegan = CC_CALLBACK_2(HelloWorld::onTouchesBegan, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(HelloWorld::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(MainScene::onTouchesMoved, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(MainScene::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(MainScene::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     _winSize = Director::getInstance()->getWinSize();
@@ -143,7 +143,7 @@ bool HelloWorld::init()
     
     // frame loop
     if (GameManager::getInstance()->movePattern == mpBring) {
-        schedule( CC_SCHEDULE_SELECTOR(HelloWorld::doStep) );
+        schedule( CC_SCHEDULE_SELECTOR(MainScene::doStep) );
     }
     
     // event listener
@@ -241,7 +241,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::onActionDecided()
+void MainScene::onActionDecided()
 {
     // enable all units
     for (int i = 0; i < _unitList->size(); i++) {
@@ -256,13 +256,13 @@ void HelloWorld::onActionDecided()
     _gameManager->isAction = true;
 }
 
-void HelloWorld::clearActionUI()
+void MainScene::clearActionUI()
 {
     this->clearAttackGrid();
     _attackTarget->stopLock();
 }
 
-void HelloWorld::showMovingGrid(Vec2 tileGrid)
+void MainScene::showMovingGrid(Vec2 tileGrid)
 {
     auto layer = _tiledMap->getLayer("objects");
     Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
@@ -304,7 +304,7 @@ void HelloWorld::showMovingGrid(Vec2 tileGrid)
     }
 }
 
-void HelloWorld::showAttackGrid(Vec2 tileGrid)
+void MainScene::showAttackGrid(Vec2 tileGrid)
 {
     Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
     int range = unit->attackRange;
@@ -334,7 +334,7 @@ void HelloWorld::showAttackGrid(Vec2 tileGrid)
     }
 }
 
-void HelloWorld::highlightBattleUnit()
+void MainScene::highlightBattleUnit()
 {
     Unit* cur = (Unit*)(_gameManager->currentUnit);
     for (int i = 0; i < _unitList->size(); i++) {
@@ -353,7 +353,7 @@ void HelloWorld::highlightBattleUnit()
     }
 }
 
-void HelloWorld::turnActionMode()
+void MainScene::turnActionMode()
 {
     auto ground = _tiledMap->getLayer("ground");
     auto objects = _tiledMap->getLayer("objects");
@@ -379,7 +379,7 @@ void HelloWorld::turnActionMode()
     }
 }
 
-void HelloWorld::turnControlMode()
+void MainScene::turnControlMode()
 {
     auto ground = _tiledMap->getLayer("ground");
     auto objects = _tiledMap->getLayer("objects");
@@ -404,7 +404,7 @@ void HelloWorld::turnControlMode()
     }
 }
 
-void HelloWorld::clearMovingGrid()
+void MainScene::clearMovingGrid()
 {
     ssize_t n = _movingGridList->size();
     for (ssize_t i = 0; i < n ; i++) {
@@ -414,7 +414,7 @@ void HelloWorld::clearMovingGrid()
     _movingGridList->clear();
 }
 
-void HelloWorld::clearAttackGrid()
+void MainScene::clearAttackGrid()
 {
     ssize_t n = _attackGridList->size();
     for (ssize_t i = 0; i < n ; i++) {
@@ -428,7 +428,7 @@ void HelloWorld::clearAttackGrid()
     }
 }
 
-void HelloWorld::focusBattle()
+void MainScene::focusBattle()
 {
     Unit* cur = (Unit*)(GameManager::getInstance()->currentUnit);
     Vec2 battlePos = (cur->getPosition() + cur->attackTarget->getPosition()) / 2;
@@ -442,7 +442,7 @@ void HelloWorld::focusBattle()
     _attackTarget->lockTarget(cur, cur->attackTarget);
 }
 
-void HelloWorld::doStep(float delta)
+void MainScene::doStep(float delta)
 {
     // mpBring
     if (GameManager::getInstance()->isUnitGrabbed) {
@@ -527,7 +527,7 @@ void HelloWorld::doStep(float delta)
     _frameCnt++;
 }
 
-Vec2 HelloWorld::refrainMapPos(Vec2 pos)
+Vec2 MainScene::refrainMapPos(Vec2 pos)
 {
     float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
@@ -541,7 +541,7 @@ Vec2 HelloWorld::refrainMapPos(Vec2 pos)
     return Vec2(x, y);
 }
 
-bool HelloWorld::isMapInsideView(Vec2 pos)
+bool MainScene::isMapInsideView(Vec2 pos)
 {
     float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
@@ -553,7 +553,7 @@ bool HelloWorld::isMapInsideView(Vec2 pos)
     return ret;
 }
 
-void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
+void MainScene::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
     if (_gameManager->isAction) return; // return if during action animation
     if (GameManager::getInstance()->isUnitGrabbed == false) {
@@ -572,13 +572,13 @@ void HelloWorld::onTouchesMoved(const std::vector<Touch*>& touches, Event  *even
     }
 }
 
-void HelloWorld::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
+void MainScene::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
     if (_gameManager->isAction) return; // return if during action animation
     GameManager::getInstance()->touchQueue->empty();
 }
 
-void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
+void MainScene::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
     if (_gameManager->isAction) return; // return if during action animation
     
@@ -602,7 +602,7 @@ void HelloWorld::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
     CCLOG("map x: %f¥n",_tiledMap->getPosition().x);
 }
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void MainScene::menuCloseCallback(Ref* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");

@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __MainScene_SCENE_H__
+#define __MainScene_SCENE_H__
 
 #include "cocos2d.h"
 #include "Unit.h"
@@ -15,7 +15,7 @@ enum
     kTagTileMap = 1,
 };
 
-class HelloWorld : public cocos2d::Layer
+class MainScene : public cocos2d::Layer
 {
 private:
     TMXTiledMap* _tiledMap;
@@ -46,7 +46,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(MainScene);
 private:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *event) override;
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *event) override;
@@ -66,4 +66,4 @@ private:
     void onActionDecided();
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __MainScene_SCENE_H__

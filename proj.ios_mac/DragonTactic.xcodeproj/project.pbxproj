@@ -33,6 +33,7 @@
 		360995561AF65E5F0069EED8 /* BattleUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360995541AF65E5F0069EED8 /* BattleUI.cpp */; };
 		360995581AF663670069EED8 /* grid-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 360995571AF663670069EED8 /* grid-light.png */; };
 		3609955B1AF71F0D0069EED8 /* SpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360995591AF71F0D0069EED8 /* SpriteBase.cpp */; };
+		366A636E1B1227BB005FE1D6 /* tex3.png in Resources */ = {isa = PBXBuildFile; fileRef = 366A636D1B1227BB005FE1D6 /* tex3.png */; };
 		366F906A1B022CC9006316B6 /* attack_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 366F90691B022CC9006316B6 /* attack_target.png */; };
 		366F906C1B02CE89006316B6 /* check_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 366F906B1B02CE89006316B6 /* check_mark.png */; };
 		366F906F1B039344006316B6 /* Charactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 366F906D1B039344006316B6 /* Charactor.cpp */; };
@@ -171,6 +172,7 @@
 		360995571AF663670069EED8 /* grid-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grid-light.png"; sourceTree = "<group>"; };
 		360995591AF71F0D0069EED8 /* SpriteBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteBase.cpp; sourceTree = "<group>"; };
 		3609955A1AF71F0D0069EED8 /* SpriteBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBase.h; sourceTree = "<group>"; };
+		366A636D1B1227BB005FE1D6 /* tex3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tex3.png; sourceTree = "<group>"; };
 		366F90691B022CC9006316B6 /* attack_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attack_target.png; sourceTree = "<group>"; };
 		366F906B1B02CE89006316B6 /* check_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_mark.png; sourceTree = "<group>"; };
 		366F906D1B039344006316B6 /* Charactor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Charactor.cpp; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				366A636D1B1227BB005FE1D6 /* tex3.png */,
 				295906581B05B45400BABB3C /* m_03.png */,
 				295906541B059CF800BABB3C /* ef_hit1_00.png */,
 				295906551B059CF800BABB3C /* ef_hit1_01.png */,
@@ -607,6 +610,7 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				360995581AF663670069EED8 /* grid-light.png in Resources */,
 				366F906A1B022CC9006316B6 /* attack_target.png in Resources */,
+				366A636E1B1227BB005FE1D6 /* tex3.png in Resources */,
 				295906591B05B45400BABB3C /* m_03.png in Resources */,
 				29C6FBFC1B01FFF300FC4A13 /* grid-attack.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
@@ -769,7 +773,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -802,7 +806,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;

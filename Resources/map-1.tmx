@@ -4,12 +4,15 @@
   <tileoffset x="-15" y="0"/>
   <image source="tex2.png" width="960" height="960"/>
  </tileset>
+ <tileset firstgid="65" name="sandfringe" tilewidth="90" tileheight="90">
+  <image source="tex3.png" width="720" height="720"/>
+ </tileset>
  <layer name="ground" width="12" height="18">
   <properties>
    <property name="cc_vertexz" value="-1000"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3WTSw7EIAxDuVJCNzS9/7mGSlh6Y6WLiJ/tJAbuMcY6cZ9YH6HzuaN2xI48a406S/DyYAO8F/dgPoEv6DymO8EhPqFNnOasR1quV8iVjX6gf+LEW02OxJnw0iJ2jX8PvWfXL+OKL8/K9nlP4lP7anToS57e6bHwfo9hedzPhAa94777o/yBfOJfVg81feRbYT1dXQlfVM/X/+j+zrv+Ab1vC/1gAwAA
+   H4sIAAAAAAAAA5WS4Q7CIAyE+4D0Idw/hZGo84/68LZJGy8X2LTJFwpcb3QgInIy1KhGN0rkGvNHrPkooS/ABnUaY498pK80zzrU9/BdyZcZ+ZedGtTzvn+vRd5Iv4Cmxrj84J+6Ddb6gX4d+OY9jPrlM2NvrFfKG/WRegWNknf+h9n9zu5idv49PM7GRb7vhnvA3ONq3Iw77FXoU8nf42m8jPcB/8YHibJY02ADAAA=
   </data>
  </layer>
  <layer name="objects" width="12" height="18">
@@ -18,7 +21,7 @@
    <property name="cc_vertexz" value="automatic"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgoA/QhGJsQIsEM/ABJRzmaWIRU0STJ2Q2PqBIWAkYKBFWgmKmIh49pLpXiww9pAJ09xKyE1ktLA6ITQv4ALobsMmREheUAAA/nD2DYAMAAA==
+   H4sIAAAAAAAAA2NgoA/QhGJsQIsEM/ABJRzmaWIRU0STJ2Q2PqBIWAkYKBFWgmKmIh49pLpXiww9pAJ09xKyE1ktLA6ITQvEAnTzlNBoWgMAJzDnjmADAAA=
   </data>
  </layer>
 </map>

@@ -88,7 +88,7 @@ bool MainScene::init()
     u->moveRange = 3;
     u->attackRange = 2;
     u->charName = "ani02";
-    u->setMapGrid(4, 1);
+    u->setMapGrid(4, 4);
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);

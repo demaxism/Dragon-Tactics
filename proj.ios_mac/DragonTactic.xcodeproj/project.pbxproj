@@ -12,6 +12,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		29480A471B130BB000E18556 /* ground-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A461B130BB000E18556 /* ground-1.png */; };
 		295906481B04B0C800BABB3C /* btn_decide.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906461B04B0C800BABB3C /* btn_decide.png */; };
 		295906491B04B0C800BABB3C /* low_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906471B04B0C800BABB3C /* low_panel.png */; };
 		295906531B058AB600BABB3C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295906511B058AB600BABB3C /* Effect.cpp */; };
@@ -147,6 +148,7 @@
 		1D6058910D05DD3D006BFB54 /* DragonTactic iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DragonTactic iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		29480A461B130BB000E18556 /* ground-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-1.png"; sourceTree = "<group>"; };
 		295906461B04B0C800BABB3C /* btn_decide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_decide.png; sourceTree = "<group>"; };
 		295906471B04B0C800BABB3C /* low_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = low_panel.png; sourceTree = "<group>"; };
 		295906511B058AB600BABB3C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29480A461B130BB000E18556 /* ground-1.png */,
 				366A636D1B1227BB005FE1D6 /* tex3.png */,
 				295906581B05B45400BABB3C /* m_03.png */,
 				295906541B059CF800BABB3C /* ef_hit1_00.png */,
@@ -629,6 +632,7 @@
 				368189731AFCADF600611B01 /* m_02.png in Resources */,
 				366F90771B039353006316B6 /* m01_n.png in Resources */,
 				298516981AE5F61B0053A7A9 /* ortho-test1.png in Resources */,
+				29480A471B130BB000E18556 /* ground-1.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				368548261AF48EF7002146C3 /* tex2.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,

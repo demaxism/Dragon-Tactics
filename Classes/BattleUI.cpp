@@ -222,7 +222,7 @@ UpperInfoPanel::UpperInfoPanel()
     
     _lowHidePos = Vec2(0, -size.height - 52);
     _lowShowPos = Vec2(0, -size.height + 50);
-    _lowPanel = Sprite::create("low_panel.png");
+    _lowPanel = Sprite::create();
     _lowPanel->setPosition(_lowShowPos);
     addChild(_lowPanel);
     _isShowing = false;

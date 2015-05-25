@@ -88,7 +88,7 @@ bool MainScene::init()
     u->moveRange = 3;
     u->attackRange = 2;
     u->charName = "ani02";
-    u->setMapGrid(4, 4);
+    u->setMapGrid(4, 6);
     _tiledMap->addChild(u);
     u->alignTile();
     _unitList->pushBack(u);
@@ -96,21 +96,21 @@ bool MainScene::init()
     // monsters
     Monster* m = Monster::create("m_02.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(5, 8));
+    m->setPosition(m->tilePosition(4, 11));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
     
     m = Monster::create("m_02.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(1, 4));
+    m->setPosition(m->tilePosition(1, 8));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
     
     m = Monster::create("m_03.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(8, 11));
+    m->setPosition(m->tilePosition(8, 12));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
@@ -265,6 +265,7 @@ void MainScene::clearActionUI()
 void MainScene::showMovingGrid(Vec2 tileGrid)
 {
     auto layer = _tiledMap->getLayer("objects");
+    auto ground = _tiledMap->getLayer("ground");
     Unit* unit = (Unit*)(GameManager::getInstance()->currentUnit);
     int range = unit->moveRange;
     int xmin = MAX(0, tileGrid.x - range);
@@ -276,8 +277,11 @@ void MainScene::showMovingGrid(Vec2 tileGrid)
         for (int y = ymin; y <= ymax; y++) {
             uint ymove = abs(y - (int)tileGrid.y);
             if (xmove + ymove > range) continue;
+            int yIdx = _tiledMap->getMapSize().height - y - 1;// y coord reverted
+            int gg = ground->getTileGIDAt(Vec2(x, yIdx));
+            if (gg == 0) continue; // no object at ground
             // object in objects layer
-            int gid = layer->getTileGIDAt(Vec2(x, _tiledMap->getMapSize().height - y - 1)); // y coord reverted
+            int gid = layer->getTileGIDAt(Vec2(x, yIdx)); // y coord reverted
             if (gid == 0) { // no object in grid
                 bool hasOtherUnit = false;
                 // check unit on this grid
@@ -356,16 +360,22 @@ void MainScene::highlightBattleUnit()
 void MainScene::turnActionMode()
 {
     auto ground = _tiledMap->getLayer("ground");
+    auto fringe = _tiledMap->getLayer("fringe");
     auto objects = _tiledMap->getLayer("objects");
     for (int x = 0; x < _tiledMap->getMapSize().width; x++) {
         for (int y = 0; y < _tiledMap->getMapSize().height; y++) {
+            Color3B dark = Color3B(0x60, 0x60, 0x60);
             Sprite* g = ground->getTileAt(Vec2(x, y));
             if (g != nullptr)
-                g->setColor(Color3B(0x60, 0x60, 0x60));
+                g->setColor(dark);
             
             Sprite* o = objects->getTileAt(Vec2(x, y));
             if (o != nullptr)
-                o->setColor(Color3B(0x60, 0x60, 0x60));
+                o->setColor(dark);
+            
+            Sprite* f = fringe->getTileAt(Vec2(x, y));
+            if (f != nullptr)
+                f->setColor(dark);
         }
     }
 
@@ -383,15 +393,21 @@ void MainScene::turnControlMode()
 {
     auto ground = _tiledMap->getLayer("ground");
     auto objects = _tiledMap->getLayer("objects");
+    auto fringe = _tiledMap->getLayer("fringe");
     for (int x = 0; x < _tiledMap->getMapSize().width; x++) {
         for (int y = 0; y < _tiledMap->getMapSize().height; y++) {
+            Color3B white = Color3B(0xff, 0xff, 0xff);
             Sprite* g = ground->getTileAt(Vec2(x, y));
             if (g != nullptr)
-                g->setColor(Color3B(0xff, 0xff, 0xff));
+                g->setColor(white);
             
             Sprite* o = objects->getTileAt(Vec2(x, y));
             if (o != nullptr)
-                o->setColor(Color3B(0xff, 0xff, 0xff));
+                o->setColor(white);
+            
+            Sprite* f = fringe->getTileAt(Vec2(x, y));
+            if (f != nullptr)
+                f->setColor(white);
         }
     }
     for (int i = 0; i < _unitList->size(); i++) {

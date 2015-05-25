@@ -5,14 +5,25 @@
   <image source="tex2.png" width="960" height="960"/>
  </tileset>
  <tileset firstgid="65" name="sandfringe" tilewidth="90" tileheight="90">
-  <image source="tex3.png" width="720" height="720"/>
+  <image source="tex3.png" width="900" height="900"/>
  </tileset>
+ <tileset firstgid="165" name="ground1" tilewidth="90" tileheight="90">
+  <image source="ground-1.png" width="540" height="540"/>
+ </tileset>
+ <layer name="fringe" width="12" height="18">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA52SzQoCMQyE82x6WVBUFGQRD3vyLKgXF28Wf1FURAQVfFOnbBbGJZbiwAcJnYShrUihGqgrCZjJbzVAk/ou2IIdkdD5OLCLd/S0nkf4vZyRJaQcTCK9//id4e+DFmgrHTAM7M9ASv0AjGj/ouKfGjnK+8sN/0a+32oPluRfgbWx05LPc6J8IR3AUeuY/5CBu9YxmRzVPtM5MHOlLKUeOnPR/ibFu73Am7JUZ57kSQ3PB5xHx3RgAwAA
+  </data>
+ </layer>
  <layer name="ground" width="12" height="18">
   <properties>
    <property name="cc_vertexz" value="-1000"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA5WS4Q7CIAyE+4D0Idw/hZGo84/68LZJGy8X2LTJFwpcb3QgInIy1KhGN0rkGvNHrPkooS/ABnUaY498pK80zzrU9/BdyZcZ+ZedGtTzvn+vRd5Iv4Cmxrj84J+6Ddb6gX4d+OY9jPrlM2NvrFfKG/WRegWNknf+h9n9zu5idv49PM7GRb7vhnvA3ONq3Iw77FXoU8nf42m8jPcB/8YHibJY02ADAAA=
+   H4sIAAAAAAAAA51SQQrAMAjr///UeXCl3xoDBQmp0wmhEJPUSsf4X9vQ0V52auBYxoS+Qw4e5+6DbxMtziDgj/osF/VKOLYPnGc19d38TC/ELzYT7t65WMv6LxR87F7cfcRM3oS5lT14pv+/r6r+6Uo9Tf4tCGADAAA=
   </data>
  </layer>
  <layer name="objects" width="12" height="18">
@@ -21,7 +32,7 @@
    <property name="cc_vertexz" value="automatic"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgoA/QhGJsQIsEM/ABJRzmaWIRU0STJ2Q2PqBIWAkYKBFWgmKmIh49pLpXiww9pAJ09xKyE1ktLA6ITQvEAnTzlNBoWgMAJzDnjmADAAA=
+   H4sIAAAAAAAAA2NgoA/QhGJsQIsEM/ABJRzmaWIRU0STJ2Q2PqBIWAnVAanu1SJDD6kAFA5KSHxkO5UwlaOIweKA2LSAy0x0QIp5tAAAr95gtGADAAA=
   </data>
  </layer>
 </map>

@@ -54,7 +54,7 @@ bool MainScene::init()
     // add bg
     _mapBg = Sprite::create("map_bg01.jpg");
     addChild(_mapBg, -2);
-    _mapBg->setColor(Color3B(0x80, 0x80, 0x80));
+    _mapBg->setColor(Color3B::GRAY);
     _mapBg->setScale(2.4);
     _mapBg->setPositionZ(-1020);
     
@@ -400,6 +400,7 @@ void MainScene::turnActionMode()
         Monster* m = _monsterList->at(i);
         m->setColor(Color3B(0x80, 0x80, 0x80));
     }
+    _mapBg->setColor(Color3B::BLACK);
 }
 
 void MainScene::turnControlMode()
@@ -431,6 +432,7 @@ void MainScene::turnControlMode()
         Monster* m = _monsterList->at(i);
         m->setColor(Color3B(0xff, 0xff, 0xff));
     }
+    _mapBg->setColor(Color3B::GRAY);
 }
 
 void MainScene::clearMovingGrid()
@@ -467,7 +469,7 @@ void MainScene::focusBattle()
     mapPosTo += Vec2(10, -180); // small adjust
     Vec2 refrained = refrainMapPos(mapPosTo);
     _tiledMap->runAction(MoveTo::create(0.2, refrained));
-    _mapBg->runAction(MoveTo::create(0.2, mapBgPos(refrained)));
+    _mapBg->setPosition(mapBgPos(refrained));
     // attack target
     _attackTarget->lockTarget(cur, cur->attackTarget);
 }

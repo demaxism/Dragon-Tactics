@@ -51,13 +51,26 @@ bool MainScene::init()
     _action = new ActionLayer();
     addChild(_action, 1);
     
+    // add bg
+    _mapBg = Sprite::create("map_bg01.jpg");
+    addChild(_mapBg, -2);
+    _mapBg->setColor(Color3B(0x80, 0x80, 0x80));
+    _mapBg->setScale(2.4);
+    _mapBg->setPositionZ(-1020);
+    
     // add the tiled map
     _tiledMap = TMXTiledMap::create("map-1.tmx");
+    float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
+    float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
+    mapLowBoundary = Vec2(-mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST, -mapHeight - MAP_MARGIN + _winSize.height);
+    mapHighBoundary = Vec2(MAP_MARGIN + MAP_XADJUST, MAP_MARGIN);
+    
     addChild(_tiledMap, 0, kTagTileMap);
     _tiledMap->setPosition(refrainMapPos(Vec2(0, 0)));
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     GameManager::getInstance()->mapSize = _tiledMap->getMapSize();
     GameManager::getInstance()->tiledMap = _tiledMap;
+    _mapBg->setPosition(mapBgPos(_tiledMap->getPosition()));
     
     // debug
     auto layer = _tiledMap->getLayer("objects");
@@ -454,6 +467,7 @@ void MainScene::focusBattle()
     mapPosTo += Vec2(10, -180); // small adjust
     Vec2 refrained = refrainMapPos(mapPosTo);
     _tiledMap->runAction(MoveTo::create(0.2, refrained));
+    _mapBg->runAction(MoveTo::create(0.2, mapBgPos(refrained)));
     // attack target
     _attackTarget->lockTarget(cur, cur->attackTarget);
 }
@@ -538,6 +552,7 @@ void MainScene::doStep(float delta)
         
         Vec2 newPos = refrainMapPos(currentPos + _releaseTouchDiff);
         _tiledMap->setPosition(newPos);
+        _mapBg->setPosition(mapBgPos(newPos));
     }
     
     _frameCnt++;
@@ -549,7 +564,7 @@ Vec2 MainScene::refrainMapPos(Vec2 pos)
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     float x = pos.x;
     float y = pos.y;
-
+    
     if (pos.x > MAP_MARGIN + MAP_XADJUST) x = MAP_MARGIN + MAP_XADJUST;
     if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST) x = -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST;
     if (pos.y > MAP_MARGIN) y = MAP_MARGIN;
@@ -557,15 +572,25 @@ Vec2 MainScene::refrainMapPos(Vec2 pos)
     return Vec2(x, y);
 }
 
+Vec2 MainScene::mapBgPos(Vec2 mapPos)
+{
+    float xOffset = mapPos.x - mapLowBoundary.x;
+    float xOffsetRate = xOffset / (mapHighBoundary.x - mapLowBoundary.x);
+    float yOffset = mapPos.y - (mapLowBoundary.y);
+    float yOffsetRate = yOffset / (mapHighBoundary.y - mapLowBoundary.y);
+    
+    return Vec2(xOffsetRate * 200 + 200, yOffsetRate * 100 + 520);
+}
+
 bool MainScene::isMapInsideView(Vec2 pos)
 {
     float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     bool ret = true;
-    if (pos.x > MAP_MARGIN + MAP_XADJUST) ret = false;
-    if (pos.x < -mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST) ret = false;
-    if (pos.y > MAP_MARGIN) ret = false;
-    if (pos.y < -mapHeight - MAP_MARGIN + _winSize.height) ret = false;
+    if (pos.x > mapHighBoundary.x) ret = false;
+    if (pos.x < mapLowBoundary.x) ret = false;
+    if (pos.y > mapHighBoundary.y) ret = false;
+    if (pos.y < mapLowBoundary.y) ret = false;
     return ret;
 }
 
@@ -578,6 +603,7 @@ void MainScene::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event
         auto currentPos = _tiledMap->getPosition();
         Vec2 newPos = refrainMapPos(currentPos + diff);
         _tiledMap->setPosition(newPos);
+        _mapBg->setPosition(mapBgPos(newPos));
         
         // for slide enertia
         std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;

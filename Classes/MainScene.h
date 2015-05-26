@@ -19,6 +19,7 @@ class MainScene : public cocos2d::Layer
 {
 private:
     TMXTiledMap* _tiledMap;
+    Sprite* _mapBg;
     Size _winSize;
     float _fringe;
     Vec2 _releaseTouchDiff;
@@ -34,6 +35,8 @@ private:
     Unit* _originalUnit;
     UpperInfoPanel* _upper;
     ActionLayer* _action;
+    Vec2 mapLowBoundary;
+    Vec2 mapHighBoundary;
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -53,6 +56,7 @@ private:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event) override;
     void doStep(float delta);
     Vec2 refrainMapPos(Vec2 pos);
+    Vec2 mapBgPos(Vec2 mapPos);
     bool isMapInsideView(Vec2 pos);
     void showMovingGrid(Vec2 pos);
     void showAttackGrid(Vec2 pos);

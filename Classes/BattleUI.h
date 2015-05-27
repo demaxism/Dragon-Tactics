@@ -98,4 +98,16 @@ public:
     void touchEvent(Ref *pSender, Widget::TouchEventType type);
 };
 
+class MapBg : public Sprite
+{
+public:
+    MapBg(void);
+    void moveTo(Vec2);
+    void turnOff();
+    void turnOn();
+private:
+    Sprite* _bg;
+    LayerColor* _colorBg;
+};
+
 #endif /* defined(__DragonTactic__BattleUI__) */

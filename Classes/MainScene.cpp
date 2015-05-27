@@ -52,14 +52,13 @@ bool MainScene::init()
     addChild(_action, 1);
     
     // add bg
-    _mapBg = Sprite::create("map_bg01.jpg");
+    _mapBg = new MapBg();
     addChild(_mapBg, -2);
-    _mapBg->setColor(Color3B::GRAY);
-    _mapBg->setScale(2.4);
     _mapBg->setPositionZ(-1020);
     
     // add the tiled map
-    _tiledMap = TMXTiledMap::create("map-1.tmx");
+    //_tiledMap = TMXTiledMap::create("map-1.tmx");
+    _tiledMap = TMXTiledMap::create("plane.tmx");
     float mapWidth = _tiledMap->getMapSize().width * _tiledMap->getTileSize().width;
     float mapHeight = _tiledMap->getMapSize().height * _tiledMap->getTileSize().height;
     mapLowBoundary = Vec2(-mapWidth - MAP_MARGIN + _winSize.width + MAP_XADJUST, -mapHeight - MAP_MARGIN + _winSize.height);
@@ -70,7 +69,7 @@ bool MainScene::init()
     GameManager::getInstance()->tileSize = _tiledMap->getTileSize();
     GameManager::getInstance()->mapSize = _tiledMap->getMapSize();
     GameManager::getInstance()->tiledMap = _tiledMap;
-    _mapBg->setPosition(mapBgPos(_tiledMap->getPosition()));
+    _mapBg->moveTo(mapBgPos(_tiledMap->getPosition()));
     
     // debug
     auto layer = _tiledMap->getLayer("objects");
@@ -109,14 +108,14 @@ bool MainScene::init()
     // monsters
     Monster* m = Monster::create("m_02.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(4, 11));
+    m->setPosition(m->tilePosition(4, 12));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
     
     m = Monster::create("m_02.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(1, 8));
+    m->setPosition(m->tilePosition(1, 5));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);
@@ -400,7 +399,7 @@ void MainScene::turnActionMode()
         Monster* m = _monsterList->at(i);
         m->setColor(Color3B(0x80, 0x80, 0x80));
     }
-    _mapBg->setColor(Color3B::BLACK);
+    _mapBg->turnOff();
 }
 
 void MainScene::turnControlMode()
@@ -432,7 +431,7 @@ void MainScene::turnControlMode()
         Monster* m = _monsterList->at(i);
         m->setColor(Color3B(0xff, 0xff, 0xff));
     }
-    _mapBg->setColor(Color3B::GRAY);
+    _mapBg->turnOn();
 }
 
 void MainScene::clearMovingGrid()
@@ -469,7 +468,7 @@ void MainScene::focusBattle()
     mapPosTo += Vec2(10, -180); // small adjust
     Vec2 refrained = refrainMapPos(mapPosTo);
     _tiledMap->runAction(MoveTo::create(0.2, refrained));
-    _mapBg->setPosition(mapBgPos(refrained));
+    _mapBg->moveTo(mapBgPos(refrained));
     // attack target
     _attackTarget->lockTarget(cur, cur->attackTarget);
 }
@@ -554,7 +553,7 @@ void MainScene::doStep(float delta)
         
         Vec2 newPos = refrainMapPos(currentPos + _releaseTouchDiff);
         _tiledMap->setPosition(newPos);
-        _mapBg->setPosition(mapBgPos(newPos));
+        _mapBg->moveTo(mapBgPos(newPos));
     }
     
     _frameCnt++;
@@ -581,7 +580,7 @@ Vec2 MainScene::mapBgPos(Vec2 mapPos)
     float yOffset = mapPos.y - (mapLowBoundary.y);
     float yOffsetRate = yOffset / (mapHighBoundary.y - mapLowBoundary.y);
     
-    return Vec2(xOffsetRate * 200 + 200, yOffsetRate * 100 + 520);
+    return Vec2(xOffsetRate, yOffsetRate);
 }
 
 bool MainScene::isMapInsideView(Vec2 pos)
@@ -605,7 +604,7 @@ void MainScene::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event
         auto currentPos = _tiledMap->getPosition();
         Vec2 newPos = refrainMapPos(currentPos + diff);
         _tiledMap->setPosition(newPos);
-        _mapBg->setPosition(mapBgPos(newPos));
+        _mapBg->moveTo(mapBgPos(newPos));
         
         // for slide enertia
         std::queue<Vec2>* touchQueue = GameManager::getInstance()->touchQueue;

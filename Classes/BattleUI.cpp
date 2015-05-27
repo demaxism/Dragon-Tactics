@@ -357,5 +357,37 @@ void UpperInfoPanel::showEnemyInfo(Sprite* enemy)
     _panel->addChild(_enemy);
 }
 
+MapBg::MapBg()
+{
+    Sprite::init();
+    //_bg = Sprite::create("map_bg01.jpg");
+    _bg = Sprite::create();
+    addChild(_bg);
+    _bg->setColor(Color3B::GRAY);
+    _bg->setScale(2.4);
+    
+    Size size = Director::getInstance()->getVisibleSize();
+    _colorBg = LayerColor::create(Color4B(0x40,0x40,0x40,0xff), size.width, size.height);
+    this->addChild(_colorBg);
+}
+
+void MapBg::moveTo(Vec2 moveRate)
+{
+    Size size = Director::getInstance()->getVisibleSize();
+    Vec2 pos = Vec2(moveRate.x * 200 + size.width /2, moveRate.y * 100 + size.height /2);
+    _bg->setPosition(pos);
+}
+
+void MapBg::turnOff()
+{
+    _bg->setColor(Color3B::BLACK);
+    _colorBg->setColor(Color3B::BLACK);
+}
+
+void MapBg::turnOn()
+{
+    _bg->setColor(Color3B::GRAY);
+    _colorBg->setColor(Color3B(0x40,0x40,0x40));
+}
 
 

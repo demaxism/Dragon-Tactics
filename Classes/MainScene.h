@@ -19,7 +19,7 @@ class MainScene : public cocos2d::Layer
 {
 private:
     TMXTiledMap* _tiledMap;
-    Sprite* _mapBg;
+    MapBg* _mapBg;
     Size _winSize;
     float _fringe;
     Vec2 _releaseTouchDiff;

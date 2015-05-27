@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="90" tileheight="90" nextobjectid="1">
+ <tileset firstgid="1" name="plane" tilewidth="90" tileheight="90">
+  <image source="plane_map.png" width="900" height="900"/>
+ </tileset>
+ <tileset firstgid="101" name="obj" tilewidth="120" tileheight="120">
+  <tileoffset x="-15" y="0"/>
+  <image source="tex2.png" width="960" height="960"/>
+ </tileset>
+ <layer name="ground" width="20" height="20">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzFU1sKgDAM24cXEA8geJF9iCAD/dn97yIDBzE0W/0QA8U92jSZWwjfItN8pjHGW2BtugPnCqvRr9awpsOhcTBqLS7ewxzmq+uxo0cF81WeBPxlfHY0jsIvh+rN/B5M0J+xhOcZeKHyF9jbX3CWPPR20hc1Ki+WvhIZ6vhOe84SOazYQ/sOqjfKPlp9kuBo+bD2lT/rffH/83Apj5Y+D1fliyKv91aLh03U9Hr+gQvDVx/s
+  </data>
+ </layer>
+ <layer name="fringe" width="20" height="20">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJytVLsKAjEQXLTUxhNBECEW6hdY3AkWFlpooaAWgnI+/v8b3MVdbg3ZGOUGhrw2k9dsAD4xi7RzZMGcw3esudxwueDSIUeB+JWhk/N6e+QFeVRaMfQCfUtVp30Uxl4sOPg8+/aHuTHI2evSO9eo90A+uX5KiG8gM2Q3MDbw2iXyhrzznMwbbyHbXB8G9EJv7EPPGyMnzKkR7yDu73/v1PJ3/0+9HZc6R1PyIqYn+eHAzosOhN/WB3kw5a7IE6G3JZCXyBviwRS9nRF3gMpLghQ98ozvFdK6QvU3WXqyf2LT0BetteqTP/PkxT1Vu4R37ogurfVgLT2u81f3SZwPirl4a1l4AbSqG5s=
+  </data>
+ </layer>
+ <layer name="objects" width="20" height="20">
+  <properties>
+   <property name="cc_alpha_func" value="0.05"/>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAv6KWzfZSCPiqY0YrDzDYS9KADZL3EhmkbATtHwcCCXjQ2etpDlqc0HrGZTy+A7A9C6Xy4A/R4HGrhAQDdJwtM
+  </data>
+ </layer>
+</map>

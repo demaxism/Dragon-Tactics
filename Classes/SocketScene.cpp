@@ -9,7 +9,6 @@
 /* Server side config
  connect to jpnode.demaxism.com, cd /var/www/demo/nodejs
  node ws_server.js
- 
  */
 
 #include "SocketScene.h"

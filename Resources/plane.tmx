@@ -15,7 +15,7 @@
    <property name="cc_vertexz" value="-1000"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzFU1sKgDAM24cXEA8geJF9iCAD/dn97yIDBzE0W/0QA8U92jSZWwjfItN8pjHGW2BtugPnCqvRr9awpsOhcTBqLS7ewxzmq+uxo0cF81WeBPxlfHY0jsIvh+rN/B5M0J+xhOcZeKHyF9jbX3CWPPR20hc1Ki+WvhIZ6vhOe84SOazYQ/sOqjfKPlp9kuBo+bD2lT/rffH/83Apj5Y+D1fliyKv91aLh03U9Hr+gQvDVx/s
+   eJzFlEEKwzAMBHXIB4ofYCiUPMOHEAiB9tL//6WIVrBstXF8KBWI2EGelRQ5Zr+1J+0rrdFHrcJz/3iFvbIl0UMW+v1EjhNpKxbmVukM8+J9I1bkgzGZM6+B5gTrRyfHi6iXPdMuwDf7zktZAX22q717MMKLWPcbvJspZhtgehz2juvEuVG1ZPm5Z3eG5+WIFww1G5sdz6C6ozgTpaOzCwb3I9NS9wLjuBeK12OpGvGMz8x8khW8JuKyfwOaf5tV5NfT/Ie9AFC/HYo=
   </data>
  </layer>
  <layer name="fringe" width="20" height="20">
@@ -23,7 +23,7 @@
    <property name="cc_vertexz" value="-1000"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJyVVE1rAkEMDYoiKLRaBW1RVqTVc8GDCh481EN7sFA9FBS//v9vaIIZfA7JdH3wyGzmzZvZ3WSIbjFOPE+YU+WM/sdS46fGucaM2Tf0H47PRPf7Zm6Za/AaMcvOupaRW8BYzjGFs4jXu+OFa/DdvxxdHi9EeHfLr3Snl+A34XcvTsyzjjc59AVmg/kEuWeNL5F2zzwwj7qmEc1XmTUddyHf0Wj94xi47pX5phwyH5iPzApoMkrXd+qbdhJzXn23jVzJOFeMlUbs0bklzAnxC/2Rkd2jgjrd/lsPUoOpb4U10XU0UktSG6EGU34DjStH90PXWgpI+fWYTbrUzNDw2tH1bvL8wvmFRfWM76vgtYRcuDM3ke4Mz3u69E4R9jqpF85j/2Iu6GKIZhvt5eEPwiId1w==
+   eJyVVF0LQUEQ3dxIUSTKJbpS8qw8oDx4cB94oPCgyNf//w1mMpMx7ax7T51md3b27NfMOveLaaA/A86JC/cfKdkN2SXZBDjwxK8NnRmttwdegEehNQaWjHktj28l2riPudgLak0MLTlHnn1rxGXRkuCz+/SKObUQ54BeXjyBL2qfMsQXgA3l65DtKv8NeAc+aI6eVwFWqd0T/pis7401eqo/IiJqwDqwLMYTF87v0J3GgTErv9seX9GzL40dWVmjS19gRqAe10fi/DWaB5iDobuSOaHfiIG5hLnBORjSG5LdGXEH980lRkivD2waY6h1dd+/ydLj/SMj0tT/FWulwsd/5knFvUT/5j61E4m1nqQlx2X9Sh/HaWDMRa1l4Q3hFB0I
   </data>
  </layer>
  <layer name="objects" width="20" height="20">

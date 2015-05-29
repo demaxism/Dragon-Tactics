@@ -365,9 +365,10 @@ MapBg::MapBg()
     addChild(_bg);
     _bg->setColor(Color3B::GRAY);
     _bg->setScale(2.4);
+    bgColor = Color3B(0x11, 0x6b, 0xb7);
     
     Size size = Director::getInstance()->getVisibleSize();
-    _colorBg = LayerColor::create(Color4B(0x40,0x40,0x40,0xff), size.width, size.height);
+    _colorBg = LayerColor::create(Color4B(bgColor.r,bgColor.g,bgColor.b,0xff), size.width, size.height);
     this->addChild(_colorBg);
 }
 
@@ -387,7 +388,7 @@ void MapBg::turnOff()
 void MapBg::turnOn()
 {
     _bg->setColor(Color3B::GRAY);
-    _colorBg->setColor(Color3B(0x40,0x40,0x40));
+    _colorBg->setColor(bgColor);
 }
 
 

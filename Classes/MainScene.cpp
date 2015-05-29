@@ -73,6 +73,7 @@ bool MainScene::init()
     
     // debug
     auto layer = _tiledMap->getLayer("objects");
+    layer->setPosition(layer->getPosition() + Vec2(-15, 0)); // !! this layer's tileset's property: Drawing offset, need put here
     Sprite* sp = layer->getTileAt(Vec2(0,11));
     int a = layer->getTileGIDAt(Vec2(2, 15));
     //int z = sp->getPositionZ();

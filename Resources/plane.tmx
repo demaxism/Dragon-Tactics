@@ -7,6 +7,9 @@
   <tileoffset x="-15" y="0"/>
   <image source="tex2.png" width="960" height="960"/>
  </tileset>
+ <tileset firstgid="165" name="wall" tilewidth="90" tileheight="90">
+  <image source="walltex.png" width="720" height="720"/>
+ </tileset>
  <layer name="ground" width="20" height="20">
   <properties>
    <property name="cc_vertexz" value="-1000"/>
@@ -20,7 +23,7 @@
    <property name="cc_vertexz" value="-1000"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJytVLsKAjEQXLTUxhNBECEW6hdY3AkWFlpooaAWgnI+/v8b3MVdbg3ZGOUGhrw2k9dsAD4xi7RzZMGcw3esudxwueDSIUeB+JWhk/N6e+QFeVRaMfQCfUtVp30Uxl4sOPg8+/aHuTHI2evSO9eo90A+uX5KiG8gM2Q3MDbw2iXyhrzznMwbbyHbXB8G9EJv7EPPGyMnzKkR7yDu73/v1PJ3/0+9HZc6R1PyIqYn+eHAzosOhN/WB3kw5a7IE6G3JZCXyBviwRS9nRF3gMpLghQ98ozvFdK6QvU3WXqyf2LT0BetteqTP/PkxT1Vu4R37ogurfVgLT2u81f3SZwPirl4a1l4AbSqG5s=
+   eJyVVE1rAkEMDYoiKLRaBW1RVqTVc8GDCh481EN7sFA9FBS//v9vaIIZfA7JdH3wyGzmzZvZ3WSIbjFOPE+YU+WM/sdS46fGucaM2Tf0H47PRPf7Zm6Za/AaMcvOupaRW8BYzjGFs4jXu+OFa/DdvxxdHi9EeHfLr3Snl+A34XcvTsyzjjc59AVmg/kEuWeNL5F2zzwwj7qmEc1XmTUddyHf0Wj94xi47pX5phwyH5iPzApoMkrXd+qbdhJzXn23jVzJOFeMlUbs0bklzAnxC/2Rkd2jgjrd/lsPUoOpb4U10XU0UktSG6EGU34DjStH90PXWgpI+fWYTbrUzNDw2tH1bvL8wvmFRfWM76vgtYRcuDM3ke4Mz3u69E4R9jqpF85j/2Iu6GKIZhvt5eEPwiId1w==
   </data>
  </layer>
  <layer name="objects" width="20" height="20">
@@ -29,7 +32,7 @@
    <property name="cc_vertexz" value="automatic"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKAv6KWzfZSCPiqY0YrDzDYS9KADZL3EhmkbATtHwcCCXjQ2etpDlqc0HrGZTy+A7A9C6Xy4A/R4HGrhAQDdJwtM
+   eJxjYKAv6KWzfZSCPiqY0YrDzDYS9KADZL3EhmkbATtHAWWA0rAlFI/I8tSwC1faJpT2KAVDrQwgFxCKoz4sasgNe2qUU+QAANobDFk=
   </data>
  </layer>
 </map>

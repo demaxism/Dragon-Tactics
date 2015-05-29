@@ -12,7 +12,7 @@
 Vec2 SpriteBase::tilePosition(int x, int y)
 {
     Size tileSize = GameManager::getInstance()->tileSize;
-    return Vec2(tileSize.width * x + 15 + tileSize.width * 0.5f + offset.x, tileSize.height * y + tileSize.height * 0.5f + offset.y);
+    return Vec2(tileSize.width * x + tileSize.width * 0.5f + offset.x, tileSize.height * y + tileSize.height * 0.5f + offset.y);
 }
 
 void SpriteBase::alignTile()

@@ -15,6 +15,7 @@
 		29480A471B130BB000E18556 /* ground-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A461B130BB000E18556 /* ground-1.png */; };
 		29480A4B1B15A9A000E18556 /* plane_map.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A491B15A9A000E18556 /* plane_map.png */; };
 		29480A4C1B15A9A000E18556 /* plane.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 29480A4A1B15A9A000E18556 /* plane.tmx */; };
+		29480A4E1B16EEFE00E18556 /* walltex.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A4D1B16EEFE00E18556 /* walltex.png */; };
 		295906481B04B0C800BABB3C /* btn_decide.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906461B04B0C800BABB3C /* btn_decide.png */; };
 		295906491B04B0C800BABB3C /* low_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906471B04B0C800BABB3C /* low_panel.png */; };
 		295906531B058AB600BABB3C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295906511B058AB600BABB3C /* Effect.cpp */; };
@@ -154,6 +155,7 @@
 		29480A461B130BB000E18556 /* ground-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ground-1.png"; sourceTree = "<group>"; };
 		29480A491B15A9A000E18556 /* plane_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane_map.png; sourceTree = "<group>"; };
 		29480A4A1B15A9A000E18556 /* plane.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plane.tmx; sourceTree = "<group>"; };
+		29480A4D1B16EEFE00E18556 /* walltex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walltex.png; sourceTree = "<group>"; };
 		295906461B04B0C800BABB3C /* btn_decide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_decide.png; sourceTree = "<group>"; };
 		295906471B04B0C800BABB3C /* low_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = low_panel.png; sourceTree = "<group>"; };
 		295906511B058AB600BABB3C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29480A4D1B16EEFE00E18556 /* walltex.png */,
 				29480A491B15A9A000E18556 /* plane_map.png */,
 				29480A4A1B15A9A000E18556 /* plane.tmx */,
 				366A63741B14BB7F005FE1D6 /* map_bg01.jpg */,
@@ -633,6 +636,7 @@
 				29480A4B1B15A9A000E18556 /* plane_map.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				29480A4E1B16EEFE00E18556 /* walltex.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,

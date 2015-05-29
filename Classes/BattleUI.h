@@ -105,6 +105,7 @@ public:
     void moveTo(Vec2);
     void turnOff();
     void turnOn();
+    Color3B bgColor;
 private:
     Sprite* _bg;
     LayerColor* _colorBg;

@@ -16,6 +16,8 @@
 		29480A4B1B15A9A000E18556 /* plane_map.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A491B15A9A000E18556 /* plane_map.png */; };
 		29480A4C1B15A9A000E18556 /* plane.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 29480A4A1B15A9A000E18556 /* plane.tmx */; };
 		29480A4E1B16EEFE00E18556 /* walltex.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A4D1B16EEFE00E18556 /* walltex.png */; };
+		29480A531B1830BA00E18556 /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29480A511B1830BA00E18556 /* TitleScene.cpp */; };
+		29480A571B18398E00E18556 /* SocketScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29480A551B18398E00E18556 /* SocketScene.cpp */; };
 		295906481B04B0C800BABB3C /* btn_decide.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906461B04B0C800BABB3C /* btn_decide.png */; };
 		295906491B04B0C800BABB3C /* low_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906471B04B0C800BABB3C /* low_panel.png */; };
 		295906531B058AB600BABB3C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295906511B058AB600BABB3C /* Effect.cpp */; };
@@ -156,6 +158,10 @@
 		29480A491B15A9A000E18556 /* plane_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane_map.png; sourceTree = "<group>"; };
 		29480A4A1B15A9A000E18556 /* plane.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plane.tmx; sourceTree = "<group>"; };
 		29480A4D1B16EEFE00E18556 /* walltex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walltex.png; sourceTree = "<group>"; };
+		29480A511B1830BA00E18556 /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
+		29480A521B1830BA00E18556 /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScene.h; sourceTree = "<group>"; };
+		29480A551B18398E00E18556 /* SocketScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SocketScene.cpp; sourceTree = "<group>"; };
+		29480A561B18398E00E18556 /* SocketScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketScene.h; sourceTree = "<group>"; };
 		295906461B04B0C800BABB3C /* btn_decide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_decide.png; sourceTree = "<group>"; };
 		295906471B04B0C800BABB3C /* low_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = low_panel.png; sourceTree = "<group>"; };
 		295906511B058AB600BABB3C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
@@ -442,6 +448,10 @@
 				368189751AFCAE6900611B01 /* Monster.h */,
 				295906511B058AB600BABB3C /* Effect.cpp */,
 				295906521B058AB600BABB3C /* Effect.h */,
+				29480A511B1830BA00E18556 /* TitleScene.cpp */,
+				29480A521B1830BA00E18556 /* TitleScene.h */,
+				29480A551B18398E00E18556 /* SocketScene.cpp */,
+				29480A561B18398E00E18556 /* SocketScene.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -680,6 +690,7 @@
 			files = (
 				36B7FB281AED2044006A92AA /* GameManager.cpp in Sources */,
 				366F906F1B039344006316B6 /* Charactor.cpp in Sources */,
+				29480A531B1830BA00E18556 /* TitleScene.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				368189761AFCAE6900611B01 /* Monster.cpp in Sources */,
 				295906531B058AB600BABB3C /* Effect.cpp in Sources */,
@@ -690,6 +701,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				360995561AF65E5F0069EED8 /* BattleUI.cpp in Sources */,
+				29480A571B18398E00E18556 /* SocketScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

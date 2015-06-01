@@ -21,6 +21,7 @@
 		29480A5B1B1C06DB00E18556 /* ani03_f.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A581B1C06DB00E18556 /* ani03_f.png */; };
 		29480A5C1B1C06DB00E18556 /* ani03_n.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A591B1C06DB00E18556 /* ani03_n.png */; };
 		29480A5F1B1C076D00E18556 /* q_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A5E1B1C076D00E18556 /* q_03.png */; };
+		29480A631B1C70AF00E18556 /* sea-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 29480A621B1C70AF00E18556 /* sea-0.png */; };
 		295906481B04B0C800BABB3C /* btn_decide.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906461B04B0C800BABB3C /* btn_decide.png */; };
 		295906491B04B0C800BABB3C /* low_panel.png in Resources */ = {isa = PBXBuildFile; fileRef = 295906471B04B0C800BABB3C /* low_panel.png */; };
 		295906531B058AB600BABB3C /* Effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295906511B058AB600BABB3C /* Effect.cpp */; };
@@ -168,6 +169,7 @@
 		29480A581B1C06DB00E18556 /* ani03_f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ani03_f.png; sourceTree = "<group>"; };
 		29480A591B1C06DB00E18556 /* ani03_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ani03_n.png; sourceTree = "<group>"; };
 		29480A5E1B1C076D00E18556 /* q_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = q_03.png; sourceTree = "<group>"; };
+		29480A621B1C70AF00E18556 /* sea-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sea-0.png"; sourceTree = "<group>"; };
 		295906461B04B0C800BABB3C /* btn_decide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_decide.png; sourceTree = "<group>"; };
 		295906471B04B0C800BABB3C /* low_panel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = low_panel.png; sourceTree = "<group>"; };
 		295906511B058AB600BABB3C /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Effect.cpp; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29480A621B1C70AF00E18556 /* sea-0.png */,
 				29480A5E1B1C076D00E18556 /* q_03.png */,
 				29480A581B1C06DB00E18556 /* ani03_f.png */,
 				29480A591B1C06DB00E18556 /* ani03_n.png */,
@@ -626,6 +629,7 @@
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				29C6FC191B045E9700FC4A13 /* bg_mask.png in Resources */,
 				295906561B059CF800BABB3C /* ef_hit1_00.png in Resources */,
+				29480A631B1C70AF00E18556 /* sea-0.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				29C6FC171B045DB600FC4A13 /* bg_02.jpg in Resources */,
 				369686E71AF4C2FD008EFA2E /* m_01.png in Resources */,

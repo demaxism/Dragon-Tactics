@@ -72,9 +72,9 @@ SocketScene::SocketScene()
     
     
     // Send Text Status Label
-    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 20);
+    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 20, Size(400, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Vec2(0, 0));
-    _sendTextStatus->setPosition(100, 220);
+    _sendTextStatus->setPosition(100, 400);
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label

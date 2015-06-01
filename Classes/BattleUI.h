@@ -103,11 +103,15 @@ class MapBg : public Sprite
 public:
     MapBg(void);
     void moveTo(Vec2);
+    void updateSeaPos(Vec2);
     void turnOff();
     void turnOn();
     Color3B bgColor;
 private:
+    Size _winSize;
+    int _bgType;
     Sprite* _bg;
+    Sprite* _sea;
     LayerColor* _colorBg;
 };
 

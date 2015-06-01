@@ -359,36 +359,59 @@ void UpperInfoPanel::showEnemyInfo(Sprite* enemy)
 
 MapBg::MapBg()
 {
+    _bgType = 2;
     Sprite::init();
-    //_bg = Sprite::create("map_bg01.jpg");
-    _bg = Sprite::create();
-    addChild(_bg);
-    _bg->setColor(Color3B::GRAY);
-    _bg->setScale(2.4);
-    bgColor = Color3B(0x11, 0x6b, 0xb7);
+    _winSize = Director::getInstance()->getVisibleSize();
     
-    Size size = Director::getInstance()->getVisibleSize();
-    _colorBg = LayerColor::create(Color4B(bgColor.r,bgColor.g,bgColor.b,0xff), size.width, size.height);
-    this->addChild(_colorBg);
+    if (_bgType == 0) { // color
+        bgColor = Color3B(0x11, 0x6b, 0xb7);
+        _colorBg = LayerColor::create(Color4B(bgColor.r,bgColor.g,bgColor.b,0xff), _winSize.width, _winSize.height);
+        this->addChild(_colorBg);
+    }
+    else if (_bgType == 1) { // depth
+        _bg = Sprite::create("map_bg01.jpg");
+        addChild(_bg);
+        _bg->setColor(Color3B::GRAY);
+        _bg->setScale(2.4);
+    }
+    else if (_bgType == 2) { // sea
+        _sea = Sprite::create("sea-0.png");
+        addChild(_sea);
+    }
 }
 
 void MapBg::moveTo(Vec2 moveRate)
 {
-    Size size = Director::getInstance()->getVisibleSize();
-    Vec2 pos = Vec2(moveRate.x * 200 + size.width /2, moveRate.y * 100 + size.height /2);
-    _bg->setPosition(pos);
+    if (_bgType == 1) {
+        Size size = Director::getInstance()->getVisibleSize();
+        Vec2 pos = Vec2(moveRate.x * 200 + size.width /2, moveRate.y * 100 + size.height /2);
+        _bg->setPosition(pos);
+    }
+}
+
+void MapBg::updateSeaPos(Vec2 mapPos) {
+    if (_bgType == 2) {
+        float xOffset = (int)mapPos.x % 32 + _winSize.width / 2;
+        float yOffset = (int)mapPos.y % 32 + _winSize.height / 2;
+        _sea->setPosition(Vec2(xOffset, yOffset));
+    }
 }
 
 void MapBg::turnOff()
 {
-    _bg->setColor(Color3B::BLACK);
-    _colorBg->setColor(Color3B::BLACK);
+    if (_bgType == 0)
+        _colorBg->setColor(Color3B::BLACK);
+    else if (_bgType == 1)
+        _bg->setColor(Color3B::BLACK);
+    
 }
 
 void MapBg::turnOn()
 {
-    _bg->setColor(Color3B::GRAY);
-    _colorBg->setColor(bgColor);
+    if (_bgType == 0)
+        _colorBg->setColor(bgColor);
+    else if (_bgType == 1)
+        _bg->setColor(Color3B::GRAY);
 }
 
 

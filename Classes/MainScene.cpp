@@ -557,6 +557,8 @@ void MainScene::doStep(float delta)
         _mapBg->moveTo(mapBgPos(newPos));
     }
     
+    _mapBg->updateSeaPos(_tiledMap->getPosition());
+    
     _frameCnt++;
 }
 

@@ -89,9 +89,9 @@ bool MainScene::init()
 //    player->setPosition(player->tilePosition(5, 5));
     
     // units
-    Unit* u = Unit::create("q_01.png");
+    Unit* u = Unit::create("q_03.png");
     u->moveRange = 3;
-    u->charName = "ani01";
+    u->charName = "ani03";
     u->setMapGrid(2, 3);
     _tiledMap->addChild(u);
     u->alignTile();

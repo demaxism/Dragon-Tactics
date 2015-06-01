@@ -104,14 +104,14 @@ void ActionLayer::showLayer()
 {
     if (!_isShowing) {
         setVisible(true);
-        _mask->setOpacity(0x80);
+        _mask->setOpacity(0x40);
         if (_actionLabel != nullptr)
             _actionLabel->removeFromParentAndCleanup(true);
         _actionLabel = Sprite::create("action.png");
         _actionLabel->setPosition(Vec2(_winSize.width + 300, _winSize.height/2));
         addChild(_actionLabel);
         auto movein = MoveTo::create(0.1, Vec2(_winSize.width/2, _winSize.height/2));
-        auto delay = DelayTime::create(0.6);
+        auto delay = DelayTime::create(0.3);
         auto moveout = MoveTo::create(0.1, Vec2(-300, _winSize.height/2));
         CallFunc* final = CallFunc::create([&] () {
             _actionLabel->removeFromParentAndCleanup(true);

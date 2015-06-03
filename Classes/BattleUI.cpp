@@ -357,6 +357,41 @@ void UpperInfoPanel::showEnemyInfo(Sprite* enemy)
     _panel->addChild(_enemy);
 }
 
+SeaSprite::SeaSprite()
+{
+    Sprite::init();
+    _frmCnt = 0;
+    _frameList = new Vector<Sprite*>();
+    for (int i = 0; i < 4; i++) {
+        char buffer [50];
+        sprintf(buffer, "sea-%d.png", i);
+        auto sp = Sprite::create(buffer);
+        sp->setVisible(false);
+        addChild(sp);
+        _frameList->pushBack(sp);
+    }
+    schedule(CC_SCHEDULE_SELECTOR(SeaSprite::doStep));
+}
+
+SeaSprite::~SeaSprite()
+{
+    unschedule(CC_SCHEDULE_SELECTOR(SeaSprite::doStep));
+}
+
+void SeaSprite::doStep(float delta) {
+    int framePerPic = 5;
+    if (_frmCnt % framePerPic == 0) {
+        int idx = (_frmCnt / framePerPic) % _frameList->size();
+        for (int i = 0; i < _frameList->size(); i++) {
+            Sprite* sp = _frameList->at(i);
+            sp->setVisible(false);
+        }
+        Sprite* sp = _frameList->at(idx);
+        sp->setVisible(true);
+    }
+    _frmCnt++;
+}
+
 MapBg::MapBg()
 {
     _bgType = 2;
@@ -375,7 +410,7 @@ MapBg::MapBg()
         _bg->setScale(2.4);
     }
     else if (_bgType == 2) { // sea
-        _sea = Sprite::create("sea-0.png");
+        _sea = new SeaSprite();
         addChild(_sea);
     }
 }

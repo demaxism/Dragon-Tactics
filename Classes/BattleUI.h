@@ -98,6 +98,17 @@ public:
     void touchEvent(Ref *pSender, Widget::TouchEventType type);
 };
 
+class SeaSprite : public Sprite
+{
+public:
+    SeaSprite(void);
+    ~SeaSprite(void);
+private:
+    Vector<Sprite*>* _frameList;
+    void doStep(float delta);
+    int _frmCnt;
+};
+
 class MapBg : public Sprite
 {
 public:
@@ -111,7 +122,7 @@ private:
     Size _winSize;
     int _bgType;
     Sprite* _bg;
-    Sprite* _sea;
+    SeaSprite* _sea;
     LayerColor* _colorBg;
 };
 

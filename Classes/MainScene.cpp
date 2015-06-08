@@ -89,9 +89,9 @@ bool MainScene::init()
 //    player->setPosition(player->tilePosition(5, 5));
     
     // units
-    Unit* u = Unit::create("q_03.png");
+    Unit* u = Unit::create("q_01.png");
     u->moveRange = 3;
-    u->charName = "ani03";
+    u->charName = "ani01";
     u->setMapGrid(2, 3);
     _tiledMap->addChild(u);
     u->alignTile();
@@ -123,7 +123,7 @@ bool MainScene::init()
     
     m = Monster::create("m_03.png");
     m->charName = "m01";
-    m->setPosition(m->tilePosition(8, 12));
+    m->setPosition(m->tilePosition(8, 6));
     _tiledMap->addChild(m);
     m->alignTile();
     _monsterList->pushBack(m);

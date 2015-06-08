@@ -103,6 +103,8 @@ class SeaSprite : public Sprite
 public:
     SeaSprite(void);
     ~SeaSprite(void);
+    void turnOff();
+    void turnOn();
 private:
     Vector<Sprite*>* _frameList;
     void doStep(float delta);

@@ -378,6 +378,20 @@ SeaSprite::~SeaSprite()
     unschedule(CC_SCHEDULE_SELECTOR(SeaSprite::doStep));
 }
 
+void SeaSprite::turnOff() {
+    for (int i = 0; i < _frameList->size(); i++) {
+        Sprite* sp = _frameList->at(i);
+        sp->setColor(Color3B(0x40, 0x40, 0x40));
+    }
+}
+
+void SeaSprite::turnOn() {
+    for (int i = 0; i < _frameList->size(); i++) {
+        Sprite* sp = _frameList->at(i);
+        sp->setColor(Color3B::WHITE);
+    }
+}
+
 void SeaSprite::doStep(float delta) {
     int framePerPic = 5;
     if (_frmCnt % framePerPic == 0) {
@@ -394,7 +408,7 @@ void SeaSprite::doStep(float delta) {
 
 MapBg::MapBg()
 {
-    _bgType = 2;
+    _bgType = 1;
     Sprite::init();
     _winSize = Director::getInstance()->getVisibleSize();
     
@@ -438,6 +452,8 @@ void MapBg::turnOff()
         _colorBg->setColor(Color3B::BLACK);
     else if (_bgType == 1)
         _bg->setColor(Color3B::BLACK);
+    else if (_bgType == 2)
+        _sea->turnOff();
     
 }
 
@@ -447,6 +463,8 @@ void MapBg::turnOn()
         _colorBg->setColor(bgColor);
     else if (_bgType == 1)
         _bg->setColor(Color3B::GRAY);
+    else if (_bgType == 2)
+        _sea->turnOn();
 }
 
 

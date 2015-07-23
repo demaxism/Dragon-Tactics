@@ -85,6 +85,7 @@ void Charactor::hurtStep(float delta)
 // ActionLayer
 ActionLayer::ActionLayer()
 {
+    Sprite::init();
     _winSize = Director::getInstance()->getVisibleSize();
     _isShowing = false;
     _isBgShowing = false;

@@ -10,6 +10,8 @@
 	<string>DragonTactic</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>81E0AEA46EBCACD233B09D3B441C4D1F0EBC0318</key>
+		<string>https://bitbucket.org/demaxism/fighter-d2.git</string>
 		<key>E3B27946D640D42218D7BE5DAB76019ACBF3EC2F</key>
 		<string>https://bitbucket.org/demaxism/dragontactic.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>proj.ios_mac/DragonTactic.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>81E0AEA46EBCACD233B09D3B441C4D1F0EBC0318</key>
+		<string>../../../..</string>
 		<key>E3B27946D640D42218D7BE5DAB76019ACBF3EC2F</key>
 		<string>../../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>E3B27946D640D42218D7BE5DAB76019ACBF3EC2F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>81E0AEA46EBCACD233B09D3B441C4D1F0EBC0318</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

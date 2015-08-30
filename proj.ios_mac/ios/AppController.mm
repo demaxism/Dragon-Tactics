@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import <AdSupport/ASIdentifierManager.h>
 
 @implementation AppController
 
@@ -85,6 +86,10 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();
+    
+    // IDFA test
+    NSString* idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    NSLog(@"IDFA: %@", idfa);
 
     return YES;
 }

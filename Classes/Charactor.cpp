@@ -244,7 +244,8 @@ void ActionLayer::showChars()
     _left = new Charactor(left->charName);
     addChild(_left,2);
     _left->setPosition(Vec2(_winSize.width/2 - xd, ypos));
-    auto delay = DelayTime::create(1);
+    float standTime = 0.5;
+    auto delay = DelayTime::create(standTime);
     CallFunc* func = CallFunc::create([&] () {
         _left->fight();
     });
@@ -270,7 +271,7 @@ void ActionLayer::showChars()
         _flash->setOpacity(0xff);
         _flash->runAction(FadeTo::create(0.4, 0));
     });
-    runAction(Sequence::create(delay = DelayTime::create(1.2), hurtFunc, NULL));
+    runAction(Sequence::create(delay = DelayTime::create(standTime + 0.2), hurtFunc, NULL));
 
     // send battle start event to main, for focus battle
     GameManager::getInstance()->currentUnit = left;

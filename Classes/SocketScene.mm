@@ -13,6 +13,7 @@
 
 #include "SocketScene.h"
 #include "TitleScene.h"
+#import "Gyro.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -72,7 +73,7 @@ SocketScene::SocketScene()
     
     
     // Send Text Status Label
-    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 20, Size(400, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 20, cocos2d::Size(400, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Vec2(0, 0));
     _sendTextStatus->setPosition(100, 400);
     this->addChild(_sendTextStatus);
@@ -110,6 +111,13 @@ SocketScene::SocketScene()
     {
         CC_SAFE_DELETE(_wsiError);
     }
+    
+    _count = 0;
+    _gyro = [[Gyro alloc] init];
+    int value = [(Gyro*)_gyro showMessage];
+    cocos2d::log("test-ding %d", value);
+    
+    schedule(CC_SCHEDULE_SELECTOR(SocketScene::doStep));
 }
 
 SocketScene::~SocketScene()
@@ -122,6 +130,16 @@ SocketScene::~SocketScene()
     
     if (_wsiError)
         _wsiError->close();
+}
+
+void SocketScene::doStep(float delta) {
+    _count++;
+    if (_count % 10 == 0) {
+        int value = [(Gyro*)_gyro showMessage];
+        cocos2d::log("debug-001: %d :count %d", value, _count);
+        float yaw = [(Gyro*)_gyro attitudeYaw];
+        cocos2d::log("debug-gyro: %f ", yaw);
+    }
 }
 
 // Delegate methods

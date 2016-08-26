@@ -44,6 +44,10 @@ private:
     int _sendTextTimes;
     int _sendBinaryTimes;
     Button* _btnBack;
+    int _count;
+    void* _gyro;
+    
+    void doStep(float delta);
 };
 
 

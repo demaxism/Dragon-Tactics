@@ -1,10 +1,9 @@
 # Dragon Tactic - Simulation RPG Game Demo build with Cocos2D-X
 
-![ss_TitleScene](https://github.com/nekoharuyuki/PuzzleRPG-cocos2d/blob/master/Resources/asset/ss/ss_TitleScene.jpg)
+![ss_TitleScene](https://github.com/demaxism/Dragon-Tactics/blob/main/effect3.png)
+
   
-[パズルRPGの作り方](https://www.shoeisha.co.jp/book/detail/9784798141589)を参考にC++でiOS/androidアプリでの作成を行いました。  
-  
-> ファイアエンブレムような、スマートフォンの1画面に収まる8×6マスのマップで展開される、シミュレーションバトルのDemoです。
+> ファイアエンブレムHeroesような、スマートフォンの1画面に収まる8×6マスのマップで展開される、シミュレーションバトルのDemoです。
 
   
 ***
